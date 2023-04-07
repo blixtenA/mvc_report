@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}About{% endblock %}
+
+{% block body %}
+    <h1>About mvc</h1>
+    <div class="columns">
+        <div class="column">
+    <p><a href="https://dbwebb.se/kurser/mvc-v2">MVC på BTH</a></p>
+    <p>En kurs om objektorienterad PHP-programmering med kända webbramverk, enhetstestning, kodkvalitet och databaskopplingar med objekt relational mapping (ORM).</p>
+    <p><a href="https://github.com/dbwebb-se/mvc">Kursens GIT-repo</a></p>
+    <p><a href="https://github.com/blixtenA/mvc_report">Mitt GIT-repo</a></p>
+</div>
+    <div class="column">
+    <a href="{{ asset('img/Mathematrix_book_02.svg.png') }}">
+        <img src="{{ asset('img/Mathematrix_book_02.svg.png') }}" alt="">
+    </a>
+    </div>
+</div>    
+{% endblock %}

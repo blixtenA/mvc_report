@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link rel="icon" href="{{ asset('img/glider.svg') }}">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -14,6 +14,21 @@
         {% endblock %}
     </head>
     <body>
+        <header class="site-header">
+            <span class="site-title">My Symfony Site - Report</span>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="{{ path('/') }}">Home</a></li>
+                <li><a href="{{ path('about') }}">About</a></li>
+                <li><a href="{{ path('lucky') }}">Lucky</a></li>
+                <li><a href="{{ path('quote') }}">Quote</a></li>
+                <li><a href="{{ path('report') }}">Report</a></li>
+            </ul>
+        </nav>        
         {% block body %}{% endblock %}
+        <footer class="site-footer">
+            <span class="site-footer">My footer. This page was made by Anna Blixt for MVC @ BTH</span>
+        </footer>        
     </body>
 </html>

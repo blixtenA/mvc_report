@@ -1,0 +1,15 @@
+{# templates/quote.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Quote{% endblock %}
+
+{% block body %}
+    <h1>Today's Quote</h1>
+    <p>{{ quote }}</p>
+
+    <p>Today: {{ today }}</p>
+
+    <p>Timestamp: {{ timestamp }}</p>
+
+{% endblock %}
