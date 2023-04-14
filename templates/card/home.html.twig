@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block subheader %}
+<div class="subheader">
+    {% include "card/cardnav.html.twig" %}
+</div>
+{% endblock %}
+
+{% block title %}Card game home{% endblock %}
+
+{% block body %}
+    <h1>Home of the card game</h1>
+
+    <p>Kortspelsdelen av appen. Det finns tre klasser - Card, CardHand och DeckOfCards. Card är ett spelkort som primärt innehåller färg och värde, samt några metoder för att kunna kommunicera med klassen. CardHand är en klass som kan innehålla ett antal kort som dras på en gång. Man matar in hur många kort man vill ha och dessa dras då från en deck (kommer strax till deck). Även handen har ett par hjälpmetoder som t.ex. att kunna skicka ut sina kort som strängar. Slutligen decken, DeckOfCards. Det är den största klassen. Den innehåller kort, initialt 52 st, som kan dras och övergå till att bli dragna (vilket ligger i en lista i klassen). Den har ett antal olika metoder, som t.ex. metod för att kunna sortera, dra kort, mixa om / återställa och producera sina kort som en array av strängar.</p>
+
+    <img src="{{ asset('img/CardUML.jpg')}}">
+{% endblock %}

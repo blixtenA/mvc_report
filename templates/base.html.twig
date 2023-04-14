@@ -24,8 +24,12 @@
                 <li><a href="{{ path('lucky') }}">Lucky</a></li>
                 <li><a href="{{ path('quote') }}">Quote</a></li>
                 <li><a href="{{ path('report') }}">Report</a></li>
+                <li><a href="{{ path('card_init_post') }}">Card game</a></li>
+                <li><a href="{{ path('api_land') }}">API</a></li>
             </ul>
-        </nav>        
+        </nav>   
+        {% block subheader %}{% endblock %}
+
         {% block body %}{% endblock %}
         <footer class="site-footer">
             <span class="site-footer">My footer. This page was made by Anna Blixt for MVC @ BTH</span>

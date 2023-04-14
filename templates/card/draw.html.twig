@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+{% block subheader %}
+<div class="subheader">
+    {% include "card/cardnav.html.twig" %}
+</div>
+{% endblock %}
+
+{% block title %}All cards in the deck{% endblock %}
+
+{% block body %}
+    <h1>Would you like to play a game?</h1>
+
+    <div class="cardwrapper">
+        {% for card in cards %}
+        <div class="card">
+            {{ card.getSymbol() }}
+        </div>
+        {% endfor %}
+        <p>Cards remaining: {{ remaining }} </p>
+    </div>
+
+{% endblock %}

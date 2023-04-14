@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}API Landing{% endblock %}
+
+{% block body %}
+    <h1>Available JSON Routes</h1>
+    <ul>
+        <li><a href="{{ path('quote') }}">/api/quote</a> - visar dagens citat. Citat väljs slumpmässigt från en lista.</li>
+        <li><a href="{{ path('lucky') }}">/lucky/twig</a> - visar ett slumpmässigt nummer.</li>
+        <li><a href="{{ path('about') }}">/about</a> - Om sidan</li>
+        <li><a href="{{ path('report') }}">/report</a> - redovisningstexter</li>
+        <li><a href="{{ path('card_init_post') }}">/card/init</a> - initierar kortspelet, sätter defaultvärden i sessionen, redirectar till spelstart.</li>
+        <li><a href="{{ path('card') }}">/card</a> - spelets verkliga startsida, visar UML-diagram och annat.</li>
+        <li><a href="{{ path('card_deck') }}">/card/deck</a> - en route som producerar en full 52-kortslek sorterat efter färg och valör.</li>                        
+        <li><a href="{{ path('card_shuffle') }}">/card/shuffle</a> - producerar en full 52-kortslek med ej sorterade kort.</li>                        
+        <li><a href="{{ path('card_draw') }}">/card/draw</a> - drar ett kort från sessionens kortlek, uppdaterar sessionen med den ändrade leken. </li>  
+        <li><a href="{{ path('draw_card_number', {'num': 5}) }}">/card/draw/5</a> - drar flera kort från sessionens kortlek och uppdaterar sessionen. Grundläggande felhantering om man försöker dra för många kort.</li>
+        <li><a href="{{ path('draw_many_get') }}">/card/drawmany</a> - get-route för att kunna ange hur många kort som ska dras. </li>
+        <li><a href="{{ path('draw_many_post') }}">/card/drawmany</a> - post-route för att kunna ta emot hur många kort som ska dras.</li>                                        
+        <li><a href="{{ path('api_land') }}">/api/</a> - Initierar deck of cards om ingen finns sedan tidigare i sessionen, renderar den här sidan.</li>                                        
+        <li><a href="{{ path('api_deck') }}">/api/deck</a> - Visa upp en sorterad kortlek som JSON.</li>                                        
+<li>
+        <form method="post" action="{{ path('api_deck_shuffle') }}">
+            <input type="submit" name="shuffle" value="shuffle">
+            <p>/api/deck/shuffle - mix (and reset) the deck.</p>
+        </form>        
+        </li>
+
+<li>
+        <form method="post" action="{{ path('api_deck_draw') }}">
+            <input type="hidden" name="num_cards" value="1">            
+            <input type="submit" name="draw" value="Draw 1 card">
+            /api/deck/draw - draw 1 card.
+        </form>        
+        </li>
+    <li>        
+        <form method="post" action="{{ path('api_deck_draw') }}">
+            <input type="number" name="num_cards" min="1" max="52" value="1">
+            <input type="submit" name="draw" value="Draw this many">
+            /api/deck/draw - draw any number of cards (1-52).            
+        </form>
+    </li>
+    </ul>
+{% endblock %}
