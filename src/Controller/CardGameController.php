@@ -16,11 +16,11 @@ class CardGameController extends AbstractController
     /* Init the card game */
     #[Route("/card/init", name: "card_init_post", methods: ['GET', 'POST'])]
     public function initCallback(
-        Request $request,
+        //        Request $request,
         SessionInterface $session
     ): Response {
         $deck = new DeckOfCards();
-        $cards = $deck->getCards();
+        $deck->getCards();
 
         $session->set("deck", $deck);
 
@@ -66,7 +66,7 @@ class CardGameController extends AbstractController
     /* Draw 1 card and display count of remaining cards */
     #[Route("/card/draw", name: "card_draw", methods: ['GET', 'POST'])]
     public function play(
-        Request $request,
+        //        Request $request,
         SessionInterface $session
     ): Response {
         $deck = $session->get("deck");
@@ -107,7 +107,7 @@ class CardGameController extends AbstractController
     /* Get route for getting how many cards the user wants to draw. */
     #[Route("/card/drawmany", name: "draw_many_get", methods: ['GET'])]
     public function manyCards(
-        Request $request,
+        //        Request $request,
         SessionInterface $session
     ): Response {
         $deck = $session->get("deck");
@@ -127,5 +127,4 @@ class CardGameController extends AbstractController
 
         return $this->redirectToRoute('draw_card_number', ['num' => $numCards]);
     }
-
 }

@@ -18,11 +18,11 @@ class ApiController extends AbstractController
     /* Landing page for API, display available controllers */
     #[Route("/api/", name: "api_land")]
     public function apiLand(
-        RouterInterface $router,
-        Request $request,
+//        RouterInterface $router,
+ //       Request $request,
         SessionInterface $session
     ): Response {
-        $jsonRoutes = [];
+//        $jsonRoutes = [];
         if ($session->has('deck')) {
             ;
         } else {
@@ -36,7 +36,7 @@ class ApiController extends AbstractController
     /* Show all cards in session deck, sorted by color & value */
     #[Route("/api/deck", name: "api_deck", methods: ["GET"])]
     public function apiDeck(
-        Request $request,
+//        Request $request,
         SessionInterface $session
     ): Response {
         if ($session->has('deck')) {
@@ -62,7 +62,7 @@ class ApiController extends AbstractController
     /* Shuffle tha deck like a pro */
     #[Route("/api/deck/shuffle", name: "api_deck_shuffle", methods: ["POST"])]
     public function apiDeckShuffle(
-        Request $request,
+//        Request $request,
         SessionInterface $session
     ): Response {
         if ($session->has('deck')) {
@@ -114,5 +114,4 @@ class ApiController extends AbstractController
         );
         return $response;
     }
-
 }

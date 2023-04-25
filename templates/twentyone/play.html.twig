@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+{% block subheader %}
+<div class="subheader">
+    {% include "twentyone/twentyonenav.html.twig" %}
+</div>
+{% endblock %}
+
+{% block title %}21{% endblock %}
+
+{% block body %}
+    <h1>Playing 21, round {{ round }}</h1>
+    <div class="twocol">
+        <div class="bankwrapper">
+          <h2>Bank | Bet: {{ bankbet }} | Score: {{ bankscore }}</h2>
+          <h3>Money: {{ bankmoney}}</h3>
+          <div class="button-container"></div>
+          <div class="card-container">
+            {% for card in bankhand %}
+              <div class="card" data-family="{{ card.getFamily() }}">
+                {{ card.getSymbol() }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="playerwrapper">
+          <h2>Player | Bet: {{ playerbet }} | Score: {{ playerscore }}</h2>
+          <h3>Money: {{ playermoney }}</h3>
+          <div class="button-container">
+            {% if playerturn and gameover is not defined %}
+              <form method="post" action="{{ path('twentyone_hit') }}">
+                <input type="submit" name="do_it" value="Hit (draw)">
+              </form>
+              <form method="post" action="{{ path('twentyone_stand') }}">
+                <input type="submit" name="do_it" value="Stand (fold)">
+              </form>
+            {% endif %}
+          </div>
+          <div class="card-container">
+            {% for card in playerhand %}
+              <div class="card" data-family="{{ card.getFamily() }}">
+                {{ card.getSymbol() }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    <!-- Bank messages -->
+    {% if message is defined %}
+        <div class="alert" role="alert">{{ message }}</div>
+    {% endif %}          
+
+    <!-- Game Over conditions met -->
+    {% if gameover is defined %}
+    <h2 class="{% if gameover starts with 'Player' %}green{% elseif gameover starts with 'Bank' %}red{% else %}yellow{% endif %}">
+        {{ gameover }}
+    </h2>
+        {% if anotherRound %}
+        <form method="post" action="{{ path('twentyone_init_post') }}">
+            <input type="hidden" name="type" value="round">        
+            <input type="number" name="amount" min="1" max="{{ playermoney }}" value="{{ playermoney > 10 ? 10 : playermoney }}">        
+            <input type="submit" name="do_it" value="Start a new round">
+        </form>
+        {% else %}
+        <p> Thank you for playing! </p>
+        {% endif %}
+    {% endif %}
+
+
+<p>Cards remaining: {{ remaining }} </p>
+
+
+{% endblock %}

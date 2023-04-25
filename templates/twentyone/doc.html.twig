@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{% block subheader %}
+<div class="subheader">
+    {% include "twentyone/twentyonenav.html.twig" %}
+</div>
+{% endblock %}
+
+{% block title %}21 game{% endblock %}
+
+{% block body %}
+    <h1>21 documentation</h1>
+
+    <p>Grundklasserna som används i det här spelet är samma som i Card-uppgiften: Card (ett kort), CardHand (en giv) och DeckOfCards (en full kortlek). Utöver det behöver jag en Player-klass som representerar spelaren, en Game-klass som håller ordning på spelflödet och tar belastningen från routarna, samt eventuellt en Rule-klass som får innehålla regler som t.ex. bankens beteende (om det inte räcker med Game-klassen för att lösa detta).</p>
+
+    <p><a href="https://sv.wikipedia.org/wiki/Tjugoett_(kortspel)">Regler</a></p>
+
+    <h2>Pesudocode</h2>
+    <ul>
+    <li>Start the game (player initializes by pushing a button)</li>
+    <li>Init a deck of cards</li>
+    <li>Shuffle the deck</li>
+    <li>Deal 2 cards to each player</li>
+    <li>Calculate starting score</li>
+    <li>Check if the player is over 21</li>
+    <li>Player chooses to hit (proceed) or stand</li>
+    <li>If player hits, deal another card</li>
+    <li>Check if the player is over 21</li>
+    <li>If the player choses to stand, deal a card to the bank if the bank is under 17</li>
+    <li>Keep dealing to the bank until the bank has at least 17</li>
+    <li>If the bank is over 21, the player wins. If the bank is below 21, compare scores. Highest score wins.</li>
+    <li>A tie ends the round with no scores</li>
+    </ul>
+
+    <p>The basic flow of the game:</p>
+    <img src="{{ asset('img/flowchart_21.jpg')}}">
+
+
+
+{% endblock %}

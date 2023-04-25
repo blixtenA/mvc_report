@@ -30,6 +30,11 @@ nav {
     border-style: ridge;    
 }
 
+nav ul {
+  column-count: 2; 
+  column-gap: 1em;
+}
+
 div.columns {
     display: flex;
   }
@@ -44,11 +49,14 @@ div.columns {
     grid-template-rows: auto 1fr auto;
 }
 
- footer.site-footer {
-    background-color: #b393d3;
-    border-style: ridge;
-    height: 2.5rem;
-    width: 900px;  
+footer.site-footer {
+  position: fixed;
+  bottom: 0;
+  width: 900px;
+  background-color: #b393d3;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
 }
 
 .cardwrapper {
@@ -62,7 +70,7 @@ div.columns {
     border-color: #808080 #000000 #000000 #808080;
     border-width: 1px;
     border-style: solid;
-    color: #000000;
+    color: black;
     width:  0.72em;
     height: 1em;
     border-radius: 10px;
@@ -74,6 +82,12 @@ div.columns {
     padding: 0;
     text-align: center;
     background-color: white;    
+    margin: 10px;
+}
+
+.card[data-family="Diamonds"],
+.card[data-family="Hearts"] {
+  color: red;
 }
 
 .singlecardwrapper {
@@ -113,3 +127,43 @@ div.columns {
   .subnav a:active {
     background-color: aliceblue;    
   }
+
+  .twocol {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+    .bankwrapper,
+  .playerwrapper {
+    width: 45%;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+  }
+
+  .button-container {
+    height: 20px;
+    display: flex;
+    justify-content: left;
+    margin-bottom: 20px;
+  }
+
+.green {
+    background-color: green;
+    color: white;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.yellow {
+    background-color: yellow;
+    color: black;
+}

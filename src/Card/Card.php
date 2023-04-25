@@ -4,14 +4,13 @@ namespace App\Card;
 
 class Card
 {
-    private $value;
-    private $family;
+    private string $value;
+    private string $family;
 
     /* Constructor, default = create a random card */
     public function __construct($value = null, $family = null)
     {
         if ($value === null || $family === null) {
-
             $values = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
             $families = ['Spades', 'Hearts', 'Diamonds', 'Clubs'];
 
@@ -23,22 +22,22 @@ class Card
         }
     }
 
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
 
-    public function getFamily()
+    public function getFamily(): string
     {
         return $this->family;
     }
 
-   public function getAsString()
-   {
-       return "{$this->value} of {$this->family}";
-   }
+    public function getAsString(): string
+    {
+        return "{$this->value} of {$this->family}";
+    }
 
-    public function getSymbol()
+    public function getSymbol(): string
     {
         $symbols = [
             'Spades' => ['Ace' => '🂡', '2' => '🂢', '3' => '🂣', '4' => '🂤', '5' => '🂥', '6' => '🂦', '7' => '🂧', '8' => '🂨', '9' => '🂩', '10' => '🂪', 'Jack' => '🂫', 'Queen' => '🂭', 'King' => '🂮'],
@@ -50,4 +49,6 @@ class Card
         return $symbols[$this->family][$this->value];
     }
 
+    /* New methods for 21 game. Do not mess with the code above this line.
+    Seriously, no changes above. You shall not pass. */
 }

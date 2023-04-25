@@ -31,7 +31,5 @@ class LuckyControllerJson
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
         );
         return $response;
-
     }
-
 }

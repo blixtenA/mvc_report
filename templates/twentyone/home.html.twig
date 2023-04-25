@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block subheader %}
+<div class="subheader">
+    {% include "twentyone/twentyonenav.html.twig" %}
+</div>
+{% endblock %}
+
+{% block title %}21 game home{% endblock %}
+
+{% block body %}
+    <h1>Home of the card game Twenty one</h1>
+    
+    <p><a href="https://sv.wikipedia.org/wiki/Tjugoett_(kortspel)">Regler</a></p>
+
+    <p><a href="{{ path('twentyone_doc') }}">Documentation for the 21 game</a></p>
+
+    <p>You and the bank start the game with 100 money. How much do you want to bet on the first round?</p>
+    <form method="post" action="{{ path('twentyone_init_post') }}">
+        <input type="number" name="amount" min="1" max="100" value="10">
+        <input type="hidden" name="type" value="game">
+        <input type="submit" name="do_it" value="Start a game of 21">
+    </form>
+
+{% endblock %}

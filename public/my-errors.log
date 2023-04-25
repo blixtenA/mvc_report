@@ -1,0 +1,202 @@
+/twentyone/init 
+amount: 10 
+Check for game over 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+1 continue 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+1 continue 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+ continue 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{},{},{},{}],"bankhand":[{},{}],"playerscore":28,"bankscore":9,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":45,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+ continue 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player wins on score!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":21,"bankscore":17,"playermoney":110,"bankmoney":90,"playerbet":10,"bankbet":10,"remaining":47,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+NOT game over 
+/twentyone/play 
+/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore18 
+playerScore18 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore18 
+playerScore24 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":24,"bankscore":18,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":47,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+1 continue 
+class game over check 
+bankScore0 
+playerScore20 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore25 
+playerScore20 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank is fat, Player wins!","playerhand":[{},{},{}],"bankhand":[{},{},{}],"playerscore":20,"bankscore":25,"playermoney":100,"bankmoney":80,"playerbet":10,"bankbet":30,"remaining":41,"anotherRound":true,"playerturn":false}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+1 continue 
+class game over check 
+bankScore0 
+playerScore18 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore0 
+playerScore28 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{},{},{}],"bankhand":[{},{}],"playerscore":28,"bankscore":9,"playermoney":90,"bankmoney":100,"playerbet":10,"bankbet":20,"remaining":35,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore21 
+playerScore17 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins on score!","playerhand":[{},{}],"bankhand":[{},{}],"playerscore":17,"bankscore":21,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":48,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore21 
+playerScore17 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins on score!","playerhand":[{},{}],"bankhand":[{},{}],"playerscore":12,"bankscore":6,"playermoney":80,"bankmoney":200,"playerbet":10,"bankbet":90,"remaining":44,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore16 
+playerScore18 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore24 
+playerScore18 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank is fat, Player wins!","playerhand":[{},{}],"bankhand":[{},{},{}],"playerscore":18,"bankscore":24,"playermoney":110,"bankmoney":90,"playerbet":10,"bankbet":10,"remaining":47,"anotherRound":true,"playerturn":false}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore10 
+playerScore24 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{}],"bankhand":[{},{}],"playerscore":24,"bankscore":10,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":48,"anotherRound":true,"playerturn":true}/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{}],"bankhand":[{},{}],"playerscore":24,"bankscore":10,"playermoney":90,"bankmoney":110,"playerbet":0,"bankbet":0,"remaining":48,"anotherRound":true,"playerturn":true}/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{}],"bankhand":[{},{}],"playerscore":24,"bankscore":10,"playermoney":90,"bankmoney":110,"playerbet":0,"bankbet":0,"remaining":48,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore8 
+playerScore15 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore18 
+playerScore15 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins on score!","playerhand":[{},{}],"bankhand":[{},{},{}],"playerscore":15,"bankscore":18,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":47,"anotherRound":true,"playerturn":false}/twentyone/gameover 
+{"round":1,"gameover":"Bank wins on score!","playerhand":[{},{}],"bankhand":[{},{},{}],"playerscore":15,"bankscore":18,"playermoney":90,"bankmoney":110,"playerbet":0,"bankbet":0,"remaining":47,"anotherRound":true,"playerturn":false}/twentyone/play 
+/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore9 
+playerScore18 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore9 
+playerScore26 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":26,"bankscore":9,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":47,"anotherRound":true,"playerturn":true}/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":26,"bankscore":9,"playermoney":90,"bankmoney":110,"playerbet":0,"bankbet":0,"remaining":47,"anotherRound":true,"playerturn":true}/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":26,"bankscore":9,"playermoney":90,"bankmoney":110,"playerbet":0,"bankbet":0,"remaining":47,"anotherRound":true,"playerturn":true}/twentyone/gameover 
+{"round":1,"gameover":"Player is fat, Bank wins!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":26,"bankscore":9,"playermoney":90,"bankmoney":110,"playerbet":0,"bankbet":0,"remaining":47,"anotherRound":true,"playerturn":true}/twentyone/gameover 
+{"round":1,"gameover":"Bank wins, Player is fat!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":26,"bankscore":9,"playermoney":90,"bankmoney":110,"playerbet":0,"bankbet":0,"remaining":47,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+1 continue 
+class game over check 
+bankScore15 
+playerScore0 
+NOT game over 
+/twentyone/play 
