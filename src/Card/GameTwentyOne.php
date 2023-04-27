@@ -72,25 +72,24 @@ class Game
 
     public function hit(): bool
     {
-        $this->message = "";
-        if ($this->isPlayerTurn && !$this->player->hit($this->deck)) {
-            return false;
-        } 
-        $score = $this->bank->getScore();
-        $endCond = $this->bank->getEndCond();
-        if ($score >= $endCond) {
-            $this->message = "Bank stands";
-            return false;
-        }
-        while ($score < $endCond && $this->bank->hit($this->deck)) {
+        if ($this->isPlayerTurn) {
+            if ($this->player->hit($this->deck)) {
+                return true;
+            }
+        } else {
             $score = $this->bank->getScore();
+            $endCond = $this->bank->getEndCond();
+            while ($score < $endCond && $this->bank->hit($this->deck)) {
+                $score = $this->bank->getScore();
+            }
+            if ($score >= $endCond) {
+                $this->message = "Bank stands";
+                return false;
+            }
+            $this->message = "Bank takes a card";
+            return true;
         }
-        if ($score >= $endCond) {
-            $this->message = "Bank stands";
-            return false;
-        }
-        $this->message = "Bank takes a card";
-        return true;
+        return false;
     }
 
     public function stand(): void
