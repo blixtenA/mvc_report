@@ -10,13 +10,13 @@ use App\Card\CardHand;
 use App\Card\DeckOfCards;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use \Exception;
 
 class CardGameController extends AbstractController
 {
     /* Init the card game */
     #[Route("/card/init", name: "card_init_post", methods: ['GET', 'POST'])]
     public function initCallback(
-        //        Request $request,
         SessionInterface $session
     ): Response {
         $deck = new DeckOfCards();
@@ -66,7 +66,6 @@ class CardGameController extends AbstractController
     /* Draw 1 card and display count of remaining cards */
     #[Route("/card/draw", name: "card_draw", methods: ['GET', 'POST'])]
     public function play(
-        //        Request $request,
         SessionInterface $session
     ): Response {
         $deck = $session->get("deck");
@@ -89,9 +88,9 @@ class CardGameController extends AbstractController
         $deck = $session->get("deck");
 
         if ($num > 52) {
-            throw new \Exception("Can not draw more than 52 cards!");
+            throw new Exception("Can not draw more than 52 cards!");
         } elseif ($num > $deck->remainingCards()) {
-            throw new \Exception("Not enough cards left in the deck!");
+            throw new Exception("Not enough cards left in the deck!");
         }
 
         $hand = new CardHand($deck, $num);
@@ -107,7 +106,6 @@ class CardGameController extends AbstractController
     /* Get route for getting how many cards the user wants to draw. */
     #[Route("/card/drawmany", name: "draw_many_get", methods: ['GET'])]
     public function manyCards(
-        //        Request $request,
         SessionInterface $session
     ): Response {
         $deck = $session->get("deck");
@@ -121,7 +119,6 @@ class CardGameController extends AbstractController
     #[Route("/card/drawmany", name: "draw_many_post", methods: ['POST'])]
     public function manyCardsPost(
         Request $request,
-        SessionInterface $session
     ): Response {
         $numCards = $request->request->get('num_cards');
 

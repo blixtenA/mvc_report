@@ -4,21 +4,28 @@ namespace App\Card;
 
 class CardHand
 {
-    private array $cards;
+    /**
+    * @var Card[] $cards
+    */
+    private array $cards = [];
     private int $number;
 
-    public function __construct(DeckOfCards $deck, $number = 1)
+    public function __construct(DeckOfCards $deck, int $number = 1)
     {
         $this->cards = [];
         $this->number = $number;
         for ($i = 0; $i < $this->number; $i++) {
+            /** @var Card $card */
             $card = $deck->drawCard();
-            if ($card) {
+            if ($card !== null) {
                 $this->cards[] = $card;
             }
         }
     }
 
+    /**
+     * @return Card[]
+     */
     public function getCards(): array
     {
         return $this->cards;
@@ -30,6 +37,9 @@ class CardHand
         $this->number++;
     }    
 
+    /**
+    * @return string[]
+    */
     public function getCardsAsString(): array
     {
         $cardsAsString = [];
@@ -52,36 +62,37 @@ class CardHand
     public function getScore(): int
     {
         $score = 0;
-
+    
         foreach ($this->cards as $card) {
             $value = $card->getValue();
-
-            if ($value === "Ace") {
-                if ($score + 14 > 21) {
-                    $score += 1;
-                } else {
-                    $score += 14;
-                }
-            } elseif ($value === "King") {
-                $score += 13;
-            } elseif ($value === "Queen") {
-                $score += 12;
-            } elseif ($value === "Jack") {
-                $score += 11;
-            } else {
-                $score += intval($value);
+    
+            switch ($value) {
+                case "Ace":
+                    $score += ($score + 14 > 21) ? 1 : 14;
+                    break;
+                case "King":
+                    $score += 13;
+                    break;
+                case "Queen":
+                    $score += 12;
+                    break;
+                case "Jack":
+                    $score += 11;
+                    break;
+                default:
+                    $score += intval($value);
+                    break;
             }
         }
-
+    
         return $score;
     }
 
-    public function isGameOver($participant = "player")
+    public function isGameOver(string $participant = "player"): bool
     {
         if ($participant == "player") {
             return $this->getScore() >= 21;
-        } else {
-            return $this->getScore() >= 17;
         }
+        return $this->getScore() >= 17;
     }
 }

@@ -167,3 +167,10 @@ footer.site-footer {
     background-color: yellow;
     color: black;
 }
+
+.thank-you {
+  background-color: gold;
+  padding: 10px;
+  margin: 20px;
+  text-align: center;
+}

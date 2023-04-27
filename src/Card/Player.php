@@ -2,9 +2,14 @@
 
 namespace App\Card;
 
+use Exception;
+
 class Player
 {
     private string $name;
+    /**
+    * @var CardHand
+    */
     private object $hand;
     private int $score;
     private string $type;
@@ -20,11 +25,7 @@ class Player
 
         /* Type init. Player and Bank have different end conditions. */
         $this->type = $type;
-        if ($type === "player") {
-            $this->endCond = 21;
-        } else {
-            $this->endCond = 17;
-        }
+        $this->endCond = ($type === "player") ? 21 : 17;
         $this->score = $this->hand->getScore();
 
         /* init first bet and starting money, 100 */
@@ -38,7 +39,12 @@ class Player
         return $this->name;
     }
 
-    public function getHand(): object
+    public function getEndCond(): int
+    {
+        return $this->endCond;
+    }
+
+    public function getHand(): CardHand
     {
         return $this->hand;
     }
@@ -53,26 +59,31 @@ class Player
         return $this->score;
     }
 
-    public function reset($deck): void
+    public function reset(DeckOfCards $deck): void
     {
         $this->score = 0;
         $this->hand = new CardHand($deck, 2);
+        $this->score = $this->hand->getScore();        
     }
 
-    public function hit($deck): bool
+    public function hit(DeckOfCards $deck): bool
     {
-        /* Draw a card from the given deck and add to the hand */
-        $card = $deck->drawCard();
-        $this->hand->addCard($card);
-
+            /* Draw a card from the given deck and add to the hand */
+        try {
+            $card = $deck->drawCard();
+        } catch (Exception $e) {
+            /* No more cards in the deck */
+            return false;
+        }
+          $this->hand->addCard($card);
+    
         $this->score = $this->hand->getScore();
-
+    
         /* Check if end condition applies */
         if ($this->hand->isGameOver($this->type)) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     public function getMoney(): int
@@ -80,13 +91,13 @@ class Player
         return $this->money;
     }
 
-    public function addMoney($amount): int
+    public function addMoney(int $amount): int
     {
         $this->money += $amount;
         return $this->money;
     }
 
-    public function payMoney($amount): int
+    public function payMoney(int $amount): int
     {
         $this->money -= $amount;
         return $this->money;
@@ -100,7 +111,7 @@ class Player
         return $this->currentBet;
     }
 
-    public function setCurrentBet($amount): int
+    public function setCurrentBet(int $amount): int
     {
         $this->currentBet = $amount;
         $this->money -= $this->currentBet;

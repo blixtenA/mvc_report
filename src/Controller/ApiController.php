@@ -18,25 +18,22 @@ class ApiController extends AbstractController
     /* Landing page for API, display available controllers */
     #[Route("/api/", name: "api_land")]
     public function apiLand(
-//        RouterInterface $router,
- //       Request $request,
         SessionInterface $session
     ): Response {
-//        $jsonRoutes = [];
-        if ($session->has('deck')) {
-            ;
-        } else {
+        if (!$session->has('deck')) {
             $deck = new DeckOfCards();
             $session->set("deck", $deck);
         }
-
+    
         return $this->render('api_landing.html.twig');
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     /* Show all cards in session deck, sorted by color & value */
     #[Route("/api/deck", name: "api_deck", methods: ["GET"])]
     public function apiDeck(
-//        Request $request,
         SessionInterface $session
     ): Response {
         if ($session->has('deck')) {
@@ -59,10 +56,12 @@ class ApiController extends AbstractController
         return $response;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     /* Shuffle tha deck like a pro */
     #[Route("/api/deck/shuffle", name: "api_deck_shuffle", methods: ["POST"])]
     public function apiDeckShuffle(
-//        Request $request,
         SessionInterface $session
     ): Response {
         if ($session->has('deck')) {
@@ -85,6 +84,9 @@ class ApiController extends AbstractController
         return $response;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     /* Draw 1 or more cards. */
     #[Route("/api/deck/draw", name: "api_deck_draw", methods: ["POST"])]
     public function apiDeckDraw(
@@ -100,7 +102,7 @@ class ApiController extends AbstractController
             $deck = new DeckOfCards();
         }
 
-        $hand = new CardHand($deck, $numCards);
+        $hand = new CardHand($deck, (int) $numCards);
         $data = [
             "cards" => $hand->getCardsAsString(),
             "remaining" => $deck->remainingCards()

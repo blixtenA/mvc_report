@@ -4,7 +4,12 @@ namespace App\Card;
 
 class Rules
 {
-    public function determineWinner($player, $bank): array
+    /**
+    * @param Player $player
+    * @param Player $bank
+    * @return array{Player|null, Player|null, string} 
+    */
+    public function determineWinner(Player $player, Player $bank): array
     {
         $playerScore = $player->getScore();
         $bankScore = $bank->getScore();
@@ -18,15 +23,19 @@ class Rules
             return [$player, $bank, "Player wins on score!"];
         } elseif ($bankScore > $playerScore) {
             return [$bank, $player, "Bank wins on score!"];
-        } else {
-            return [null, null, "Game ties, no winner!"];
         }
+        return [null, null, "Game ties, no winner!"];
     }
 
-    public function payout($result, Player $player, Player $bank)
+    /**
+    * @param array<mixed> $result
+    * @param Player $player
+    * @param Player $bank
+    * @return bool
+    */
+    public function payout(array $result, Player $player, Player $bank): bool
     {
         $winner = $result[0];
-        $loser = $result[1];
         $bet = intval($winner->getCurrentBet());
 
         $winner->addMoney($bet * 2);
@@ -36,5 +45,16 @@ class Rules
             return false;
         }
         return true;
+    }
+
+    public function endOfGame(Game $game): bool
+    {
+        $deck = $game->getDeck();
+    
+        if ($deck->remainingCards() < 4) {
+            return true;
+        }
+    
+        return false;
     }
 }

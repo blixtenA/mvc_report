@@ -2,9 +2,17 @@
 
 namespace App\Card;
 
+use Exception;
+
 class DeckOfCards
 {
+    /**
+    * @var Card[] $cards
+    */
     private array $cards;
+    /**
+    * @var Card[]
+    */
     private array $drawn;
 
     public function __construct()
@@ -20,15 +28,22 @@ class DeckOfCards
         $this->drawn = [];
     }
 
+    /**
+    * @return Card[]
+    */
     public function getCards(): array
     {
         return $this->cards;
     }
 
-    public function drawCard(): object
+    /**
+    * @return Card
+    * @throws Exception
+    */
+    public function drawCard(): Card
     {
         if (count($this->cards) == 0) {
-            return null;
+            throw new Exception("No more cards in the deck");
         }
         $card = array_pop($this->cards);
         $this->drawn[] = $card;
@@ -42,6 +57,9 @@ class DeckOfCards
         $this->drawn = [];
     }
 
+    /**
+    * @return Card[]
+    */
     public function getDrawnCards(): array
     {
         return $this->drawn;
@@ -70,6 +88,9 @@ class DeckOfCards
         });        
     }
 
+    /**
+    * @return string[]
+    */
     public function getCardsAsString(): array
     {
         $cardsAsString = [];
@@ -78,7 +99,4 @@ class DeckOfCards
         }
         return $cardsAsString;
     }
-
-    /* New methods for 21 game. Do not mess with the code above this line.
-    Seriously, no changes above. You shall not pass. */
 }

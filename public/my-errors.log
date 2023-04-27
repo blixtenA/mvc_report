@@ -200,3 +200,136 @@ bankScore15
 playerScore0 
 NOT game over 
 /twentyone/play 
+/twentyone/init 
+amount: 20 
+Check for game over 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins, Player is fat!","playerhand":[{},{}],"bankhand":[{},{}],"playerscore":25,"bankscore":22,"playermoney":80,"bankmoney":110,"playerbet":20,"bankbet":10,"remaining":48,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+ continue 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins, Player is fat!","playerhand":[{},{},{}],"bankhand":[{},{}],"playerscore":24,"bankscore":18,"playermoney":70,"bankmoney":160,"playerbet":10,"bankbet":50,"remaining":43,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+1 continue 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player wins, Bank is fat!","playerhand":[{},{},{}],"bankhand":[{},{},{}],"playerscore":19,"bankscore":24,"playermoney":80,"bankmoney":20,"playerbet":10,"bankbet":140,"remaining":37,"anotherRound":true,"playerturn":false}/twentyone/init 
+amount: 10 
+Check for game over 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins on score!","playerhand":[{},{}],"bankhand":[{},{},{}],"playerscore":18,"bankscore":19,"playermoney":70,"bankmoney":40,"playerbet":10,"bankbet":20,"remaining":32,"anotherRound":true,"playerturn":false}/twentyone/init 
+amount: 10 
+Check for game over 
+NOT game over 
+/twentyone/play 
+/twentyone/play 
+/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore11 
+playerScore16 
+NOT game over 
+/twentyone/play 
+/twentyone/hit 
+1 continue 
+class game over check 
+bankScore11 
+playerScore19 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore21 
+playerScore19 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins on score!","playerhand":[{},{},{}],"bankhand":[{},{},{}],"playerscore":19,"bankscore":21,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":46,"anotherRound":true,"playerturn":false}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore24 
+playerScore0 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player wins, Bank is fat!","playerhand":[{},{}],"bankhand":[{},{},{}],"playerscore":7,"bankscore":24,"playermoney":100,"bankmoney":30,"playerbet":10,"bankbet":80,"remaining":41,"anotherRound":true,"playerturn":false}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/play 
+/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore25 
+playerScore6 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Player wins, Bank is fat!","playerhand":[{},{}],"bankhand":[{},{}],"playerscore":6,"bankscore":25,"playermoney":110,"bankmoney":90,"playerbet":10,"bankbet":10,"remaining":48,"anotherRound":true,"playerturn":true}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 
+/twentyone/play 
+/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore14 
+playerScore18 
+NOT game over 
+/twentyone/play 
+/twentyone/stand 
+/twentyone/hit 
+ continue 
+class game over check 
+bankScore20 
+playerScore18 
+game over 
+/twentyone/gameover 
+{"round":1,"gameover":"Bank wins on score!","playerhand":[{},{}],"bankhand":[{},{},{}],"playerscore":18,"bankscore":20,"playermoney":90,"bankmoney":110,"playerbet":10,"bankbet":10,"remaining":47,"anotherRound":true,"playerturn":false}/twentyone/init 
+amount: 10 
+Check for game over 
+class game over check 
+bankScore0 
+playerScore0 
+NOT game over 
+/twentyone/play 

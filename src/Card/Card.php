@@ -8,18 +8,19 @@ class Card
     private string $family;
 
     /* Constructor, default = create a random card */
-    public function __construct($value = null, $family = null)
+    public function __construct(string $value = null, string $family = null)
     {
-        if ($value === null || $family === null) {
-            $values = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
-            $families = ['Spades', 'Hearts', 'Diamonds', 'Clubs'];
-
-            $this->value = $values[array_rand($values)];
-            $this->family = $families[array_rand($families)];
-        } else {
+        if ($value !== null && $family !== null) {
             $this->value = $value;
             $this->family = $family;
+            return;
         }
+    
+        $values = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
+        $families = ['Spades', 'Hearts', 'Diamonds', 'Clubs'];
+    
+        $this->value = $values[array_rand($values)];
+        $this->family = $families[array_rand($families)];
     }
 
     public function getValue(): string
@@ -48,7 +49,4 @@ class Card
 
         return $symbols[$this->family][$this->value];
     }
-
-    /* New methods for 21 game. Do not mess with the code above this line.
-    Seriously, no changes above. You shall not pass. */
 }

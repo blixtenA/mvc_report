@@ -32,26 +32,23 @@ class TwentyOneController extends AbstractController
         return $this->render('twentyone/doc.html.twig');
     }
 
+    /**
+    * @SuppressWarnings(PHPMD.ElseExpression)
+    */
     /* Init the 21 game with a shuffled deck */
     #[Route("/twentyone/init", name: "twentyone_init_post", methods: ['GET', 'POST'])]
     public function initCallback(
         Request $request,
         SessionInterface $session
     ): Response {
-        $logFile = "./my-errors.log";
-        error_log("/twentyone/init \n", 3, $logFile);
 
         /* new Round or new Game? */
         $type = $request->request->get('type');
 
         /* receive player bet */
         $amount = $request->request->get('amount');
-
-        error_log("amount: ", 3, $logFile);
-        error_log("$amount \n", 3, $logFile);
-
         if ($type === "game") {
-            $game = new Game($amount);
+            $game = new Game((int) $amount);
         } else {
             $game = $session->get("game");
             $game->startNewRound($amount);
@@ -59,26 +56,18 @@ class TwentyOneController extends AbstractController
         
         /* Store in session */
         $session->set("game", $game);
-        error_log("Check for game over \n", 3, $logFile);
         /* Check for game over */
         if ($game->checkGameOver()) {
-            error_log("game over \n", 3, $logFile);
-
             return $this->redirectToRoute('twentyone_gameover');
         }
-        error_log("NOT game over \n", 3, $logFile);
-
         return $this->redirectToRoute('twentyone_play');
     }
 
+    /* Renders the main play page for the game. */
     #[Route("/twentyone/play", name: "twentyone_play", methods: ['GET', 'POST'])]
     public function twentyonePlay(
         SessionInterface $session
     ): Response {
-
-        $logFile = "./my-errors.log";
-        error_log("/twentyone/play \n", 3, $logFile);
-
 
         $game = $session->get("game");
         $data = $game->getData();
@@ -87,26 +76,27 @@ class TwentyOneController extends AbstractController
         return $this->render('twentyone/play.html.twig', $data);
     }
 
+    /* Hit logic for drawing cards */
     #[Route("/twentyone/hit", name: "twentyone_hit", methods: ['GET', 'POST'])]
     public function hit(
         SessionInterface $session
     ): Response {
 
-        $logFile = "./my-errors.log";
-        error_log("/twentyone/hit \n", 3, $logFile);
-
-
         $game = $session->get("game");
         $continue = $game->hit();
         $session->set("game", $game); 
-        error_log($continue." continue \n", 3, $logFile);
 
         /* Check for game over */
         if ($game->checkGameOver() or !$continue) {
-            error_log("game over \n", 3, $logFile);            
             return $this->redirectToRoute('twentyone_gameover');
         }
-        error_log("NOT game over \n", 3, $logFile);
+
+        /* Check if it's the bank's turn */
+        if (!$game->isPlayerTurn()) {
+            return $this->redirectToRoute('twentyone_hit');
+        }
+
+        /* Player turn and game continues */
         return $this->redirectToRoute('twentyone_play');
     }
 
@@ -115,9 +105,6 @@ class TwentyOneController extends AbstractController
     public function standPlayer(
         SessionInterface $session
     ): Response {
-        $logFile = "./my-errors.log";
-        error_log("/twentyone/stand \n", 3, $logFile);
-
         $game = $session->get("game");        
         $game->stand();
         $session->set("game", $game);        
@@ -130,14 +117,8 @@ class TwentyOneController extends AbstractController
         SessionInterface $session
     ): Response {
 
-        $logFile = "./my-errors.log";
-        error_log("/twentyone/gameover \n", 3, $logFile);
-
         $game = $session->get("game");  
         $data = $game->endOfRound();
-
-        $logFile = "./my-errors.log";
-        error_log(json_encode($data), 3, $logFile);
 
         $session->set("game", $game);
 

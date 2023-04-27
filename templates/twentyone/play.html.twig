@@ -62,7 +62,11 @@
             <input type="submit" name="do_it" value="Start a new round">
         </form>
         {% else %}
-        <p> Thank you for playing! </p>
+        <div class="thank-you">
+            <p> Thank you for playing!</p>
+            <p> Player money: {{ playermoney }} </p>
+            <p> Bank money: {{ bankmoney }} </p>
+        </div>
         {% endif %}
     {% endif %}
 
