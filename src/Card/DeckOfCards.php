@@ -76,16 +76,16 @@ class DeckOfCards
             $suitOrder = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
             $aSuitIndex = array_search($cardA->getFamily(), $suitOrder);
             $bSuitIndex = array_search($cardB->getFamily(), $suitOrder);
-        
+
             if ($aSuitIndex == $bSuitIndex) {
                 $valueOrder = ['Ace','2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
                 $aValueIndex = array_search($cardA->getValue(), $valueOrder);
                 $bValueIndex = array_search($cardB->getValue(), $valueOrder);
                 return $aValueIndex - $bValueIndex;
             }
-        
+
             return $aSuitIndex - $bSuitIndex;
-        });        
+        });
     }
 
     /**

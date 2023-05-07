@@ -10,7 +10,7 @@ use App\Card\CardHand;
 use App\Card\DeckOfCards;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use \Exception;
+use Exception;
 
 class CardGameController extends AbstractController
 {

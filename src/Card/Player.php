@@ -63,12 +63,12 @@ class Player
     {
         $this->score = 0;
         $this->hand = new CardHand($deck, 2);
-        $this->score = $this->hand->getScore();        
+        $this->score = $this->hand->getScore();
     }
 
     public function hit(DeckOfCards $deck): bool
     {
-            /* Draw a card from the given deck and add to the hand */
+        /* Draw a card from the given deck and add to the hand */
         try {
             $card = $deck->drawCard();
         } catch (Exception $e) {
@@ -76,9 +76,9 @@ class Player
             return false;
         }
           $this->hand->addCard($card);
-    
+
         $this->score = $this->hand->getScore();
-    
+
         /* Check if end condition applies */
         if ($this->hand->isGameOver($this->type)) {
             return false;

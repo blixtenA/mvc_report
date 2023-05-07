@@ -1,6 +1,6 @@
 {
-    "name": "mortenson/example",
-    "description": "mortenson/example",
+    "name": "anna/blixt",
+    "description": "anna/blixt",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -91,23 +91,15 @@
     "scripts": {
         "phpmd": "tools/phpmd/vendor/bin/phpmd . text phpmd.xml || true",
         "phpstan": "tools/phpstan/vendor/bin/phpstan || true",
+        "csfix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix src tests",
+        "csfix:dry": "tools/php-cs-fixer/vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix src tests --dry-run -v",
         "lint": [
             "@phpmd",
             "@phpstan"
         ],
-        "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"        
-        },
-        "post-install-cmd": [
-            "@auto-scripts"
-        ],
-        "post-update-cmd": [
-            "@auto-scripts"
-        ],
-        "csfix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix src tests",
-        "csfix:dry": "tools/php-cs-fixer/vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix src tests --dry-run -v"
-    },
+        "phpdoc": "tools/phpdoc/phpdoc",
+        "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit"
+    },    
     "conflict": {
         "symfony/symfony": "*"
     },
@@ -117,4 +109,5 @@
             "require": "6.1.*"
         }
     }
+
 }

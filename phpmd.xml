@@ -13,6 +13,8 @@
     <exclude-pattern>cache</exclude-pattern>
     <exclude-pattern>node_modules</exclude-pattern>
     <exclude-pattern>vendor</exclude-pattern>
+    <exclude-pattern>tests/Card/GameTest.php</exclude-pattern>
+    <exclude-pattern>tests/Card/PlayerTest.php</exclude-pattern>
 
     <rule ref="rulesets/design.xml" />
     <rule ref="rulesets/cleancode.xml" />
@@ -32,5 +34,10 @@
     </rule>
 
     <rule ref="rulesets/unusedcode.xml" />
+        <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
+        <properties>
+            <property name="allowed" value="0"/>
+        </properties>
+    </rule>
 
 </ruleset>

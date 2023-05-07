@@ -24,22 +24,22 @@ class Game
 
         /* Shuffle the deck */
         $this->deck->mixCards();
-    
+
         /* Init the bank and player */
         $this->bank = new Player("bank", $this->deck, 10, "bank");
-        $this->player = new Player("player", $this->deck, $playerBet);  
+        $this->player = new Player("player", $this->deck, $playerBet);
     }
 
-    public function startNewRound(int $playerBet): void 
+    public function startNewRound(int $playerBet): void
     {
         $this->message = "";
         $bank = $this->bank;
         $player = $this->player;
-    
+
         /* Reset the Bank and Player objects */
         $bank->reset($this->deck);
         $player->reset($this->deck);
-    
+
         /* Set the players' current bets and the player turn */
         $bank->newBet();
         $player->setCurrentBet($playerBet);
@@ -49,6 +49,16 @@ class Game
     public function isPlayerTurn(): bool
     {
         return $this->isPlayerTurn;
+    }
+
+    public function getPlayer(): Player
+    {
+        return $this->player;
+    }
+
+    public function getBank(): Player
+    {
+        return $this->bank;
     }
 
     public function getDeck(): DeckOfCards
@@ -61,7 +71,7 @@ class Game
         $message = $this->message;
         $this->message = '';
         return $message;
-    }    
+    }
 
     public function resetHard(): void
     {
@@ -70,6 +80,13 @@ class Game
         $this->bank->reset($this->deck);
     }
 
+    /**
+     * Play a turn.
+     *
+     * @return bool true if the game is over
+     *
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function hit(): bool
     {
         if ($this->isPlayerTurn) {
@@ -123,7 +140,7 @@ class Game
             "bankbet" => $this->bank->getCurrentBet(),
             "remaining" => $this->deck->remainingCards(),
             "playerturn" => $this->isPlayerTurn,
-            "message" => $this->getMessage()          
+            "message" => $this->getMessage()
         ];
     }
 
@@ -165,7 +182,7 @@ class Game
         $bankhand = $this->bank->getHand();
 
         $data = [
-            "round" => $this->round,            
+            "round" => $this->round,
             "gameover" => $result[2],
             "playerhand" => $playerhand->getCards(),
             "bankhand" => $bankhand->getCards(),

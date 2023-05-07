@@ -10,6 +10,12 @@ class CardHand
     private array $cards = [];
     private int $number;
 
+    /**
+     * CardHand constructor.
+     *
+     * @param DeckOfCards $deck
+     * @param int         $number
+     */
     public function __construct(DeckOfCards $deck, int $number = 1)
     {
         $this->cards = [];
@@ -24,6 +30,8 @@ class CardHand
     }
 
     /**
+     * Get the cards in the hand.
+     *
      * @return Card[]
      */
     public function getCards(): array
@@ -31,15 +39,22 @@ class CardHand
         return $this->cards;
     }
 
+    /**
+     * Add a card to the hand.
+     *
+     * @param Card $card
+     */
     public function addCard(Card $card): void
     {
         $this->cards[] = $card;
         $this->number++;
-    }    
+    }
 
     /**
-    * @return string[]
-    */
+     * Get the cards in the hand as strings.
+     *
+     * @return string[]
+     */
     public function getCardsAsString(): array
     {
         $cardsAsString = [];
@@ -49,6 +64,11 @@ class CardHand
         return $cardsAsString;
     }
 
+    /**
+     * Check if the hand has an ace.
+     *
+     * @return bool
+     */
     public function hasAce(): bool
     {
         foreach ($this->cards as $card) {
@@ -59,13 +79,18 @@ class CardHand
         return false;
     }
 
+    /**
+     * Get the score of the hand.
+     *
+     * @return int
+     */
     public function getScore(): int
     {
         $score = 0;
-    
+
         foreach ($this->cards as $card) {
             $value = $card->getValue();
-    
+
             switch ($value) {
                 case "Ace":
                     $score += ($score + 14 > 21) ? 1 : 14;
@@ -84,10 +109,17 @@ class CardHand
                     break;
             }
         }
-    
+
         return $score;
     }
 
+    /**
+     * Check if the game is over for the participant.
+     *
+     * @param string $participant
+     *
+     * @return bool
+     */
     public function isGameOver(string $participant = "player"): bool
     {
         if ($participant == "player") {

@@ -53,7 +53,7 @@ class TwentyOneController extends AbstractController
             $game = $session->get("game");
             $game->startNewRound($amount);
         }
-        
+
         /* Store in session */
         $session->set("game", $game);
         /* Check for game over */
@@ -84,7 +84,7 @@ class TwentyOneController extends AbstractController
 
         $game = $session->get("game");
         $continue = $game->hit();
-        $session->set("game", $game); 
+        $session->set("game", $game);
 
         /* Check for game over */
         if ($game->checkGameOver() or !$continue) {
@@ -105,9 +105,9 @@ class TwentyOneController extends AbstractController
     public function standPlayer(
         SessionInterface $session
     ): Response {
-        $game = $session->get("game");        
+        $game = $session->get("game");
         $game->stand();
-        $session->set("game", $game);        
+        $session->set("game", $game);
 
         return $this->redirectToRoute('twentyone_hit');
     }
@@ -117,7 +117,7 @@ class TwentyOneController extends AbstractController
         SessionInterface $session
     ): Response {
 
-        $game = $session->get("game");  
+        $game = $session->get("game");
         $data = $game->endOfRound();
 
         $session->set("game", $game);

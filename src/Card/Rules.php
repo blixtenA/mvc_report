@@ -7,7 +7,7 @@ class Rules
     /**
     * @param Player $player
     * @param Player $bank
-    * @return array{Player|null, Player|null, string} 
+    * @return array{Player|null, Player|null, string}
     */
     public function determineWinner(Player $player, Player $bank): array
     {
@@ -50,11 +50,11 @@ class Rules
     public function endOfGame(Game $game): bool
     {
         $deck = $game->getDeck();
-    
+
         if ($deck->remainingCards() < 4) {
             return true;
         }
-    
+
         return false;
     }
 }

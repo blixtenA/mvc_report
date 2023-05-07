@@ -24,7 +24,7 @@ class ApiController extends AbstractController
             $deck = new DeckOfCards();
             $session->set("deck", $deck);
         }
-    
+
         return $this->render('api_landing.html.twig');
     }
 
