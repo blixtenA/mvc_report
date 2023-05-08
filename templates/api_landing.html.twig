@@ -19,7 +19,10 @@
         <li><a href="{{ path('draw_many_post') }}">/card/drawmany</a> - post-route för att kunna ta emot hur många kort som ska dras.</li>                                        
         <li><a href="{{ path('api_land') }}">/api/</a> - Initierar deck of cards om ingen finns sedan tidigare i sessionen, renderar den här sidan.</li>                                        
         <li><a href="{{ path('api_deck') }}">/api/deck</a> - Visa upp en sorterad kortlek som JSON.</li>                                        
-<li>
+
+        <li><a href="{{ path('api_game') }}">/api/game</a> - Visa upp ställningen i spelet.</li>                                        
+
+        <li>
         <form method="post" action="{{ path('api_deck_shuffle') }}">
             <input type="submit" name="shuffle" value="shuffle">
             <p>/api/deck/shuffle - mix (and reset) the deck.</p>

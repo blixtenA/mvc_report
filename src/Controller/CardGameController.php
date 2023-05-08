@@ -69,6 +69,7 @@ class CardGameController extends AbstractController
         SessionInterface $session
     ): Response {
         $deck = $session->get("deck");
+
         $hand = new CardHand($deck, 1);
         $data = [
             "cards" => $hand->getCards(),

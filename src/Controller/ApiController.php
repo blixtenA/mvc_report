@@ -59,6 +59,31 @@ class ApiController extends AbstractController
     /**
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
+    /* Show the current standing in the game */
+    #[Route("/api/game", name: "api_game", methods: ["GET"])]
+    public function apiGame(
+        SessionInterface $session
+    ): Response {
+        if ($session->has('game')) {
+            $game = $session->get("game");
+        } else {
+            $game = new Game(10);
+        }
+
+        $data = [
+            'game' => $game->getData(),
+        ];
+
+        $response = new JsonResponse($data);
+        $response->setEncodingOptions(
+            $response->getEncodingOptions() | JSON_PRETTY_PRINT
+        );
+        return $response;
+    }    //anbl tag
+
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     /* Shuffle tha deck like a pro */
     #[Route("/api/deck/shuffle", name: "api_deck_shuffle", methods: ["POST"])]
     public function apiDeckShuffle(
