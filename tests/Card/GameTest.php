@@ -22,8 +22,10 @@ class GameTest extends TestCase
     public function testStartNewRound(): void
     {
         $game = new Game(10);
-        $this->assertEquals(90, $game->getPlayer()->getMoney());
-        $this->assertEquals(90, $game->getBank()->getMoney());
+        $player = $game->getPlayer();
+        $bank = $game->getBank();
+        $game->startNewRound(10);
+        $this->assertEquals(80, $game->getPlayer()->getMoney());
         $this->assertTrue($game->isPlayerTurn());
     }
 
@@ -62,6 +64,7 @@ class GameTest extends TestCase
         $this->assertCount(2, $hand->getCards());
     }
 
+    /* Hit the player */
     public function testPlayerHitScore(): void
     {
         $player = $this->game->getPlayer();
@@ -69,6 +72,55 @@ class GameTest extends TestCase
         $this->game->hit();
 
         $this->assertTrue($player->getScore() > $playerscore);
+    }
+
+    /* Hit the bank */
+    public function testBankHitScore(): void
+    {
+        do {
+            $game = new Game(10);
+            $player = $game->getPlayer();
+            $bank = $game->getBank();
+    
+        } while ($player->getScore() >= 21 || $bank->getScore()  >= 17);
+
+            $bankscore = $bank->getScore();
+            $game->stand();
+            $game->hit();
+    
+        $this->assertTrue($bank->getScore() > $bankscore);
+    }
+
+    /* Bank has 17, that meets the end condition for the bank and it quite. */
+    public function testBankHitScorePartDeux(): void
+    {
+        do {
+            $game = new Game(10);
+            $player = $game->getPlayer();
+            $bank = $game->getBank();
+    
+        } while ($player->getScore() >= 21 || $bank->getScore()  != 17);
+
+            $bankScore = $bank->getScore();
+            $game->stand();
+    
+        $this->assertFalse($game->hit());
+    }
+
+    /* Bank has a low score and hits. */
+    public function testBankHitScoreLowScore(): void
+    {
+        do {
+            $game = new Game(10);
+            $player = $game->getPlayer();
+            $bank = $game->getBank();
+    
+        } while ($player->getScore() >= 21 || $bank->getScore()  > 7);
+
+            $bankScore = $bank->getScore();
+            $game->stand();
+    
+        $this->assertTrue($game->hit());
     }
 
     public function testCheckGameOver(): void
@@ -84,6 +136,38 @@ class GameTest extends TestCase
 
         /* Assert that checkGameOver returns true */
         $this->assertTrue($game->checkGameOver());
+    }
+
+    public function testCheckGameOverNoCards(): void
+    {
+
+        do {
+            $game = new Game(10);
+            $player = $game->getPlayer();
+            $bank = $game->getBank();
+    
+        } while ($player->getScore() >= 21 || $bank->getScore()  >= 17);
+
+        for ($i = 0; $i < 48; $i++) {
+            $game->getDeck()->drawCard();
+        }
+
+        /* Assert that checkGameOver returns true */
+        $this->assertTrue($game->checkGameOver());
+    }
+
+    public function testCheckGameOverFalse(): void
+    {
+
+        do {
+            $game = new Game(10);
+            $player = $game->getPlayer();
+            $bank = $game->getBank();
+    
+        } while ($player->getScore() >= 21 || $bank->getScore()  >= 17);
+
+        /* Assert that checkGameOver returns true */
+        $this->assertFalse($game->checkGameOver());
     }
 
     public function testGetMessage(): void
@@ -166,5 +250,8 @@ class GameTest extends TestCase
         /* Assert that the playerturn key is of type bool */
         $this->assertIsBool($data['playerturn']);
     }
+
+
+
 
 }

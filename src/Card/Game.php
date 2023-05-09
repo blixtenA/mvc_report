@@ -99,6 +99,7 @@ class Game
             while ($score < $endCond && $this->bank->hit($this->deck)) {
                 $score = $this->bank->getScore();
             }
+            print(" new score: ".$score);
             if ($score >= $endCond) {
                 $this->message = "Bank stands";
                 return false;
