@@ -9,8 +9,29 @@
 
 {% block body %}
     <h1>Update Book</h1>
-    <form method="post" action="{{ path('book_update', {'id': id}) }}">
-        {{ form_widget(form) }}
+
+    <div class="form-container">
+        {{ form_start(form, {'action': path('book_update', {'id': id}), 'method': 'POST'}) }}
+        <div class="form-row">
+            <label for="{{ form.title.vars.id }}" class="form-label">{{ form.title.vars.label }}</label>
+            <div class="form-input">{{ form_widget(form.title) }}</div>
+        </div>
+        <div class="form-row">
+            <label for="{{ form.ISBN.vars.id }}" class="form-label">{{ form.ISBN.vars.label }}</label>
+            <div class="form-input">{{ form_widget(form.ISBN) }}</div>
+        </div>
+        <div class="form-row">
+            <label for="{{ form.author.vars.id }}" class="form-label">{{ form.author.vars.label }}</label>
+            <div class="form-input">{{ form_widget(form.author) }}</div>
+        </div>
+        <div class="form-row">
+            <label for="{{ form.image.vars.id }}" class="form-label">{{ form.image.vars.label }}</label>
+            <div class="form-input">{{ form_widget(form.image) }}</div>
+        </div>
         <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+        {{ form_end(form) }}
+        <div>
+            <a href="{{ path('book_read_many') }}" class="btn btn-back">Back</a>
+        </div>
+    </div>
 {% endblock %}

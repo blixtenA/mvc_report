@@ -19,7 +19,6 @@
         <li><a href="{{ path('draw_many_post') }}">/card/drawmany</a> - post-route för att kunna ta emot hur många kort som ska dras.</li>                                        
         <li><a href="{{ path('api_land') }}">/api/</a> - Initierar deck of cards om ingen finns sedan tidigare i sessionen, renderar den här sidan.</li>                                        
         <li><a href="{{ path('api_deck') }}">/api/deck</a> - Visa upp en sorterad kortlek som JSON.</li>                                        
-
         <li><a href="{{ path('api_game') }}">/api/game</a> - Visa upp ställningen i spelet.</li>                                        
 
         <li>
@@ -43,5 +42,8 @@
             /api/deck/draw - draw any number of cards (1-52).            
         </form>
     </li>
+    <li><a href="{{ path('api_library_books') }}">/api/library/books</a> - Visa alla böcker i biblioteket.</li>                                        
+    <li><a href="{{ path('api_library_isbn', {'isbn': 123456}) }}">/api/library/book/{ISBN}</a> - Visa en bok mha ISBN (123456).</li>
+
     </ul>
 {% endblock %}

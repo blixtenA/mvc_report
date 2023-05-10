@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+
 {% block subheader %}
 <div class="subheader">
     {% include "library/librarynav.html.twig" %}
@@ -11,5 +12,13 @@
     <h1>{{ book.title }}</h1>
     <p><strong>ISBN:</strong> {{ book.ISBN }}</p>
     <p><strong>Author:</strong> {{ book.author }}</p>
-    <p><strong>Image:</strong> {{ book.image }}</p>
+    <p><strong>Image:</strong></p>
+    <img src="{{ book.image }}" alt="{{ book.title }} cover" class="book-image">
+    <div>
+        <a href="{{ path('book_read_many') }}" class="btn btn-back">Back</a>
+        <a href="{{ path('book_update', {'id': book.id}) }}" class="btn btn-primary">Edit</a>
+        <form action="{{ path('book_delete', {'id': book.id}) }}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>    
 {% endblock %}

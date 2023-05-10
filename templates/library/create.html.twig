@@ -9,8 +9,29 @@
 {% block body %}
     <h1>Create Book</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-primary" type="submit">Save</button>
-    {{ form_end(form) }}
+    <div class="form-container">
+        {{ form_start(form) }}
+        <div class="form-row">
+            <label for="{{ form.title.vars.id }}" class="form-label">{{ form_label(form.title) }}</label>
+            <div class="form-input">{{ form_widget(form.title) }}</div>
+        </div>
+        <div class="form-row">
+            <label for="{{ form.ISBN.vars.id }}" class="form-label">{{ form_label(form.ISBN) }}</label>
+            <div class="form-input">{{ form_widget(form.ISBN) }}</div>
+        </div>
+        <div class="form-row">
+            <label for="{{ form.author.vars.id }}" class="form-label">{{ form_label(form.author) }}</label>
+            <div class="form-input">{{ form_widget(form.author) }}</div>
+        </div>
+        <div class="form-row">
+            <label for="{{ form.image.vars.id }}" class="form-label">{{ form_label(form.image) }}</label>
+            <div class="form-input">{{ form_widget(form.image) }}</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        {{ form_end(form) }}
+        <div>
+            <a href="{{ path('book_read_many') }}" class="btn btn-back">Back</a>
+        </div>        
+    </div>
+
 {% endblock %}

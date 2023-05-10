@@ -35,14 +35,13 @@ class LibraryController extends AbstractController
             $entityManager->persist($book);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_library');
+            return $this->redirectToRoute('book_read_many');
         }
 
         return $this->render('library/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
 
     #[Route('/library/readone/{id}', name: 'book_read_one', requirements: ['id' => '\d+'])]
     public function readOne(int $id, ManagerRegistry $doctrine): Response
