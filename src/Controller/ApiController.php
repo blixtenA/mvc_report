@@ -13,6 +13,7 @@ use App\Card\Card;
 use App\Card\CardHand;
 use App\Card\DeckOfCards;
 use App\Entity\Book;
+use App\Card\Game;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ApiController extends AbstractController

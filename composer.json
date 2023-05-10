@@ -89,7 +89,7 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
-        "phpmd": "tools/phpmd/vendor/bin/phpmd . text phpmd.xml || true",
+        "phpmd": "tools/phpmd/vendor/bin/phpmd src text phpmd.xml || true",
         "phpstan": "tools/phpstan/vendor/bin/phpstan || true",
         "csfix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix src tests",
         "csfix:dry": "tools/php-cs-fixer/vendor/bin/php-cs-fixer --config=.php-cs-fixer.dist.php fix src tests --dry-run -v",

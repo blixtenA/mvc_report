@@ -15,18 +15,48 @@
     <exclude-pattern>vendor</exclude-pattern>
     <exclude-pattern>tests/Card/GameTest.php</exclude-pattern>
     <exclude-pattern>tests/Card/PlayerTest.php</exclude-pattern>
+    <exclude-pattern>src/Repository/BookRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/LibraryRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/ProductRepository.php</exclude-pattern>
 
     <rule ref="rulesets/design.xml" />
     <rule ref="rulesets/cleancode.xml" />
     <rule ref="rulesets/codesize.xml" />
     <rule ref="rulesets/controversial.xml"/>
-
-    <rule ref="rulesets/naming.xml" />
-    <rule ref="rulesets/naming.xml/ShortVariable">
+    <rule ref="rulesets/naming.xml">
+      <exclude name="ShortVariable" />
+      <exclude name="CamelCasePropertyName" />
+    </rule>
+    
+    <!-- ShortVariable rule with exceptions -->
+    <rule name="ShortVariableCustom"
+        message="Avoid variables with short names like {0}. Configured minimum length is {1}."
+        class="PHPMD\Rule\Naming\ShortVariable"
+        externalInfoUrl="https://phpmd.org/rules/naming.html#shortvariable">
+        <description>
+            Avoid really short variable names. This is a custom rule with exceptions.
+        </description>
+        <priority>3</priority>
         <properties>
+            <property name="minimum" value="3" />
             <property name="exceptions" value="i,j,db,id,di" />
         </properties>
     </rule>
+    
+    <!-- CamelCasePropertyName rule with exceptions -->
+    <rule name="CamelCasePropertyNameCustom"
+        message="Property {0} should be in camelCase."
+        class="PHPMD\Rule\Naming\CamelCasePropertyName"
+        externalInfoUrl="https://phpmd.org/rules/naming.html#camelcasepropertyname">
+        <description>
+            Checks that properties are in camelCase. This is a custom rule with exceptions.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="exceptions" value="ISBN" />
+        </properties>
+    </rule>
+
     <rule ref="rulesets/naming.xml/ShortMethodName">
         <properties>
             <property name="exceptions" value="t,e" />
