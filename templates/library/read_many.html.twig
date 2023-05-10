@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books{% endblock %}
+
+{% block body %}
+    <h1>Books</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>
+                        <a href="{{ path('book_read_one', {'id': book.id}) }}">
+                            {{ book.title }}
+                        </a>
+                    </td>
+                    <td>{{ book.author }}</td>
+                    <td>
+                        <a href="{{ path('book_update', {'id': book.id}) }}" class="btn btn-primary">
+                            Update
+                        </a>
+                        <form action="{{ path('book_delete', {'id': book.id}) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
