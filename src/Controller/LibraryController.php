@@ -11,7 +11,6 @@ use App\Form\BookType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-
 class LibraryController extends AbstractController
 {
     #[Route('/library', name: 'app_library')]
@@ -44,7 +43,7 @@ class LibraryController extends AbstractController
         ]);
     }
 
-    
+
     #[Route('/library/readone/{id}', name: 'book_read_one', requirements: ['id' => '\d+'])]
     public function readOne(int $id, ManagerRegistry $doctrine): Response
     {
@@ -59,7 +58,7 @@ class LibraryController extends AbstractController
             'book' => $book,
         ]);
     }
-    
+
     #[Route('/library/readmany', name: 'book_read_many')]
     public function readMany(ManagerRegistry $doctrine): Response
     {
@@ -93,7 +92,7 @@ class LibraryController extends AbstractController
 
         return $this->render('library/update.html.twig', [
             'form' => $form->createView(),
-            'id' => $id, 
+            'id' => $id,
         ]);
     }
 

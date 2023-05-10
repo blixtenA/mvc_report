@@ -81,13 +81,13 @@ class GameTest extends TestCase
             $game = new Game(10);
             $player = $game->getPlayer();
             $bank = $game->getBank();
-    
+
         } while ($player->getScore() >= 21 || $bank->getScore()  >= 17);
 
-            $bankscore = $bank->getScore();
-            $game->stand();
-            $game->hit();
-    
+        $bankscore = $bank->getScore();
+        $game->stand();
+        $game->hit();
+
         $this->assertTrue($bank->getScore() > $bankscore);
     }
 
@@ -98,12 +98,12 @@ class GameTest extends TestCase
             $game = new Game(10);
             $player = $game->getPlayer();
             $bank = $game->getBank();
-    
+
         } while ($player->getScore() >= 21 || $bank->getScore()  != 17);
 
-            $bankScore = $bank->getScore();
-            $game->stand();
-    
+        $bankScore = $bank->getScore();
+        $game->stand();
+
         $this->assertFalse($game->hit());
     }
 
@@ -114,12 +114,12 @@ class GameTest extends TestCase
             $game = new Game(10);
             $player = $game->getPlayer();
             $bank = $game->getBank();
-    
+
         } while ($player->getScore() >= 21 || $bank->getScore()  > 7);
 
-            $bankScore = $bank->getScore();
-            $game->stand();
-    
+        $bankScore = $bank->getScore();
+        $game->stand();
+
         $this->assertTrue($game->hit());
     }
 
@@ -145,7 +145,7 @@ class GameTest extends TestCase
             $game = new Game(10);
             $player = $game->getPlayer();
             $bank = $game->getBank();
-    
+
         } while ($player->getScore() >= 21 || $bank->getScore()  >= 17);
 
         for ($i = 0; $i < 48; $i++) {
@@ -163,7 +163,7 @@ class GameTest extends TestCase
             $game = new Game(10);
             $player = $game->getPlayer();
             $bank = $game->getBank();
-    
+
         } while ($player->getScore() >= 21 || $bank->getScore()  >= 17);
 
         /* Assert that checkGameOver returns true */

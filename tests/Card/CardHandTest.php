@@ -51,16 +51,16 @@ class CardHandTest extends TestCase
     public function testHasAce(): void
     {
         $this->deck->mixCards();
-    
+
         $handWithAce = new CardHand($this->deck);
         $handWithAce->addCard(new Card('Ace', 'Hearts'));
-    
+
         $handWithoutAce = new CardHand($this->deck);
-    
+
         do {
             $handWithoutAce = new CardHand($this->deck);
         } while ($handWithoutAce->hasAce());
-    
+
         $this->assertTrue($handWithAce->hasAce());
         $this->assertFalse($handWithoutAce->hasAce());
     }
@@ -71,21 +71,21 @@ class CardHandTest extends TestCase
         $hand = new CardHand($this->deck, 1);
         $card1 = $hand->getCards()[0];
         $value1 = $card1->getValue();
-    
+
         $card2 = new Card('2', 'Diamonds');
         $hand->addCard($card2);
         $value2 = $card2->getValue();
-    
+
         $map = [
             'Ace' => 1,
             'King' => 13,
             'Queen' => 12,
             'Jack' => 11,
         ];
-        $expected = (isset($map[$value1]) ? $map[$value1] : intval($value1)) + (isset($map[$value2]) ? $map[$value2] : intval($value2));    
+        $expected = (isset($map[$value1]) ? $map[$value1] : intval($value1)) + (isset($map[$value2]) ? $map[$value2] : intval($value2));
         $this->assertContains($hand->getScore(), [$expected, $expected + 13]);
     }
-    
+
 
     public function testIsGameOver(): void
     {

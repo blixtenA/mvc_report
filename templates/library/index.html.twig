@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
+{% block subheader %}
+<div class="subheader">
+    {% include "library/librarynav.html.twig" %}
+</div>
+{% endblock %}
 
-{% block title %}Hello LibraryController!{% endblock %}
+{% block title %}Welcome to the Library!{% endblock %}
 
 {% block body %}
 <style>

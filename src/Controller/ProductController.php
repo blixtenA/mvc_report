@@ -46,11 +46,11 @@ public function showAllProduct(
     $products = $productRepository
         ->findAll();
 
-        $response = $this->json($products);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
-        return $response;
+    $response = $this->json($products);
+    $response->setEncodingOptions(
+        $response->getEncodingOptions() | JSON_PRETTY_PRINT
+    );
+    return $response;
 }
 
 #[Route('/product/show/{id}', name: 'product_by_id')]

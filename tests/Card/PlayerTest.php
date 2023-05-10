@@ -137,7 +137,7 @@ class PlayerTest extends TestCase
     public function testHitException(): void
     {
         $game = new Game(10);
-    
+
         for ($i = 0; $i < 48; $i++) {
             $game->getDeck()->drawCard();
         }
@@ -150,14 +150,14 @@ class PlayerTest extends TestCase
 
     public function testHitTrue(): void
     {
-    do {
-        $game = new Game(10);
-        $player = $game->getPlayer();
-        $bank = $game->getBank();
-    } while ($player->getScore() > 7 || $bank->getScore() > 17);
+        do {
+            $game = new Game(10);
+            $player = $game->getPlayer();
+            $bank = $game->getBank();
+        } while ($player->getScore() > 7 || $bank->getScore() > 17);
 
-    $this->assertTrue($player->hit($game->getDeck()));
+        $this->assertTrue($player->hit($game->getDeck()));
 
-}
+    }
 
 }
