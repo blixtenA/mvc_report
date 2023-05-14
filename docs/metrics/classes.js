@@ -113,10 +113,11 @@ var classes = [
         "totalDataComplexity": 6.33,
         "totalSystemComplexity": 853.33,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 5,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -247,10 +248,11 @@ var classes = [
         "totalDataComplexity": 8.88,
         "totalSystemComplexity": 400.88,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 7,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -363,10 +365,11 @@ var classes = [
         "totalDataComplexity": 3.87,
         "totalSystemComplexity": 1179.87,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 6,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -428,10 +431,11 @@ var classes = [
         "totalDataComplexity": 0.5,
         "totalSystemComplexity": 1.5,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 2,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -562,10 +566,11 @@ var classes = [
         "totalDataComplexity": 3.25,
         "totalSystemComplexity": 2530.25,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 9,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -625,10 +630,77 @@ var classes = [
         "totalDataComplexity": 0.33,
         "totalSystemComplexity": 4.33,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 2,
         "instability": 1,
+        "numberOfUnitTests": 0,
+        "violations": {}
+    },
+    {
+        "name": "App\\Controller\\MetricsController",
+        "interface": false,
+        "abstract": false,
+        "final": false,
+        "methods": [
+            {
+                "name": "index",
+                "role": null,
+                "public": true,
+                "private": false,
+                "_type": "Hal\\Metric\\FunctionMetric"
+            }
+        ],
+        "nbMethodsIncludingGettersSetters": 1,
+        "nbMethods": 1,
+        "nbMethodsPrivate": 0,
+        "nbMethodsPublic": 1,
+        "nbMethodsGetter": 0,
+        "nbMethodsSetters": 0,
+        "wmc": 1,
+        "ccn": 1,
+        "ccnMethodMax": 1,
+        "externals": [
+            "Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "Symfony\\Component\\HttpFoundation\\Response"
+        ],
+        "parents": [
+            "Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController"
+        ],
+        "implements": [],
+        "lcom": 1,
+        "length": 7,
+        "vocabulary": 7,
+        "volume": 19.65,
+        "difficulty": 0.5,
+        "effort": 9.83,
+        "level": 2,
+        "bugs": 0.01,
+        "time": 1,
+        "intelligentContent": 39.3,
+        "number_operators": 1,
+        "number_operands": 6,
+        "number_operators_unique": 1,
+        "number_operands_unique": 6,
+        "cloc": 1,
+        "loc": 9,
+        "lloc": 8,
+        "mi": 95.8,
+        "mIwoC": 71.11,
+        "commentWeight": 24.69,
+        "kanDefect": 0.15,
+        "relativeStructuralComplexity": 1,
+        "relativeDataComplexity": 0.5,
+        "relativeSystemComplexity": 1.5,
+        "totalStructuralComplexity": 1,
+        "totalDataComplexity": 0.5,
+        "totalSystemComplexity": 1.5,
+        "package": "App\\Controller\\",
+        "pageRank": 0.01,
+        "afferentCoupling": 0,
+        "efferentCoupling": 2,
+        "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -737,10 +809,11 @@ var classes = [
         "totalDataComplexity": 2.65,
         "totalSystemComplexity": 1538.65,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 5,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -826,10 +899,11 @@ var classes = [
         "totalDataComplexity": 8,
         "totalSystemComplexity": 12,
         "package": "App\\Controller\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 2,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -899,10 +973,11 @@ var classes = [
         "totalDataComplexity": 1,
         "totalSystemComplexity": 9,
         "package": "App\\Form\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 3,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -980,10 +1055,11 @@ var classes = [
         "totalDataComplexity": 0.83,
         "totalSystemComplexity": 75.83,
         "package": "App\\Repository\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 3,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -1061,10 +1137,11 @@ var classes = [
         "totalDataComplexity": 0.83,
         "totalSystemComplexity": 75.83,
         "package": "App\\Repository\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 3,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -1146,6 +1223,7 @@ var classes = [
         "afferentCoupling": 1,
         "efferentCoupling": 3,
         "instability": 0.75,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -1226,6 +1304,7 @@ var classes = [
         "afferentCoupling": 1,
         "efferentCoupling": 2,
         "instability": 0.67,
+        "numberOfUnitTests": 9,
         "violations": {}
     },
     {
@@ -1310,6 +1389,7 @@ var classes = [
         "afferentCoupling": 2,
         "efferentCoupling": 0,
         "instability": 0,
+        "numberOfUnitTests": 5,
         "violations": {}
     },
     {
@@ -1413,6 +1493,7 @@ var classes = [
         "afferentCoupling": 3,
         "efferentCoupling": 2,
         "instability": 0.4,
+        "numberOfUnitTests": 10,
         "violations": {}
     },
     {
@@ -1518,10 +1599,11 @@ var classes = [
         "totalDataComplexity": 11.2,
         "totalSystemComplexity": 139.2,
         "package": "App\\Card\\",
-        "pageRank": 0.19,
+        "pageRank": 0.18,
         "afferentCoupling": 5,
         "efferentCoupling": 2,
         "instability": 0.29,
+        "numberOfUnitTests": 4,
         "violations": {}
     },
     {
@@ -1662,10 +1744,11 @@ var classes = [
         "totalDataComplexity": 41,
         "totalSystemComplexity": 265,
         "package": "App\\Card\\",
-        "pageRank": 0.08,
+        "pageRank": 0.07,
         "afferentCoupling": 2,
         "efferentCoupling": 2,
         "instability": 0.5,
+        "numberOfUnitTests": 6,
         "violations": {}
     },
     {
@@ -1817,6 +1900,7 @@ var classes = [
         "afferentCoupling": 3,
         "efferentCoupling": 3,
         "instability": 0.5,
+        "numberOfUnitTests": 27,
         "violations": {}
     },
     {
@@ -1895,6 +1979,7 @@ var classes = [
         "afferentCoupling": 2,
         "efferentCoupling": 0,
         "instability": 0,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -1993,6 +2078,7 @@ var classes = [
         "afferentCoupling": 2,
         "efferentCoupling": 0,
         "instability": 0,
+        "numberOfUnitTests": 0,
         "violations": {}
     },
     {
@@ -2045,10 +2131,11 @@ var classes = [
         "totalDataComplexity": 0,
         "totalSystemComplexity": 0,
         "package": "App\\",
-        "pageRank": 0.02,
+        "pageRank": 0.01,
         "afferentCoupling": 0,
         "efferentCoupling": 1,
         "instability": 1,
+        "numberOfUnitTests": 0,
         "violations": {}
     }
 ]

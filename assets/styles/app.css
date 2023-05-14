@@ -41,6 +41,7 @@ div.columns {
   
   .column {
     flex: 50%;
+    margin: 5px;
   }
 
   .wrapper {
@@ -260,4 +261,10 @@ tbody tr:nth-child(even) {
 
 .form-input {
   flex: 1;
+}
+
+.column .small {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }

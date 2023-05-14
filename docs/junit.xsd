@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="testsuites">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="testsuite">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="testsuite">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="testsuite" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="testcase" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence minOccurs="0">
+                                <xs:element name="system-out" minOccurs="0" type="xs:string" />
+                              </xs:sequence>
+                              <xs:attribute name="name" use="required" />
+                              <xs:attribute name="class" use="required" />
+                              <xs:attribute name="classname" use="required">
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:string">
+                                    <xs:enumeration value="App.Card.CardTest" />
+                                    <xs:enumeration value="App.Card.DeckOfCardsTest" />
+                                    <xs:enumeration value="App.Card.GameTest" />
+                                    <xs:enumeration value="App.Card.PlayerTest" />
+                                    <xs:enumeration value="App.Card.RulesTest" />
+                                    <xs:enumeration value="Tests.App.Card.CardHandTest" />
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:attribute>
+                              <xs:attribute name="file" use="required" />
+                              <xs:attribute name="line" type="xs:integer" use="required" />
+                              <xs:attribute name="assertions" type="xs:integer" use="required">
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:string">
+                                    <xs:enumeration value="1" />
+                                    <xs:enumeration value="12" />
+                                    <xs:enumeration value="13" />
+                                    <xs:enumeration value="2" />
+                                    <xs:enumeration value="3" />
+                                    <xs:enumeration value="4" />
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:attribute>
+                              <xs:attribute name="time" type="xs:decimal" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="name" use="required" />
+                        <xs:attribute name="file" use="required" />
+                        <xs:attribute name="tests" type="xs:integer" use="required" />
+                        <xs:attribute name="assertions" type="xs:integer" use="required" />
+                        <xs:attribute name="errors" type="xs:integer" use="required" fixed="0" />
+                        <xs:attribute name="warnings" type="xs:integer" use="required" fixed="0" />
+                        <xs:attribute name="failures" type="xs:integer" use="required" fixed="0" />
+                        <xs:attribute name="skipped" type="xs:integer" use="required" fixed="0" />
+                        <xs:attribute name="time" type="xs:decimal" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" use="required" />
+                  <xs:attribute name="tests" type="xs:integer" use="required" />
+                  <xs:attribute name="assertions" type="xs:integer" use="required" />
+                  <xs:attribute name="errors" type="xs:integer" use="required" />
+                  <xs:attribute name="warnings" type="xs:integer" use="required" />
+                  <xs:attribute name="failures" type="xs:integer" use="required" />
+                  <xs:attribute name="skipped" type="xs:integer" use="required" />
+                  <xs:attribute name="time" type="xs:decimal" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" />
+            <xs:attribute name="tests" type="xs:integer" use="required" />
+            <xs:attribute name="assertions" type="xs:integer" use="required" />
+            <xs:attribute name="errors" type="xs:integer" use="required" />
+            <xs:attribute name="warnings" type="xs:integer" use="required" />
+            <xs:attribute name="failures" type="xs:integer" use="required" />
+            <xs:attribute name="skipped" type="xs:integer" use="required" />
+            <xs:attribute name="time" type="xs:decimal" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

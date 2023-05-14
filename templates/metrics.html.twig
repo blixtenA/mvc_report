@@ -6,8 +6,81 @@
     <h1>Metrics report</h1>
     <div class="columns">
         <div class="column">
-        </div>
+            <h2>Introduktion</h2>
+                <h3>Codestyle (kodstil):</h3>
+                <p>
+                Kodstil handlar om att följa en enhetlig stil i hela koden. 
+                En konsekvent stil gör det lättare att läsa och förstå koden 
+                samt underlättar samarbete mellan utvecklare.</p>
+
+                <h3>Coverage (täckning):</h3>
+                <p>
+                Mäter hur väl testerna täcker koden. Genom att ha en 
+                hög testtäckning kan man vara säker på att kritisk funktionalitet 
+                testas ordentligt och att buggar upptäcks tidigt.</p>
+                
+                <h3>Complexity (komplexitet):</h3>
+                <p>
+                Mäter hur komplicerad koden är att förstå och underhålla. 
+                Låg komplexitet är önskvärd, eftersom det gör koden mer läsbar, 
+                felsökningsvänlig och enklare att vidareutveckla.
+                I min kod fick jag relativt hög komplexitet på funktionen hit för 21-spelet.
+                Detta berodde säkert på att hit täcker många olika scenarion, beroende på 
+                om det är spelaren eller bankens tur att spela och hur respektive spelare ska 
+                kunna bete sig, inklusive exit-villkor för spelet (game over).</p>
+                
+                <h3>Cohesion (sammanhållning):</h3> 
+                <p>
+                Mäter hur väl en modul, en klass eller en funktion fokuserar 
+                på en enda uppgift. Högre sammanhållning innebär att koden har 
+                tydliga ansvarsområden och är mindre benägen att påverkas av ändringar 
+                i andra delar av systemet.</p>
+                
+                <h3>Coupling (koppling):</h3> 
+                <p>
+                Mäter hur beroende en modul, en klass eller en funktion är av 
+                andra delar av systemet. Låg koppling innebär att ändringar i en 
+                del inte har stor påverkan på andra delar, vilket ökar flexibiliteten 
+                och underhållbarheten i koden.</p>
+                
+                <h3>CRAP (Change Risk Analysis and Predictions, förändringsriskanalys och förutsägelser):</h3>
+                <p>
+                CRAP-mätningen kombinerar kodkomplexitet och testtäckning för att 
+                identifiera högriskkod. Högt CRAP-värde indikerar att kodraden är 
+                både komplex och dåligt täckt av tester, vilket kan öka risken för 
+                buggar och problem vid ändringar.</p>
+            </div>
         <div class="column">
+            <h2>Phpmetrics</h2>
+            <p>
+            Min kod fick överlag bra poäng i phpmetrics. Egentligen hittade jag bara en sak
+            som kändes relevant att åtgärda och det var komplexiteten i Game-klassen. Den har jag
+            sett som ett problemområde sedan den skrevs. 
+            För att hitta två saker till att åtgärda valde jag att titta på LCOM (cohersion) och
+            tog den klass som hade högst "poäng" - Rules, samt att jag ville försöka skriva test för 
+            en kontroller. Det ingick inte i tidigare moment som obligatoriskt, men i brist på annat uppenbart 
+            att åtgärda känns det som en vettig utmaning att testa på att skriva test för en annan typ 
+            av klass och försöka nå så mycket av den koden som möjligt. 
+            <img class="small" src="{{ asset('img/phpmetrics1.jpg') }}" alt="">
+            </p>
+
+            <h2>Scrutinizer</h2>            
+            <p>
+            Jag går in i Scrutinizer med ett startvärde på 9.98. Det betyder att koden inte har så många systematiska 
+            problem och inte behöver särskilt mycket översyn. Jag hittar en "bug" i form av en doc comment 
+            som inte stämmer med innehållet i Rules.php - den ska jag fixa. Jag ser att det finns 
+            lite oanvänd kod i GameTest och en bug i LibraryRepository där det finns kvar en pekare på 
+            Library-klassen som jag skapade och sedan tog bort. Jag kommer att gå igenom och se till att 
+            de här småsakerna blir fixade. Coverage är bara 42%, men det beror ju på att vi inte skriver 
+            tester för controllers. 
+            <img class="small" src="{{ asset('img/Scrutinizer1.jpg') }}" alt="">
+            <ul>
+            <li><img src="https://scrutinizer-ci.com/g/blixtenA/mvc_report/badges/quality-score.png?b=master"></li>
+            <li><img src="https://scrutinizer-ci.com/g/blixtenA/mvc_report/badges/coverage.png?b=master"></li>
+            <li><a href="https://scrutinizer-ci.com/g/blixtenA/mvc_report/inspections/a2d29bce-09af-4330-ad65-cb372e1cd49e/log"><img src="https://scrutinizer-ci.com/g/blixtenA/mvc_report/badges/build.png?b=master"></a></li>
+            <li><a href="https://scrutinizer-ci.com/code-intelligence"><img src="https://scrutinizer-ci.com/g/blixtenA/mvc_report/badges/code-intelligence.svg?b=master"></a></li>
+        </ul>
+        </p>
         </div>
     </div>    
 {% endblock %}
