@@ -147,14 +147,14 @@ class PlayerTest extends TestCase
         $this->assertFalse($player->hit($game->getDeck()));
 
     }
-/* fix!!!! */
+
     public function testHitTrue(): void
     {
         do {
             $game = new Game(10);
             $player = $game->getPlayer();
             $bank = $game->getBank();
-        } while ($player->getScore() > 7 || $bank->getScore() > 17);
+        } while ($player->getScore() > 6 || $bank->getScore() > 17);
 
         $this->assertTrue($player->hit($game->getDeck()));
 

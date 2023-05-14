@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Card;
-use App\Entity\Player;
+use App\Card\Player;
 
 class Rules
 {

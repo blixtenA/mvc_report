@@ -89,17 +89,22 @@ class Game
      */
     public function hit(): bool
     {
+        print("hit score: ". $this->player->getScore() . "\n");
         if ($this->isPlayerTurn) {
+            print("player's turn");
             if ($this->player->hit($this->deck)) {
+                print("Score at return: ". $this->player->getScore() . "\n");
                 return true;
             }
+            print("didn't return: ". $this->player->getScore() . "\n");
+
         } else {
             $score = $this->bank->getScore();
             $endCond = $this->bank->getEndCond();
             while ($score < $endCond && $this->bank->hit($this->deck)) {
                 $score = $this->bank->getScore();
             }
-            print(" new score: ".$score);
+            print(" new score: ".$score."\n");
             if ($score >= $endCond) {
                 $this->message = "Bank stands";
                 return false;
