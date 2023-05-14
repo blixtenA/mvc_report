@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Card;
+use App\Entity\Player;
 
 class Rules
 {
@@ -28,11 +29,11 @@ class Rules
     }
 
     /**
-    * @param array<mixed> $result
-    * @param Player $player
-    * @param Player $bank
-    * @return bool
-    */
+     * @param array $result
+     * @param Player $player
+     * @param Player $bank
+     * @return bool
+     */
     public function payout(array $result, Player $player, Player $bank): bool
     {
         $winner = $result[0];

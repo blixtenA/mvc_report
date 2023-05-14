@@ -16,7 +16,6 @@ use App\Entity\Book;
 use App\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class LibraryControllerTest extends TestCase
 {
