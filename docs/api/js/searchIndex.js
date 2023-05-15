@@ -491,6 +491,16 @@ Search.appendIndex(
             "summary": "Play\u0020a\u0020turn.",
             "url": "classes/App-Card-Game.html#method_hit"
         },                {
+            "fqsen": "\\App\\Card\\Game\u003A\u003AhitPlayer\u0028\u0029",
+            "name": "hitPlayer",
+            "summary": "",
+            "url": "classes/App-Card-Game.html#method_hitPlayer"
+        },                {
+            "fqsen": "\\App\\Card\\Game\u003A\u003AhitBank\u0028\u0029",
+            "name": "hitBank",
+            "summary": "",
+            "url": "classes/App-Card-Game.html#method_hitBank"
+        },                {
             "fqsen": "\\App\\Card\\Game\u003A\u003Astand\u0028\u0029",
             "name": "stand",
             "summary": "",
@@ -701,21 +711,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Entity-Book.html#property_image"
         },                {
-            "fqsen": "\\App\\Entity\\Library",
-            "name": "Library",
-            "summary": "",
-            "url": "classes/App-Entity-Library.html"
-        },                {
-            "fqsen": "\\App\\Entity\\Library\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/App-Entity-Library.html#method_getId"
-        },                {
-            "fqsen": "\\App\\Entity\\Library\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "",
-            "url": "classes/App-Entity-Library.html#property_id"
-        },                {
             "fqsen": "\\App\\Entity\\Product",
             "name": "Product",
             "summary": "",
@@ -796,26 +791,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Repository-BookRepository.html#method_remove"
         },                {
-            "fqsen": "\\App\\Repository\\LibraryRepository",
-            "name": "LibraryRepository",
-            "summary": "",
-            "url": "classes/App-Repository-LibraryRepository.html"
-        },                {
-            "fqsen": "\\App\\Repository\\LibraryRepository\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-Repository-LibraryRepository.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Repository\\LibraryRepository\u003A\u003Asave\u0028\u0029",
-            "name": "save",
-            "summary": "",
-            "url": "classes/App-Repository-LibraryRepository.html#method_save"
-        },                {
-            "fqsen": "\\App\\Repository\\LibraryRepository\u003A\u003Aremove\u0028\u0029",
-            "name": "remove",
-            "summary": "",
-            "url": "classes/App-Repository-LibraryRepository.html#method_remove"
-        },                {
             "fqsen": "\\App\\Repository\\ProductRepository",
             "name": "ProductRepository",
             "summary": "",
@@ -835,6 +810,16 @@ Search.appendIndex(
             "name": "remove",
             "summary": "",
             "url": "classes/App-Repository-ProductRepository.html#method_remove"
+        },                {
+            "fqsen": "\\App\\Controller\\MetricsController",
+            "name": "MetricsController",
+            "summary": "",
+            "url": "classes/App-Controller-MetricsController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\MetricsController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "",
+            "url": "classes/App-Controller-MetricsController.html#method_index"
         },                {
             "fqsen": "\\",
             "name": "\\",
