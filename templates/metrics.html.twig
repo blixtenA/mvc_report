@@ -75,9 +75,29 @@
                     för en relativt liten controllerklass måste man nu också underhålla en fet testklass.
                 </p>
                 <p>
-                    Småfelen som hittades av Scrutinizer gick jag igenom och fixade.
+                    Småfelen som hittades av Scrutinizer gick jag igenom och fixade. Det ändrade dock inte 9,98-poängen vare sig upp eller ner.
                 </p>
-
+                <p>
+                    Jag gjorde ett försök att förbättra Rules-klassens LCOM, men jag hittade inget sätt att förbättra detta. 
+                    Klassen är relativt rak och enkel som den är, med tre relativt små metoder som har tydliga uppgifter. Klassens 
+                    natur är att avgöra regler i olika skeden av spelet, och jag ser inget sätt att komma runt att det blir en samling 
+                    and olika regelmetoder som kanske inte har så mycket gemensamt. Klassens syfte är att vara en samling "helper"-metoder 
+                    som avlastar spelklassen. Jag ser ingen vinst i att splitta upp klassen i tre olika klassen, en för varje regel, även 
+                    om detta skulle förbättra LCOM. 
+                </p>
+                <p>
+                    Mitt försök att minska komplexiteten i Game-klassen var inte framgångsrikt. De åtgärder jag vidtog var att splitta upp två metoder, hit och endOfGame. 
+                    Syftet med att splitta upp dem var att renordla funktionerna och använda flera mindre funktioner med tydligare uppgifter. Till min förvåning dök 
+                    Maintainability Index från 57.48 till 53.88 för klassen. Relative Sytem Complexity gick upp från 289 till 484.
+                    <img class="small" src="{{ asset('img/MaintainBeforeAfter.jpg') }}" alt="">
+                    Jag finner ändå resultatet intressant och bra som underlag till diskussion. Det var rimligt att anta att Game-klassen hade ett komplexitetsproblem och 
+                    hit-metoden samt endOfGame-metoden var misstänkta då dessa var de enda metoderna som var snåriga med flera tänkbara returns och kod som skulle kunna läggas ut på underfunktioner. 
+                    Hit-metoden var intialt en metod som kollade vems tur det var (spelarens eller bankens) och baserat på detta gick metoden in i ett av två villkor och utförde olika logik beroende på om det 
+                    var spelarens eller bankens tur. Att lägga detta som separata metoder trodde jag bergsäkert skulle minska komplexiteten. Den ökade istället. MEN på detta vann jag å andra sidan bättre läsbarhet och 
+                    följer bättre Single Responsibility Principle. Det kan leda till att koden blir lättare att underhålla i det långa loppet, även om mätvärdet tekniskt sett blev sämre. Ändringarna jag testade i endOfGame-klassen 
+                    fick jag rulla tillbaka. Det blev helt enkelt för mycket sämre att dela upp det. Komplexiteten ökade (mycket) med de förändringarna och jag upplevde inte att hanteringen blev tydligare, så som den åtminstone blev för hit-metoden.
+                    Det kan också vara värt att tänka efter före om huruvida det är värt att "bråka" med kod som redan har bra mätvärden - kanske var det tillräckligt bra som det var?
+                </p>
             </div>
         <div class="column">
             <h2>Phpmetrics</h2>

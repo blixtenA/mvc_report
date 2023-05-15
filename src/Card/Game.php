@@ -82,37 +82,40 @@ class Game
 
     /**
      * Play a turn.
-     *
-     * @return bool true if the game is over
-     *
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
+     * 
+     * */
     public function hit(): bool
     {
-        print("hit score: ". $this->player->getScore() . "\n");
         if ($this->isPlayerTurn) {
-            print("player's turn");
-            if ($this->player->hit($this->deck)) {
-                print("Score at return: ". $this->player->getScore() . "\n");
-                return true;
-            }
-            print("didn't return: ". $this->player->getScore() . "\n");
-
+            return $this->hitPlayer();
         } else {
-            $score = $this->bank->getScore();
-            $endCond = $this->bank->getEndCond();
-            while ($score < $endCond && $this->bank->hit($this->deck)) {
-                $score = $this->bank->getScore();
-            }
-            print(" new score: ".$score."\n");
-            if ($score >= $endCond) {
-                $this->message = "Bank stands";
-                return false;
-            }
-            $this->message = "Bank takes a card";
+            return $this->hitBank();
+        }
+    }
+
+    /* Player's turn, hit */
+    private function hitPlayer(): bool
+    {
+        if ($this->player->hit($this->deck)) {
             return true;
         }
         return false;
+    }
+
+    /* Bank's turn, hit or stand */
+    private function hitBank(): bool
+    {
+        $score = $this->bank->getScore();
+        $endCond = $this->bank->getEndCond();
+        while ($score < $endCond && $this->bank->hit($this->deck)) {
+            $score = $this->bank->getScore();
+        }
+        if ($score >= $endCond) {
+            $this->message = "Bank stands";
+            return false;
+        }
+        $this->message = "Bank takes a card";
+        return true;
     }
 
     public function stand(): void

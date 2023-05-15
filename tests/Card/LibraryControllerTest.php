@@ -110,7 +110,7 @@ class LibraryControllerTest extends TestCase
             ->method('render')
             ->with('library/read_one.html.twig', ['book' => $book])
             ->willReturn($response);
-        
+
         $actualResponse = $controller->readOne($id, $doctrine);
 
         $this->assertSame($response, $actualResponse);
@@ -121,7 +121,7 @@ class LibraryControllerTest extends TestCase
         $id = 1;
         $doctrine = $this->createMock(ManagerRegistry::class);
         $bookRepository = $this->createMock(BookRepository::class);
-        
+
         $doctrine->expects($this->once())
             ->method('getRepository')
             ->with(Book::class)
@@ -138,7 +138,7 @@ class LibraryControllerTest extends TestCase
 
         $controller->expects($this->never())
             ->method('render');
-        
+
         $this->expectException(NotFoundHttpException::class);
         $controller->readOne($id, $doctrine);
     }
@@ -167,7 +167,7 @@ class LibraryControllerTest extends TestCase
             ->method('render')
             ->with('library/read_many.html.twig', ['books' => $books])
             ->willReturn($response);
-        
+
         $actualResponse = $controller->readMany($doctrine);
 
         $this->assertSame($response, $actualResponse);

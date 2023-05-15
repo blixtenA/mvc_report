@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Card;
+
 use App\Card\Player;
 
 class Rules
@@ -29,7 +30,7 @@ class Rules
     }
 
     /**
-     * @param array $result
+     * @param array{Player|null, Player|null, string} $result
      * @param Player $player
      * @param Player $bank
      * @return bool
@@ -42,7 +43,7 @@ class Rules
         $winner->addMoney($bet * 2);
 
         /* Check if either participant is at 0 money */
-        if ($player->getMoney() == 0 || $bank->getMoney() == 0) {
+        if ($player->getMoney() === 0 || $bank->getMoney() === 0) {
             return false;
         }
         return true;

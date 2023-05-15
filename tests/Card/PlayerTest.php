@@ -157,7 +157,6 @@ class PlayerTest extends TestCase
         } while ($player->getScore() > 6 || $bank->getScore() > 17);
 
         $this->assertTrue($player->hit($game->getDeck()));
-
     }
 
 }
