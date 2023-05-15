@@ -1,0 +1,66 @@
+{% extends "proj/base.html.twig" %}
+
+{% block title %}Game{% endblock %}
+
+{% block body %}
+    <h1>Would you like to play a game?</h1>
+
+    <div class="gameCanvas">
+        <div class="roomBackground" style="background-image: url('{{ asset(room.getBackground()) }}');">
+            <!-- You can position game objects or events on the background here -->
+            {% for gameObject in room.getGameObjects() %}
+                <div
+                    id="gameObject-{{ loop.index }}"
+                    class="gameObject"
+                    style="background-image: url('{{ asset(gameObject.getImage()) }}'); left: {{ gameObject.getPositionX() }}px; top: {{ gameObject.getPositionY() }}px;"
+                >
+                    <div class="optionsContainer">
+                        {% for option in gameObject.getOptions() %}
+                            <button class="optionButton" data-option="{{ option }}">{{ option }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+
+    <script>
+        console.log("script");
+        document.addEventListener('DOMContentLoaded', function() {
+            var gameObjects = document.querySelectorAll('.gameObject');
+            gameObjects.forEach(function(gameObject) {
+                gameObject.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    var optionsContainer = gameObject.querySelector('.optionsContainer');
+                    optionsContainer.classList.toggle('active');
+                });
+    
+                var optionButtons = gameObject.querySelectorAll('.optionButton');
+                optionButtons.forEach(function(button) {
+                    button.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        var option = button.dataset.option;
+                        console.log('Player chose:', option);
+                    });
+                });
+            });
+    
+            document.addEventListener('click', function() {
+                var optionsContainers = document.querySelectorAll('.optionsContainer');
+                optionsContainers.forEach(function(container) {
+                    container.classList.remove('active');
+                });
+            });
+        });
+    </script>
+    
+    
+    <div class="inventoryRow">
+        {% for i in 1..6 %}
+            <div class="inventorySlot"></div>
+        {% endfor %}
+        <div class="inventorySpace"></div>
+    </div>
+
+{% endblock %}
