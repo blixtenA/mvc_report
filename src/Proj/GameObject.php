@@ -9,16 +9,65 @@ class GameObject
     private $positionY;
     private $clickable;
     private $name;
-    private $options;
+    private $options = [];
+    private $objId;
+    private $events = [];
 
-    public function __construct($image, $positionX, $positionY, $name, $clickable = false, $options = [])
+    public function __construct($objId, $image, $positionX, $positionY, $name, $clickable = false, $options = [])
     {
+        $this->objId = $objId;
         $this->image = $image;
         $this->positionX = $positionX;
         $this->positionY = $positionY;
         $this->clickable = $clickable;
         $this->name = $name;
         $this->options = $options;
+        $this->events = [];
+    }
+
+    public function getObjId(): string
+    {
+        return $this->objId;
+    }
+
+    public function setObjId($objId)
+    {
+        $this->objId = $objId;
+    }
+
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    public function getEventById($eventId)
+    {
+        foreach ($this->events as $event) {
+            if ($event->getEventId() == $eventId) {
+                return $event;
+            }
+        }
+        return null;
+    }
+
+    public function setEvents($events)
+    {
+        $this->events = $events;
+    }
+
+    public function addEvent($eventId)
+    {
+        if (!in_array($eventId, $this->events)) {
+            $this->events[] = $eventId;
+        }
+    }
+
+    public function removeEvent($eventId)
+    {
+        $index = array_search($eventId, $this->events);
+        if ($index !== false) {
+            unset($this->events[$index]);
+        }
     }
 
     public function getImage(): string
@@ -46,23 +95,37 @@ class GameObject
         return $this->clickable;
     }
 
-    public function onClick()
+    public function onClick(): array
     {
-        $dialogue = "<div class='speechBubble'>";
-        $dialogue .= "<p>{$this->name}</p>";
-        foreach ($this->options as $option) {
-            $dialogue .= "<button class='optionButton' data-option=\"{$option}\">{$option}</button>";
+        $options = [];
+        foreach ($this->options as $label => $eventId) {
+            $options[] = [
+                'label' => $label,
+                'eventId' => $eventId,
+            ];
         }
-        $dialogue .= "</div>";
-        console.log("click");
-        var_dump($this->options);
-    
-        return $dialogue;
+        return $options;
     }
-
+    
     public function getOptions(): array
     {
-        return $this->options;
+        $options = [];
+        foreach ($this->options as $optionKey => $eventId) {
+            $options[$optionKey] = $eventId;
+        }
+        return $options;
     }
+    
+    
+    public function getEventByOption($option)
+    {
+        return isset($this->options[$option]) ? $this->options[$option] : null;
+    }
+    
+    public function addOption($key, $value)
+    {
+        $this->options[$key] = $value;
+    }
+    
     
 }

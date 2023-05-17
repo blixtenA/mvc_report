@@ -1,0 +1,37 @@
+{% extends 'proj/base.html.twig' %}
+
+{% block title %}Create game objects!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Welcome to the Project</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.image) }}
+    {{ form_row(form.positionX) }}
+    {{ form_row(form.positionY) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.clickable) }}
+    
+    {% for key, optionForm in form.options %}
+        <div class="option-item">
+            {{ form_row(optionForm.key) }}
+            {{ form_row(optionForm.value) }}
+        </div>
+    {% endfor %}
+    
+    <div>
+        {{ form_rest(form) }}
+        <button type="submit">Submit</button>
+    </div>
+    
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

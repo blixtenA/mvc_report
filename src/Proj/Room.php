@@ -6,16 +6,17 @@ class Room
 {
     private $background;
     private $gameObjects;
-    private $events;
-    private $exits;
+    private $doors;
+    private $name;
+    private $description; 
 
-    public function __construct($background)
+    public function __construct($name, $background, $description = "", $doors = null)
     {
+        $this->name = $name;
         $this->background = $background;
         $this->gameObjects = [];
-        $this->events = [];
         $this->doors = [];
-        $this->description = "";
+        $this->description = $description;
     }
     
     public function toJson()
@@ -23,9 +24,19 @@ class Room
         return json_encode($this);
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function getBackground(): string
     {
         return $this->background;
+    }
+
+    public function setBackground($background)
+    {
+        $this->background = $background;
     }
 
     public function addGameObject(GameObject $gameObject)
@@ -33,19 +44,42 @@ class Room
         $this->gameObjects[] = $gameObject;
     }
 
+    public function removeGameObject(GameObject $gameObject)
+    {
+        $index = array_search($gameObject, $this->gameObjects, true);
+        if ($index !== false) {
+            unset($this->gameObjects[$index]);
+            $this->gameObjects = array_values($this->gameObjects);
+        }
+    }
+
+    public function removeAllGameObjects()
+    {
+        $this->gameObjects = [];
+    }
+
     public function getGameObjects(): array
     {
         return $this->gameObjects;
     }
 
-    public function addEvent(Event $event)
+    public function getGameObjectNames(): array
     {
-        $this->events[] = $event;
+        $names = [];
+        foreach ($this->gameObjects as $gameObject) {
+            $names[] = $gameObject->getName();
+        }
+        return $names;
     }
 
-    public function getEvents()
+    public function getGameObjectById($gameObjectId)
     {
-        return $this->events;
+        foreach ($this->gameObjects as $gameObject) {
+            if ($gameObject->getObjId() == $gameObjectId) {
+                return $gameObject;
+            }
+        }
+        return null;
     }
 
     public function addDoor(Door $door)
