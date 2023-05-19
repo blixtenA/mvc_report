@@ -39,6 +39,28 @@ class ObjectByRoomRepository extends ServiceEntityRepository
         }
     }
 
+    public function findSequenceByObjectID(int $objectID): array
+    {
+        return $this->createQueryBuilder('obr')
+            ->select('obr.sequence')
+            ->where('obr.object_id = :objectID')
+            ->setParameter('objectID', $objectID)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
+        $qb = $this->createQueryBuilder('obr');
+    
+        foreach ($criteria as $field => $value) {
+            $qb->andWhere('obr.' . $field . ' = :' . $field)
+                ->setParameter($field, $value);
+        }
+    
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return ObjectByRoom[] Returns an array of ObjectByRoom objects
 //     */

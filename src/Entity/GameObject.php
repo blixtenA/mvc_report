@@ -17,20 +17,17 @@ class GameObject
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\Column]
-    private ?int $positionX = null;
-
-    #[ORM\Column]
-    private ?int $positionY = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column]
     private ?bool $clickable = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $options = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image2 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $effect = null;
 
     public function getId(): ?int
     {
@@ -45,30 +42,6 @@ class GameObject
     public function setImage(string $image): self
     {
         $this->image = $image;
-
-        return $this;
-    }
-
-    public function getPositionX(): ?int
-    {
-        return $this->positionX;
-    }
-
-    public function setPositionX(int $positionX): self
-    {
-        $this->positionX = $positionX;
-
-        return $this;
-    }
-
-    public function getPositionY(): ?int
-    {
-        return $this->positionY;
-    }
-
-    public function setPositionY(int $positionY): self
-    {
-        $this->positionY = $positionY;
 
         return $this;
     }
@@ -97,44 +70,27 @@ class GameObject
         return $this;
     }
 
-    public function getOptions(): ?array
+    public function getImage2(): ?string
     {
-        return json_decode($this->options, true) ?: [];
+        return $this->image2;
     }
 
-    public function setOptions(?string $options): self
+    public function setImage2(?string $image2): self
     {
-        $this->options = $options;
+        $this->image2 = $image2;
+
         return $this;
     }
 
-    public function getOptionsArray(): array
+    public function getEffect(): ?string
     {
-        error_log("getOptionsArray",0);
-        $optionsString = $this->options;
-        $optionsArray = [];
-    
-        // Remove curly braces and double quotes from the string
-        $optionsString = str_replace(['{', '}', '"'], '', $optionsString);
-        error_log("optionsString ".$optionsString,0);
-    
-        // Split the string into key-value pairs
-        $pairs = explode(',', $optionsString);
-    
-        foreach ($pairs as $pair) {
-            // Split each pair into key and value
-            [$key, $value] = explode(':', $pair);
-    
-            // Remove leading/trailing spaces and add the pair to the options array
-            $optionsArray[trim($key)] = trim($value);
-        }
-    
-        return $optionsArray;
+        return $this->effect;
     }
 
-    public function setOptionsArray(array $options): self
+    public function setEffect(?string $effect): self
     {
-        $this->options = json_encode($options);
+        $this->effect = $effect;
+
         return $this;
     }
 

@@ -22,6 +22,15 @@ class ObjectByRoom
     #[ORM\Column]
     private ?int $sequence = null;
 
+    #[ORM\Column]
+    private ?int $position_x = null;
+
+    #[ORM\Column]
+    private ?int $position_y = null;
+
+    #[ORM\Column]
+    private ?int $position_z = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +68,42 @@ class ObjectByRoom
     public function setSequence(int $sequence): self
     {
         $this->sequence = $sequence;
+
+        return $this;
+    }
+
+    public function getPositionX(): ?int
+    {
+        return $this->position_x;
+    }
+
+    public function setPositionX(int $position_x): self
+    {
+        $this->position_x = $position_x;
+
+        return $this;
+    }
+
+    public function getPositionY(): ?int
+    {
+        return $this->position_y;
+    }
+
+    public function setPositionY(int $position_y): self
+    {
+        $this->position_y = $position_y;
+
+        return $this;
+    }
+
+    public function getPositionZ(): ?int
+    {
+        return $this->position_z;
+    }
+
+    public function setPositionZ(int $position_z): self
+    {
+        $this->position_z = $position_z;
 
         return $this;
     }

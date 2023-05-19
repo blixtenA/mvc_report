@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\GameObject;
+use App\Entity\Action;
+use App\Entity\Room;
+use App\Entity\EventByObject;
+use App\Entity\ObjectByRoom;
 use App\Form\GameObjectType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +19,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class GameObjectController extends AbstractController
 {
-    #[Route('/game/object', name: 'app_game_object')]
+    #[Route('/proj/game/object', name: 'app_game_object')]
     public function index(): Response
     {
         return $this->render('game_object/index.html.twig', [
@@ -23,7 +27,7 @@ class GameObjectController extends AbstractController
         ]);
     }
 
-    #[Route('/game/createObject', name: 'game_object_create')]
+    #[Route('/proj/game/createObject', name: 'game_object_create')]
     public function createGameObject(Request $request, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
@@ -34,7 +38,18 @@ class GameObjectController extends AbstractController
 
     }
 
-    #[Route('/game/showobjects', name: 'game_object_show_all')]
+    #[Route('/proj/game/createRoom', name: 'game_room_create')]
+    public function createGameRoom(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $entityManager = $doctrine->getManager();
+        
+        $gameroom = new Room();
+
+        /* broken */
+
+    }
+
+    #[Route('/proj/game/showobjects', name: 'game_object_show_all')]
     public function showAllObjects(ManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
     {
         $entityManager = $doctrine->getManager();
@@ -44,4 +59,17 @@ class GameObjectController extends AbstractController
     
         return new JsonResponse($jsonContent, 200, [], true);
     }
+
+    #[Route('/proj/game/showactions', name: 'game_action_show_all')]
+    public function showAllActions(ManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
+    {
+        $entityManager = $doctrine->getManager();
+        $gameActions = $entityManager->getRepository(Action::class)->findAll();
+        $serializedData = $serializer->normalize($gameActions, null, [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
+        $jsonContent = json_encode($serializedData, JSON_PRETTY_PRINT);
+    
+        return new JsonResponse($jsonContent, 200, [], true);
+    }
+
+
 }

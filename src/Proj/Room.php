@@ -6,17 +6,21 @@ class Room
 {
     private $background;
     private $gameObjects;
-    private $doors;
+    private ?array $neighbors;
     private $name;
     private $description; 
+    private $roomId;
+    private $start;
 
-    public function __construct($name, $background, $description = "", $doors = null)
+    public function __construct($roomId, $name, $background, $description = "", $neighbors = null, $start = false)
     {
+        $this->roomId = $roomId;
         $this->name = $name;
         $this->background = $background;
         $this->gameObjects = [];
-        $this->doors = [];
+        $this->neighbors = [];
         $this->description = $description;
+        $this->start = $start;
     }
     
     public function toJson()
@@ -28,6 +32,25 @@ class Room
     {
         return $this->name;
     }
+
+    public function getId(): int 
+    {
+        return $this->roomId;
+    }
+
+    public function addNeighbor(string $direction, Room $room): void
+    {
+        error_log("adding neighbor to room: ". $this->roomId,0);
+        error_log("direction: ". $direction,0);
+        error_log("neighbor: ". $room->getId(),0);
+
+        $this->neighbors[$direction] = $room;
+    }
+
+    public function getNeighbors(): ?array
+    {
+        return $this->neighbors;
+    }    
 
     public function getBackground(): string
     {
@@ -100,5 +123,10 @@ class Room
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function isStart(): bool
+    {
+        return $this->start ?? false;
     }
 }

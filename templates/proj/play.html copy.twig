@@ -11,12 +11,13 @@
             <div class="roomBackground" style="background-image: url('{{ asset(game.getCurrentRoom().getBackground()) }}');">
                 {% for gameObject in game.getCurrentRoom().getGameObjects() %}
                   <div class="gameObjectContainer" style="left: {{ gameObject.getPositionX() }}px; top: {{ gameObject.getPositionY() }}px;">
-                    <div id="gameObject-{{ loop.index }}" class="gameObject {{ gameObject.getEffect() ? gameObject.getEffect() : '' }}" data-game-object-id="{{ gameObject.getObjId() }}">                          
+                    <div id="gameObject-{{ loop.index }}" class="gameObject {{ gameObject.getEffect() ? gameObject.getEffect() : '' }}">
+
                         <div class="gameObjectImage" style="background-image: url('{{ asset(gameObject.getImage()) }}');"></div>
                       <div class="optionsContainer">
                         <div class="gameObjectName">{{ gameObject.getName() }}</div>
                         <div class="options">
-                            {% for option in gameObject.onClick() %}
+                          {% for option in gameObject.onClick() %}
                             <button class="optionButton" data-option="{{ option.eventId }}">{{ option.eventName }}</button>
                           {% endfor %}
                         </div>
@@ -117,5 +118,4 @@
           
       
 </div>
-
 {% endblock %}

@@ -7,13 +7,15 @@ class GameObject
     private $image;
     private $positionX;
     private $positionY;
+    private $positionZ;
     private $clickable;
     private $name;
     private $options = [];
     private $objId;
     private $events = [];
+    private $effect;
 
-    public function __construct($objId, $image, $positionX, $positionY, $name, $clickable = false, $options = [])
+    public function __construct($objId, $image, $name, $positionX = 0, $positionY = 0, $positionZ = 0, $clickable = false, $options = [], $effect = null)
     {
         $this->objId = $objId;
         $this->image = $image;
@@ -23,6 +25,7 @@ class GameObject
         $this->name = $name;
         $this->options = $options;
         $this->events = [];
+        $this->effect = $effect;
     }
 
     public function getObjId(): string
@@ -38,6 +41,11 @@ class GameObject
     public function getEvents()
     {
         return $this->events;
+    }
+
+    public function getEffect()
+    {
+        return $this->effect;
     }
 
     public function getEventById($eventId)
@@ -90,6 +98,11 @@ class GameObject
         return $this->positionY;
     }
 
+    public function getPositionZ(): int
+    {
+        return $this->positionY;
+    }
+
     public function isClickable(): bool
     {
         return $this->clickable;
@@ -98,10 +111,10 @@ class GameObject
     public function onClick(): array
     {
         $options = [];
-        foreach ($this->options as $label => $eventId) {
+        foreach ($this->options as $eventId => $eventName) {
             $options[] = [
-                'label' => $label,
                 'eventId' => $eventId,
+                'eventName' => $eventName,
             ];
         }
         return $options;
@@ -125,6 +138,7 @@ class GameObject
     public function addOption($key, $value)
     {
         $this->options[$key] = $value;
+        error_log("Added option: key = $key, value = $value", 0);
     }
     
     

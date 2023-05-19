@@ -197,4 +197,13 @@ class ApiController extends AbstractController
         return $response;
     }
 
+    /* Landing page for Game API, display available APIs */
+    #[Route("/proj/game/api", name: "game_api_land")]
+    public function gameApiLand(
+    ): Response {
+
+        return $this->render('proj/api.html.twig');
+    }
+
+
 }

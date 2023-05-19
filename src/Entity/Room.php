@@ -17,12 +17,6 @@ class Room
     #[ORM\Column(length: 255)]
     private ?string $background = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private ?array $gameObjects = null;
-
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private ?array $doors = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 

@@ -39,6 +39,45 @@ class EventByObjectRepository extends ServiceEntityRepository
         }
     }
 
+    public function findEventIDsByObjectID(int $objectID): array
+    {
+        $qb = $this->createQueryBuilder('ebo');
+        $qb->select('ebo.event_id')
+            ->where('ebo.object_id = :objectID')
+            ->setParameter('objectID', $objectID);
+    
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+    
+        // Extract event IDs from the result
+        $eventIDs = array_column($result, 'event_id');
+    
+        return $eventIDs;
+    }    
+
+    public function findEventIDsByObjectIDAndLocation(int $objectID, int $locationID): array
+    {
+        $entityManager = $this->getEntityManager();
+    
+        $query = $entityManager->createQuery('
+            SELECT ebo.event_id
+            FROM App\Entity\EventByObject ebo
+            WHERE ebo.object_id = :objectID
+            AND ebo.location = :locationID
+        ');
+    
+        $query->setParameter('objectID', $objectID);
+        $query->setParameter('locationID', $locationID);
+    
+        $result = $query->getResult();
+    
+        // Extract the event IDs from the query result
+        $eventIDs = array_column($result, 'event_id');
+    
+        return $eventIDs;
+    }
+    
+
 //    /**
 //     * @return EventByObject[] Returns an array of EventByObject objects
 //     */

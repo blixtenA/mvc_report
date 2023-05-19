@@ -4,66 +4,24 @@ namespace App\Proj;
 
 class Event
 {
-    private $eventImages;
-    private $positionX;
-    private $positionY;
-    private $animationDelay;
-    private $route;
+    private $event_id;
     private $text;
-    private $actions;
-    private $eventId;
     private $name;
+    private $actions;
+    private $location;
 
     public function __construct(
-        $eventId,
+        $event_id,
         $name,
-        $route = null,
-        array $eventImages = null,
-        $positionX = 250,
-        $positionY = 250,
-        $animationDelay = 100,
         $text = "something happened",
+        $location = "room",
         $actions = []
     ) {
-        $this->eventImages = $eventImages ?? [];
-        $this->positionX = $positionX;
-        $this->positionY = $positionY;
-        $this->animationDelay = $animationDelay;
-        $this->route = $route;
+        $this->event_id = $event_id;
         $this->text = $text;
+        $this->name = $name;
+        $this->location = $location;
         $this->actions = $actions;
-        $this->eventId = $eventId;
-        $this->name =$name;
-    }
-
-    public function getEventImages(): array
-    {
-        return $this->eventImages;
-    }
-
-    public function getPositionX(): int
-    {
-        return $this->positionX;
-    }
-
-    public function getPositionY(): int
-    {
-        return $this->positionY;
-    }
-
-    public function getAnimationDelay(): int
-    {
-        return $this->animationDelay;
-    }
-
-    public function getRoute(): string
-    {
-        return $this->route;
-    }
-
-    public function setRoute(string $route): void
-    {
-        $this->route = $route;
     }
 
     public function getText(): string
@@ -76,6 +34,26 @@ class Event
         $this->text = $text;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getEventId(): int
+    {
+        return $this->event_id;
+    }
+
+    public function setEventId(int $event_id): void
+    {
+        $this->event_id = $event_id;
+    }
+
     public function getActions(): array
     {
         return $this->actions;
@@ -86,29 +64,14 @@ class Event
         $this->actions = $actions;
     }
 
-    public function getEventId(): int
+    public function getLocation(): string
     {
-        return $this->eventId;
+        return $this->location;
     }
 
-    public function setEventId(int $eventId): void
+    public function setLocation(string $location): void
     {
-        $this->eventId = $eventId;
-    }
-
-    public function playAnimation()
-    {
-        foreach ($this->eventImages as $image) {
-            // Display the image at the specified position on screen
-            // Delay the animation by $this->animationDelay milliseconds
-            // You can use JavaScript or any other method based on your game implementation
-        }
-    }
-
-    public function actions()
-    {
-        // Perform actions related to the event
-        // For example, killing the player or triggering other game events
-        // You can implement your event logic here
+        $this->location = $location;
     }
 }
+

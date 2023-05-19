@@ -19,8 +19,23 @@ class EventByObject
     #[ORM\Column]
     private ?int $event_id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $location = null;
+    #[ORM\Column]
+    private ?int $location = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $action1 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $action2 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $action3 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $action4 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $action5 = null;
 
     public function getId(): ?int
     {
@@ -59,6 +74,66 @@ class EventByObject
     public function setLocation(string $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getAction1(): ?int
+    {
+        return $this->action1;
+    }
+
+    public function setAction1(?int $action1): self
+    {
+        $this->action1 = $action1;
+
+        return $this;
+    }
+
+    public function getAction2(): ?int
+    {
+        return $this->action2;
+    }
+
+    public function setAction2(?int $action2): self
+    {
+        $this->action2 = $action2;
+
+        return $this;
+    }
+
+    public function getAction3(): ?int
+    {
+        return $this->action3;
+    }
+
+    public function setAction3(?int $action3): self
+    {
+        $this->action3 = $action3;
+
+        return $this;
+    }
+
+    public function getAction4(): ?int
+    {
+        return $this->action4;
+    }
+
+    public function setAction4(?int $action4): self
+    {
+        $this->action4 = $action4;
+
+        return $this;
+    }
+
+    public function getAction5(): ?int
+    {
+        return $this->action5;
+    }
+
+    public function setAction5(?int $action5): self
+    {
+        $this->action5 = $action5;
 
         return $this;
     }
