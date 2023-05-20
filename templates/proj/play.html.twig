@@ -6,6 +6,7 @@
     <h1>Would you like to play a game?</h1>
 
     <div class="gameContainer">
+
         <div class="inventoryRow">
             {% for i in 1..6 %}
                 <div class="inventorySlot">
@@ -14,11 +15,14 @@
                     <div class="inventoryItem" style="background-image: url('{{ asset(gameObject.getImage()) }}');" data-game-object-id="{{ gameObject.getObjId() }}">
                         <div class="optionsContainer inventoryOptions">
                             <div class="gameObjectName">{{ gameObject.getName() }}</div>
+                            {% if gameObject.hasClickOptions() %}
+                            {% set onClickOptions = gameObject.onClick() %}
                             <div class="options">
-                                {% for option in gameObject.onClick() %}
-                                <button class="optionButton" data-option="{{ option.eventId }}">{{ option.label }}</button>
-                            {% endfor %}                            
+                                {% for option in onClickOptions %}
+                                    <button class="optionButton" data-option="{{ option.eventId }}">{{ option.eventName }}</button>
+                                {% endfor %}
                             </div>
+                        {% endif %}
                         </div>
                     </div>
                 {% endif %}                
@@ -26,8 +30,8 @@
             {% endfor %}
             <div class="inventorySpace"></div>
         </div>
+
         <div class="gameCanvas">
-            
 
             <div class="playerInfo">
                 <img src="{{ asset(game.getPlayer().getAvatar()) }}" alt="Player Avatar" class="playerAvatar">
@@ -53,6 +57,7 @@
                   </div>
                 {% endfor %}
               </div>
+              
         </div>
 
         <div class="gameInfo">
