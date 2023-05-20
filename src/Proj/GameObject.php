@@ -224,56 +224,26 @@ class GameObject
     /**
      * Initialize and populate the GameObject from a room.
      *
-     * @param Room $room The room containing the GameObject.
      */
-    public function initializeFromRoom(Room $room, \App\Entity\GameObject $gameObject, ManagerRegistry $doctrine): void
+    public function initFromRoom($objectByRoom, $gameObject)
     {
-        $this->doctrine = $doctrine;
-        $entityManager = $this->doctrine->getManager();
-        $objectByRoomRepository = $entityManager->getRepository(\App\Entity\ObjectByRoom::class);
+        $positionX = $objectByRoom->getPositionX();
+        $positionY = $objectByRoom->getPositionY();
+        $positionZ = $objectByRoom->getPositionZ();
+        $height = $objectByRoom->getHeight();
+        $width = $objectByRoom->getWidth();
 
-            /* Find the object_by_room entry for the current GameObject */
-            $objectByRoom = $objectByRoomRepository->findOneBy([
-                'room_id' => $room->getId(),
-                'object_id' => $gameObject->getId(),
-                'sequence' => 1,
-            ]);
+        $this->objId = $gameObject->getId();
+        $this->image = $gameObject->getImage();
+        $this->name = $gameObject->getName();
+        $this->positionX = $positionX;
+        $this->positionY = $positionY;
+        $this->positionZ = $positionZ;
+        $this->clickable = $gameObject->isClickable();
+        $this->options = null;
+        $this->effect = $gameObject->getEffect();
+        $this->width = $width;
+        $this->height = $height;
+    }
 
-            /* Retrieve the position values from object_by_room */
-            $positionX = $objectByRoom->getPositionX();
-            $positionY = $objectByRoom->getPositionY();
-            $positionZ = $objectByRoom->getPositionZ();
-            $height = $objectByRoom->getHeight();
-            $width = $objectByRoom->getWidth();
-
-            $this->objId = $gameObject->getId();
-            $this->image = $gameObject->getImage();
-            $this->name = $gameObject->getName();
-            $this->positionX = $positionX;
-            $this->positionY = $positionY;
-            $this->positionZ = $positionZ;
-            $this->clickable = $gameObject->isClickable();
-            $this->effect = $gameObject->getEffect();
-            $this->width = $width;
-            $this->height = $height;
-
-            /* Fetch the event IDs associated with the current GameObject */
-            $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
-            /** @phpstan-ignore-next-line */
-            $eventIDs = $eventByObjectRepository->findEventIDsByObjectIDAndLocation($gameObject->getId(), $room->getId());
-            /* Retrieve the corresponding events based on the fetched event IDs */
-            $eventRepository = $entityManager->getRepository(\App\Entity\Event::class);
-            $events = $eventRepository->findBy(['id' => $eventIDs]);
-
-            /* Create an array of event_id/name pairs for the current GameObject */
-            $eventOptions = [];
-            foreach ($events as $event) {
-                $eventOptions[$event->getId()] = $event->getName();
-            }
-
-            /* Set the event options for the current GameObject */
-            foreach ($eventOptions as $eventID => $eventName) {
-                $this->addOption($eventID, $eventName);
-            }
-    }    
 }

@@ -155,25 +155,8 @@ class ProjController extends AbstractController
                 ]);
 
                 /* Retrieve the position values from object_by_room */
-                $positionX = $objectByRoom->getPositionX();
-                $positionY = $objectByRoom->getPositionY();
-                $positionZ = $objectByRoom->getPositionZ();
-                $height = $objectByRoom->getHeight();
-                $width = $objectByRoom->getWidth();
-
-                $newGameObject = new GameObject(
-                    $gameObject->getId(),
-                    $gameObject->getImage(),
-                    $gameObject->getName(),
-                    $positionX,
-                    $positionY,
-                    $positionZ,
-                    $gameObject->isClickable(),
-                    null,
-                    $gameObject->getEffect(),
-                    $height,
-                    $width,
-                );
+                $newGameObject = new GameObject();
+                $newGameObject->initFromRoom($objectByRoom, $gameObject);
 
                 /* Fetch the event IDs associated with the current GameObject */
                 $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
@@ -232,8 +215,8 @@ class ProjController extends AbstractController
         ManagerRegistry $doctrine
         ): Response
     {
+        error_log("entering handle event",0);
         $entityManager = $doctrine->getManager();
-
 
         /* Get the game from the session */
         $game = $session->get("game");
