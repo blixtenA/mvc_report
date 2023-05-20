@@ -1,0 +1,94 @@
+{% extends 'proj/base.html.twig' %}
+
+{% block title %}Edit ObjectByRoom - ID: {{ id }}{% endblock %}
+
+{% block body %}
+
+    <h1>Edit ObjectByRoom - ID: {{ id }}</h1>
+    <div class="container">
+        <div class="form-container">
+
+    {{ form_start(form) }}
+    <table class="form-table">
+        <tbody>
+            <tr>
+                <td>{{ form_label(form.objectByRoom.room_id) }}</td>
+                <td>{{ form_widget(form.objectByRoom.room_id) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.objectByRoom.object_id) }}</td>
+                <td>{{ form_widget(form.objectByRoom.object_id) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.objectByRoom.sequence) }}</td>
+                <td>{{ form_widget(form.objectByRoom.sequence) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.objectByRoom.position_x) }}</td>
+                <td>{{ form_widget(form.objectByRoom.position_x) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.objectByRoom.position_y) }}</td>
+                <td>{{ form_widget(form.objectByRoom.position_y) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.objectByRoom.position_z) }}</td>
+                <td>{{ form_widget(form.objectByRoom.position_z) }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <br>
+    
+    <div class="button-container">
+        <button type="submit" class="update-button">Update</button>
+        <a href="{{ path('game_view_all') }}#object-by-room" class="back-button">Back</a>
+        <a href="{{ path('delete_object_by_room', {'id': id}) }}" class="delete-button">Delete</a>
+    </div>
+    
+    {{ form_end(form) }}    
+</div>
+    {% if roomBackground %}
+        <div class="canvas-container">
+            <canvas id="roomCanvas" width="80%" height="50vh" style="background-image: url('{{ asset(roomBackground) }}');"></canvas>
+        </div>
+    {% else %}
+        <div class="canvas-container">
+            <p>No background available for the room.</p>
+        </div>
+    {% endif %}
+
+    {% if gameObjectImage %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var canvas = document.getElementById('roomCanvas');
+            var context = canvas.getContext('2d');
+    
+            var img = new Image();
+            img.src = '{{ asset(gameObjectImage) }}';
+            img.onload = function() {
+                var positionX = {{ form.objectByRoom.position_x.vars.value ?? 0 }};
+                var positionY = {{ form.objectByRoom.position_y.vars.value ?? 0 }};
+
+                var width = 40;
+                var height = 40;
+    
+                // Position the image based on the x and y coordinates
+                context.drawImage(img, positionX, positionY, width, height);
+            };
+    
+            // Ensure the canvas size is set properly
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        });
+    </script>
+    
+    
+
+    
+{% endif %}
+</div>
+    
+    
+
+{% endblock %}

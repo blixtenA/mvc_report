@@ -1,0 +1,223 @@
+{% extends 'proj/base.html.twig' %}
+
+{% block title %}Create game objects!{% endblock %}
+
+{% block body %}
+
+<!-- Games -->
+<h2>Games</h2>
+<ul>
+    {% for gameId in gameIds %}
+        <li><a href="{{ path('game_edit', { 'id': gameId }) }}">Game {{ gameId }}</a></li>
+    {% endfor %}
+</ul>
+
+<!-- GameObjects -->
+<h2>Game objects</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Clickable</th>
+            <th>Effect</th>
+            <th>Image</th>
+            <th>Image2</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for gameObject in gameObject %}
+            <tr>
+                <td>{{ gameObject.id }}</td>
+                <td>{{ gameObject.name }}</td>
+                <td>{{ gameObject.clickable ? 'Yes' : 'No' }}</td>
+                <td>{{ gameObject.effect }}</td>
+                <td>{{ gameObject.image }}</td>
+                <td>{{ gameObject.image2 }}</td>
+                <td>
+                    <a href="{{ path('game_object_edit', { 'id': gameObject.id }) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('game_object_create') }}" class="create-button">Create</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Rooms -->
+<h2>Rooms</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Background</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+            <tr>
+                <td>{{ room.id }}</td>
+                <td>{{ room.name }}</td>
+                <td>{{ room.background }}</td>
+                <td>{{ room.description }}</td>
+                <td>
+                    <a href="{{ path('game_room_edit', { 'id': room.id }) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('game_room_create') }}" class="create-button">Create</a>
+            </td>
+        </tr>        
+    </tbody>
+</table>
+
+<!-- Object By Room -->
+<h2 id="object-by-room">Object By Room</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Room ID</th>
+            <th>Object ID</th>
+            <th>Sequence</th>
+            <th>Position X</th>
+            <th>Position Y</th>
+            <th>Position Z</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set sortedObjectByRooms = objectByRooms|sort((a, b) => a.getRoomId() <=> b.getRoomId()) %}
+        {% for objectByRoom in sortedObjectByRooms %}
+            <tr>
+                <td>{{ objectByRoom.id }}</td>
+                <td>{{ objectByRoom.getRoomId() }}</td>
+                <td>{{ objectByRoom.getObjectId() }}</td>
+                <td>{{ objectByRoom.getSequence() }}</td>
+                <td>{{ objectByRoom.getPositionX() }}</td>
+                <td>{{ objectByRoom.getPositionY() }}</td>
+                <td>{{ objectByRoom.getPositionZ() }}</td>
+                <td>
+                    <a href="{{ path('game_object_by_room_edit', { 'id': objectByRoom.id }) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('object_by_room_create') }}" class="create-button">Create</a>
+            </td>
+        </tr>   
+    </tbody>
+</table>
+
+
+<!-- Actions -->
+<h2>Actions</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Action</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for action in actions %}
+            <tr>
+                <td>{{ action.id }}</td>
+                <td>{{ action.getEventAction() }}</td>
+                <td>
+                    <a href="{{ path('game_action_edit', { 'id': action.id }) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('action_create') }}" class="create-button">Create</a>
+            </td>
+        </tr>           
+    </tbody>
+</table>
+
+<!-- Events -->
+<h2>Events</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Text</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.name }}</td>
+                <td>{{ event.text }}</td>
+                <td>
+                    <a href="{{ path('game_event_edit', { 'id': event.id }) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('event_create') }}" class="create-button">Create</a>
+            </td>
+        </tr>   
+    </tbody>
+</table>
+
+<!-- Event By Object -->
+<h2>Event By Object</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Object ID</th>
+            <th>Event ID</th>
+            <th>Location</th>
+            <th>Action 1</th>
+            <th>Action 2</th>
+            <th>Action 3</th>
+            <th>Action 4</th>
+            <th>Action 5</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for eventByObject in eventByObjects %}
+            <tr>
+                <td>{{ eventByObject.id }}</td>
+                <td>{{ eventByObject.getObjectId() }}</td>
+                <td>{{ eventByObject.getEventId() }}</td>
+                <td>{{ eventByObject.getLocation() }}</td>
+                <td>{{ eventByObject.getAction1() }}</td>
+                <td>{{ eventByObject.getAction2() }}</td>
+                <td>{{ eventByObject.getAction3() }}</td>
+                <td>{{ eventByObject.getAction4() }}</td>
+                <td>{{ eventByObject.getAction5() }}</td>
+                <td>
+                    <a href="{{ path('game_event_by_object_edit', { 'id': eventByObject.id }) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('event_by_object_create') }}" class="create-button">Create</a>
+            </td>
+        </tr>   
+    </tbody>
+</table>
+
+{% endblock %}

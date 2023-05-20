@@ -1,0 +1,30 @@
+{% extends 'proj/base.html.twig' %}
+
+{% block title %}Edit Action - ID: {{ id }}{% endblock %}
+
+{% block body %}
+
+    <h1>Edit Action - ID: {{ id }}</h1>
+
+    {{ form_start(form) }}
+    <table class="form-table">
+        <tbody>
+            <tr>
+                <td>{{ form_label(form.event_action) }}</td>
+                <td>{{ form_widget(form.event_action) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <div class="button-container">
+        <button type="submit" class="update-button">Update</button>
+        <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+        <a href="{{ path('action_delete', {'id': id}) }}" class="delete-button">Delete</a>
+    </div>
+    
+    {{ form_end(form) }}
+    Notice: all new or changed actions requires a code update in the Action class object.
+
+{% endblock %}

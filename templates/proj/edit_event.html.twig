@@ -1,0 +1,31 @@
+{% extends 'proj/base.html.twig' %}
+
+{% block title %}Edit Event - ID: {{ id }}{% endblock %}
+
+{% block body %}
+    <h1>Edit Event - ID: {{ id }}</h1>
+
+    {{ form_start(form) }}
+    <table class="form-table">
+        <tbody>
+            <tr>
+                <td>{{ form_label(form.text) }}</td>
+                <td>{{ form_widget(form.text) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.name) }}</td>
+                <td>{{ form_widget(form.name) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <div class="button-container">
+        <button type="submit" class="update-button">Update</button>
+        <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+        <a href="{{ path('event_delete', {'id': id}) }}" class="delete-button">Delete</a>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

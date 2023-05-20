@@ -39,6 +39,10 @@ class EventByObjectRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+ * @param int $objectID
+ * @return int[]
+ */
     public function findEventIDsByObjectID(int $objectID): array
     {
         $qb = $this->createQueryBuilder('ebo');
@@ -55,6 +59,11 @@ class EventByObjectRepository extends ServiceEntityRepository
         return $eventIDs;
     }    
 
+    /**
+ * @param int $objectID
+ * @param int $locationID
+ * @return int[]
+ */
     public function findEventIDsByObjectIDAndLocation(int $objectID, int $locationID): array
     {
         $entityManager = $this->getEntityManager();

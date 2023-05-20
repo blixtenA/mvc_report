@@ -4,16 +4,29 @@ namespace App\Proj;
 
 class Room
 {
-    private $background;
-    private $gameObjects;
-    private ?array $neighbors;
-    private $name;
-    private $description; 
-    private $roomId;
-    private $start;
+    private string $background;
+    /**
+     * @var array|GameObject[]
+     */
+    private array $gameObjects = [];
+    /**
+     * @var array<Room>|null
+     */
+    private ?array $neighbors = null;
+    private string $name;
+    private string $description;
+    private int $roomId;
+    private ?bool $start;
 
-    public function __construct($roomId, $name, $background, $description = "", $neighbors = null, $start = false)
-    {
+    // @phpstan-ignore-next-line
+    public function __construct(
+        int $roomId,
+        string $name,
+        string $background,
+        string $description = "",
+        ?array $neighbors = null,
+        ?bool $start = null
+    ) {
         $this->roomId = $roomId;
         $this->name = $name;
         $this->background = $background;
@@ -23,10 +36,10 @@ class Room
         $this->start = $start;
     }
     
-    public function toJson()
+/*    public function toJson(): string 
     {
         return json_encode($this);
-    }
+    } */
 
     public function getName(): string
     {
@@ -47,6 +60,9 @@ class Room
         $this->neighbors[$direction] = $room;
     }
 
+    /**
+     * @return ?array<Room>
+     */
     public function getNeighbors(): ?array
     {
         return $this->neighbors;
@@ -57,17 +73,17 @@ class Room
         return $this->background;
     }
 
-    public function setBackground($background)
+    public function setBackground(string $background): void
     {
         $this->background = $background;
     }
 
-    public function addGameObject(GameObject $gameObject)
+    public function addGameObject(GameObject $gameObject): void
     {
         $this->gameObjects[] = $gameObject;
     }
 
-    public function removeGameObject(GameObject $gameObject)
+    public function removeGameObject(GameObject $gameObject): void
     {
         $index = array_search($gameObject, $this->gameObjects, true);
         if ($index !== false) {
@@ -76,16 +92,22 @@ class Room
         }
     }
 
-    public function removeAllGameObjects()
+    public function removeAllGameObjects(): void
     {
         $this->gameObjects = [];
     }
 
+    /**
+     * @return array<GameObject>
+     */
     public function getGameObjects(): array
     {
         return $this->gameObjects;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getGameObjectNames(): array
     {
         $names = [];
@@ -95,7 +117,11 @@ class Room
         return $names;
     }
 
-    public function getGameObjectById($gameObjectId)
+    /**
+     * @param mixed $gameObjectId
+     * @return ?GameObject
+     */
+    public function getGameObjectById($gameObjectId): ?GameObject
     {
         foreach ($this->gameObjects as $gameObject) {
             if ($gameObject->getObjId() == $gameObjectId) {
@@ -105,22 +131,12 @@ class Room
         return null;
     }
 
-    public function addDoor(Door $door)
-    {
-        $this->doors[] = $door;
-    }
-
-    public function getDoors()
-    {
-        return $this->doors;
-    }
-
-    public function setDescription(String $text)
+    public function setDescription(String $text): void
     {
         $this->description = $text;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }

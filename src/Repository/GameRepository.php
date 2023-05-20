@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\AbstractQuery;
 
 /**
  * @extends ServiceEntityRepository<Game>
@@ -19,6 +21,27 @@ class GameRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Game::class);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function findUniqueGameIds(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('g')
+            ->select('g.game_id AS gameId')
+            ->groupBy('gameId');
+    
+        $query = $queryBuilder->getQuery();
+    
+        $results = $query->getResult();
+
+        $gameIds = [];
+        foreach ($results as $result) {
+            $gameIds[] = $result['gameId'];
+        }
+    
+        return $gameIds;
     }
 
     public function save(Game $entity, bool $flush = false): void
@@ -38,6 +61,29 @@ class GameRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findGameByCoordinates(int $gameId, int $x, int $y): ?Game
+    {
+        $queryBuilder = $this->createQueryBuilder('g')
+            ->where('g.game_id = :gameId')
+            ->andWhere('g.pos_x = :x')
+            ->andWhere('g.pos_y = :y')
+            ->setParameters([
+                'gameId' => $gameId,
+                'x' => $x,
+                'y' => $y,
+            ]);
+    
+        $query = $queryBuilder->getQuery();
+    
+        $result = $query->getResult();
+        dump($result); // Output the query result for debugging purposes
+    
+        return $result[0] ?? null;
+    }
+    
+    
+
 
 //    /**
 //     * @return Game[] Returns an array of Game objects

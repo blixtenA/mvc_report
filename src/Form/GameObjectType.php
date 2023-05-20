@@ -21,20 +21,23 @@ class GameObjectType extends AbstractType implements DataTransformerInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
+            ->add('id', TextType::class, [
+                'disabled' => true,
+            ])
             ->add('image', TextType::class)
-            ->add('positionX', TextType::class)
-            ->add('positionY', TextType::class)
             ->add('name', TextType::class)
-            ->add('clickable', TextType::class)
-            ->add('options', TextType::class, [
+            ->add('clickable', CheckboxType::class, [
                 'required' => false,
-                'attr' => [
-                    'placeholder' => 'Enter options as key-value pairs',
-                ],
+            ])
+            ->add('image2', TextType::class, [
+                'required' => false,
+            ])
+            ->add('effect', TextType::class, [
+                'required' => false,
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'transformOptions']);
     }
 
     public function transformOptions(FormEvent $event)

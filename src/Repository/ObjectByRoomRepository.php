@@ -39,6 +39,10 @@ class ObjectByRoomRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param int $objectID
+     * @return int[]
+     */
     public function findSequenceByObjectID(int $objectID): array
     {
         return $this->createQueryBuilder('obr')

@@ -1,0 +1,56 @@
+{% extends 'proj/base.html.twig' %}
+
+{% block title %}Edit Game{% endblock %}
+
+{% block body %}
+
+    <h1>Edit Game - ID: {{ id }}</h1>
+
+    <form method="POST">
+        {{ form_start(form) }}
+        <div id="games-collection">
+            {{ form_errors(form) }}
+            {% for form in form.games %}
+                <div class="game-form">
+                    {{ form_row(form.room_id) }}
+                    {{ form_row(form.pos_x) }}
+                    {{ form_row(form.pos_y) }}
+                    {{ form_row(form.game_id, {'attr': {'hidden': 'hidden'}}) }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="button-container">
+            <button type="submit" class="update-button">Update</button>
+        </div>
+        {{ form_end(form) }}
+        <div class="button-container">
+            <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+        </div>
+    </form>
+    
+    <table class="grid">
+
+        {% for row in range(5, 0, -1) %}
+            <tr>
+                <th>{{ row + 1 }}</th>
+                {% for column in 1..5 %}
+                    {% set game = gameRepository.findGameByCoordinates(id, column, row + 1) %}
+                    {% set roomId = game.getRoomId() ?? '' %}
+                    <td>{{ roomId }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <th></th>
+            {% for column in 1..5 %}
+                <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+    </table>
+    
+    
+    
+    
+    
+
+{% endblock %}

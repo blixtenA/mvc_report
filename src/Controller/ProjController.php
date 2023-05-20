@@ -95,9 +95,6 @@ class ProjController extends AbstractController
         foreach ($rooms as $roomEntity) {
             $roomPositionX = $roomPositions[$roomEntity->getId()]['pos_x'];
             $roomPositionY = $roomPositions[$roomEntity->getId()]['pos_y'];
-
-            error_log("posX: ". $roomPositionX,0);
-            error_log("posY: ". $roomPositionY,0);
         
             foreach ($rooms as $neighborEntity) {
 

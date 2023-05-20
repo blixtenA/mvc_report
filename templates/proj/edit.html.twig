@@ -1,0 +1,58 @@
+{% extends 'proj/base.html.twig' %}
+{% block title %}Edit game objects!{% endblock %}
+
+{% block body %}
+
+    <h1>Edit GameObject - ID: {{ id }}</h1>
+
+    {{ form_start(form) }}
+    <table class="form-table">
+        {{ form_row(form.id) }}
+        <tbody>
+            <tr>
+                <td>{{ form_label(form.image) }}</td>
+                <td>{{ form_widget(form.image) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.name) }}</td>
+                <td>{{ form_widget(form.name) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.clickable) }}</td>
+                <td>{{ form_widget(form.clickable) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.image2) }}</td>
+                <td>{{ form_widget(form.image2) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.effect) }}</td>
+                <td>{{ form_widget(form.effect) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <div class="button-container">
+        <button type="submit" class="update-button">Update</button>
+        <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+        <a href="{{ path('game_object_delete', {'id': id}) }}" class="delete-button">Delete</a>
+    </div>
+    
+    {{ form_end(form) }}
+
+    <div class="form-images">
+        {% if form.image.vars.value is not empty %}
+            <div class="image">
+                <img src="{{ asset(form.image.vars.value) }}" alt="Image">
+            </div>
+        {% endif %}
+        {% if form.image2.vars.value is not empty %}
+            <div class="image">
+                <img src="{{ asset(form.image2.vars.value) }}" alt="Image 2">
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

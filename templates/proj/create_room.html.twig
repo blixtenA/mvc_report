@@ -1,0 +1,30 @@
+{% extends 'proj/base.html.twig' %}
+{% block title %}Create Room{% endblock %}
+
+{% block body %}
+    <h2>Create Room</h2>
+
+    {{ form_start(form) }}
+    <table>
+        <tbody>
+            <tr>
+                <th>{{ form_label(form.background) }}</th>
+                <td>{{ form_widget(form.background) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.name) }}</th>
+                <td>{{ form_widget(form.name) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.description) }}</th>
+                <td>{{ form_widget(form.description) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button class="create-button" type="submit">Create</button>
+        <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

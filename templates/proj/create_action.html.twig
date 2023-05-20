@@ -1,0 +1,22 @@
+{% extends 'proj/base.html.twig' %}
+{% block title %}Create Action{% endblock %}
+
+{% block body %}
+    <h2>Create Action</h2>
+
+    {{ form_start(form) }}
+    <table>
+        <tbody>
+            <tr>
+                <th>{{ form_label(form.event_action) }}</th>
+                <td>{{ form_widget(form.event_action) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button class="create-button" type="submit">Create</button>
+        <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

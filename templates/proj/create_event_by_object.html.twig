@@ -1,0 +1,50 @@
+{% extends 'proj/base.html.twig' %}
+{% block title %}Create Event By Object{% endblock %}
+
+{% block body %}
+    <h2>Create Event By Object</h2>
+
+    {{ form_start(form) }}
+    <table>
+        <tbody>
+            <tr>
+                <th>{{ form_label(form.objectId) }}</th>
+                <td>{{ form_widget(form.objectId) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.eventId) }}</th>
+                <td>{{ form_widget(form.eventId) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.location) }}</th>
+                <td>{{ form_widget(form.location) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.action1) }}</th>
+                <td>{{ form_widget(form.action1) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.action2) }}</th>
+                <td>{{ form_widget(form.action2) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.action3) }}</th>
+                <td>{{ form_widget(form.action3) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.action4) }}</th>
+                <td>{{ form_widget(form.action4) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.action5) }}</th>
+                <td>{{ form_widget(form.action5) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button class="create-button" type="submit">Create</button>
+        <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

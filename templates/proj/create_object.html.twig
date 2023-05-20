@@ -1,0 +1,47 @@
+{% extends 'proj/base.html.twig' %}
+
+{% block title %}Create game objects!{% endblock %}
+
+{% block body %}
+{# proj/create_object.html.twig #}
+
+<h2>Create Game Object</h2>
+
+{{ form_start(form) }}
+<table class="form-table">
+    <tbody>
+        <tr>
+            <th>{{ form_label(form.id) }}</th>
+            <td>{{ form_widget(form.id) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.image) }}</th>
+            <td>{{ form_widget(form.image) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.name) }}</th>
+            <td>{{ form_widget(form.name) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.clickable) }}</th>
+            <td>{{ form_widget(form.clickable) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.image2) }}</th>
+            <td>{{ form_widget(form.image2) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.effect) }}</th>
+            <td>{{ form_widget(form.effect) }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="button-container">
+    <button class="create-button" type="submit">Create</button>
+    <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+</div>
+{{ form_end(form) }}
+
+
+{% endblock %}

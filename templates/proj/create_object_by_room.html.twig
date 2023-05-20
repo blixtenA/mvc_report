@@ -1,0 +1,42 @@
+{% extends 'proj/base.html.twig' %}
+{% block title %}Create Object By Room{% endblock %}
+
+{% block body %}
+    <h2>Create Object By Room</h2>
+
+    {{ form_start(form) }}
+    <table>
+        <tbody>
+            <tr>
+                <th>{{ form_label(form.room_id) }}</th>
+                <td>{{ form_widget(form.room_id) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.object_id) }}</th>
+                <td>{{ form_widget(form.object_id) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.sequence) }}</th>
+                <td>{{ form_widget(form.sequence) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.position_x) }}</th>
+                <td>{{ form_widget(form.position_x) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.position_y) }}</th>
+                <td>{{ form_widget(form.position_y) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_label(form.position_z) }}</th>
+                <td>{{ form_widget(form.position_z) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button class="create-button" type="submit">Create</button>
+        <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

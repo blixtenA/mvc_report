@@ -39,6 +39,10 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return array
+     * @phpstan-return array<mixed, mixed>
+     */
     public function findAllWithUnserializedActions(): array
     {
         $queryBuilder = $this->createQueryBuilder('e')
