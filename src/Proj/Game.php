@@ -4,10 +4,13 @@ namespace App\Proj;
 
 class Game
 {
-    private $currentRoom;
-    private $gameState;
-    private $rooms;
-    private $player;
+    private ?Room $currentRoom;
+    private string $gameState;
+    /**
+     * @var array<Room>
+     */
+    private array $rooms;
+    private ?Player $player;
 
     public function __construct()
     {
@@ -17,42 +20,45 @@ class Game
         $this->player = null;
     }
 
-    public function setCurrentRoom(Room $room)
+    public function setCurrentRoom(Room $room): void
     {
         $this->currentRoom = $room;
     }
 
-    public function getCurrentRoom()
+    public function getCurrentRoom(): ?Room
     {
         return $this->currentRoom;
     }
 
-    public function setGameState($state)
+    public function setGameState(string $state): void
     {
         $this->gameState = $state;
     }
 
-    public function getGameState()
+    public function getGameState(): string
     {
         return $this->gameState;
     }
 
-    public function addRoom(Room $room)
+    public function addRoom(Room $room): void
     {
         $this->rooms[] = $room;
     }
 
-    public function getRooms()
+    /**
+ * @return array<Room>
+ */
+    public function getRooms(): array
     {
         return $this->rooms;
     }
 
-    public function setPlayer(Player $player)
+    public function setPlayer(Player $player): void
     {
         $this->player = $player;
     }
 
-    public function getPlayer()
+    public function getPlayer(): ?Player
     {
         return $this->player;
     }

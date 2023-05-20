@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class GameType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
         ->add('game_id', HiddenType::class, [
@@ -23,7 +23,7 @@ class GameType extends AbstractType
             ->add('pos_y', IntegerType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Game::class,

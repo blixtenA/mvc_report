@@ -92,6 +92,8 @@
             <th>Position X</th>
             <th>Position Y</th>
             <th>Position Z</th>
+            <th>Width</th>
+            <th>Height</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -106,6 +108,8 @@
                 <td>{{ objectByRoom.getPositionX() }}</td>
                 <td>{{ objectByRoom.getPositionY() }}</td>
                 <td>{{ objectByRoom.getPositionZ() }}</td>
+                <td>{{ objectByRoom.getWidth() }}</td>
+                <td>{{ objectByRoom.getHeight() }}</td>
                 <td>
                     <a href="{{ path('game_object_by_room_edit', { 'id': objectByRoom.id }) }}">Edit</a>
                 </td>
@@ -127,6 +131,7 @@
         <tr>
             <th>ID</th>
             <th>Action</th>
+            <th>Text</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -135,6 +140,7 @@
             <tr>
                 <td>{{ action.id }}</td>
                 <td>{{ action.getEventAction() }}</td>
+                <td>{{ action.getText() }}</td>
                 <td>
                     <a href="{{ path('game_action_edit', { 'id': action.id }) }}">Edit</a>
                 </td>
@@ -185,7 +191,9 @@
         <tr>
             <th>ID</th>
             <th>Object ID</th>
+            <th>Object Name</th>
             <th>Event ID</th>
+            <th>Event Name</th>
             <th>Location</th>
             <th>Action 1</th>
             <th>Action 2</th>
@@ -197,10 +205,28 @@
     </thead>
     <tbody>
         {% for eventByObject in eventByObjects %}
+        {% set objectName = '' %}
+        {% set foundObject = false %}
+        {% for gameObject in gameObject %}
+            {% if not foundObject and gameObject.id == eventByObject.getObjectId() %}
+                {% set objectName = gameObject.name %}
+                {% set foundObject = true %}
+            {% endif %}
+        {% endfor %}
+        {% set eventName = '' %}
+        {% set foundEvent = false %}
+        {% for event in events %}
+            {% if not foundEvent and event.id == eventByObject.getEventId() %}
+                {% set eventName = event.name %}
+                {% set foundObject = true %}
+            {% endif %}
+        {% endfor %}
             <tr>
                 <td>{{ eventByObject.id }}</td>
                 <td>{{ eventByObject.getObjectId() }}</td>
+                <td>{{ objectName }}</td>
                 <td>{{ eventByObject.getEventId() }}</td>
+                <td>{{ eventName }}</td>
                 <td>{{ eventByObject.getLocation() }}</td>
                 <td>{{ eventByObject.getAction1() }}</td>
                 <td>{{ eventByObject.getAction2() }}</td>

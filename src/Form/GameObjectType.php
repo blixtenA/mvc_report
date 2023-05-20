@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormEvents;
 
 class GameObjectType extends AbstractType implements DataTransformerInterface
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
         $builder
@@ -40,39 +40,21 @@ class GameObjectType extends AbstractType implements DataTransformerInterface
 
     }
 
-    public function transformOptions(FormEvent $event)
+    public function reverseTransform($value)
     {
-        $data = $event->getData();
-        $options = explode("\n", $data['options']);
-        $data['options'] = [];
-
-        foreach ($options as $option) {
-            $keyValue = explode(':', $option, 2);
-            $key = trim($keyValue[0]);
-            $value = trim($keyValue[1] ?? '');
-
-            if (!empty($key)) {
-                $data['options'][$key] = $value;
-            }
-        }
-
-        $event->setData($data);
+        return null;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function transform($value)
+    {
+        return null;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => GameObject::class,
         ]);
     }
 
-    public function transform($value)
-    {
-        return $value;
-    }
-
-    public function reverseTransform($value)
-    {
-        return $value;
-    }
 }

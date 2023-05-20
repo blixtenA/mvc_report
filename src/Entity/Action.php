@@ -17,6 +17,9 @@ class Action
     #[ORM\Column(length: 255)]
     private ?string $event_action = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $text = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +33,18 @@ class Action
     public function setEventAction(string $event_action): self
     {
         $this->event_action = $event_action;
+
+        return $this;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
 
         return $this;
     }

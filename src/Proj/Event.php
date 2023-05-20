@@ -4,18 +4,22 @@ namespace App\Proj;
 
 class Event
 {
-    private $event_id;
-    private $text;
-    private $name;
-    private $actions;
-    private $location;
+    private int $event_id;
+    private string $text;
+    private string $name;
+        /**
+     * @var array<int>
+     */
+    private array $actions;
+    private int $location;
 
+       // @phpstan-ignore-next-line
     public function __construct(
-        $event_id,
-        $name,
-        $text = "something happened",
-        $location = "room",
-        $actions = []
+        int $event_id,
+        string $name,
+        string $text = "something happened",
+        int $location = 0,
+        array $actions = []
     ) {
         $this->event_id = $event_id;
         $this->text = $text;
@@ -54,22 +58,38 @@ class Event
         $this->event_id = $event_id;
     }
 
+    /**
+ * @return array<int>
+ */
     public function getActions(): array
     {
         return $this->actions;
     }
 
-    public function setActions(array $actions): void
+    /**
+ * @param array<int> $actions
+ */
+    public function setActions(array  $actions): void
     {
         $this->actions = $actions;
     }
 
-    public function getLocation(): string
+    /**
+     * Add a single action to the end of the list.
+     *
+     * @param int $action
+     */
+    public function addAction(int $action): void
+    {
+        $this->actions[] = $action;
+    }
+
+    public function getLocation(): int
     {
         return $this->location;
     }
 
-    public function setLocation(string $location): void
+    public function setLocation(int $location): void
     {
         $this->location = $location;
     }

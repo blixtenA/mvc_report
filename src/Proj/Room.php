@@ -18,6 +18,16 @@ class Room
     private int $roomId;
     private ?bool $start;
 
+    /**
+     * Room constructor.
+     *
+     * @param int $roomId The ID of the room.
+     * @param string $name The name of the room.
+     * @param string $background The background of the room.
+     * @param string $description The description of the room.
+     * @param array|null $neighbors An array of neighboring rooms.
+     * @param bool|null $start Indicates if the room is a starting room.
+     */
     // @phpstan-ignore-next-line
     public function __construct(
         int $roomId,
@@ -35,54 +45,87 @@ class Room
         $this->description = $description;
         $this->start = $start;
     }
-    
-/*    public function toJson(): string 
-    {
-        return json_encode($this);
-    } */
 
+    /**
+     * Retrieves the name of the room.
+     *
+     * @return string The name of the room.
+     */
     public function getName(): string
     {
         return $this->name;
     }
-
+    
+    /**
+     * Retrieves the ID of the room.
+     *
+     * @return int The ID of the room.
+     */
     public function getId(): int 
     {
         return $this->roomId;
     }
 
+    /**
+     * Adds a neighboring room in the specified direction.
+     *
+     * @param string $direction The direction of the neighboring room.
+     * @param Room $room The neighboring room object.
+     * @return void
+     */
     public function addNeighbor(string $direction, Room $room): void
     {
-        error_log("adding neighbor to room: ". $this->roomId,0);
-        error_log("direction: ". $direction,0);
-        error_log("neighbor: ". $room->getId(),0);
-
         $this->neighbors[$direction] = $room;
     }
 
     /**
-     * @return ?array<Room>
+     * Retrieves the neighboring rooms.
+     *
+     * @return Room[]|null An array of neighboring rooms, or null if there are no neighbors.
      */
     public function getNeighbors(): ?array
     {
         return $this->neighbors;
     }    
 
+    /**
+     * Retrieves the background of the room.
+     *
+     * @return string The background of the room.
+     */
     public function getBackground(): string
     {
         return $this->background;
     }
 
+    /**
+     * Sets the background of the room.
+     *
+     * @param string $background The background to set for the room.
+     * @return void
+     */
     public function setBackground(string $background): void
     {
         $this->background = $background;
     }
 
+    /**
+     * Adds a game object to the collection.
+     *
+     * @param GameObject $gameObject The game object to add.
+     * @return void
+     */
     public function addGameObject(GameObject $gameObject): void
     {
         $this->gameObjects[] = $gameObject;
     }
 
+    /**
+     * Removes a game object from the collection.
+     *
+     * @param GameObject $gameObject The game object to remove.
+     * @return void
+     */
     public function removeGameObject(GameObject $gameObject): void
     {
         $index = array_search($gameObject, $this->gameObjects, true);
@@ -92,13 +135,20 @@ class Room
         }
     }
 
+    /**
+     * Removes all game objects from the collection.
+     *
+     * @return void
+     */
     public function removeAllGameObjects(): void
     {
         $this->gameObjects = [];
     }
 
     /**
-     * @return array<GameObject>
+     * Retrieves an array of game objects.
+     *
+     * @return GameObject[] An array containing the game objects.
      */
     public function getGameObjects(): array
     {
@@ -106,7 +156,9 @@ class Room
     }
 
     /**
-     * @return array<string>
+     * Retrieves an array of game object names.
+     *
+     * @return string[] An array containing the names of the game objects.
      */
     public function getGameObjectNames(): array
     {
@@ -118,8 +170,10 @@ class Room
     }
 
     /**
-     * @param mixed $gameObjectId
-     * @return ?GameObject
+     * Retrieves a GameObject from the gameObjects array based on its ID.
+     *
+     * @param mixed $gameObjectId The ID of the GameObject to retrieve.
+     * @return GameObject|null The matching GameObject if found, or null if not found.
      */
     public function getGameObjectById($gameObjectId): ?GameObject
     {
@@ -131,18 +185,44 @@ class Room
         return null;
     }
 
+    /**
+     * Sets the description of the room.
+     *
+     * @param string $text The description text.
+     * @return void
+     */
     public function setDescription(String $text): void
     {
         $this->description = $text;
     }
 
+    /**
+     * Retrieves the description of the room.
+     *
+     * @return string The description of the room.
+     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
+    /**
+     * Checks if the room is a starting room.
+     *
+     * @return bool True if the room is a starting room, false otherwise.
+     */
     public function isStart(): bool
     {
         return $this->start ?? false;
+    }
+
+    /**
+     * Advance the sequence of the room.
+     *
+     * @return bool True if the room is a starting room, false otherwise.
+     */
+    public function sequenceAdvance(): void 
+    {
+        error_log("advance",0);
     }
 }

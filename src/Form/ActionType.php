@@ -13,9 +13,12 @@ class ActionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('event_action', TextType::class, [
-                'label' => 'Action',
-            ]);
+        ->add('event_action', TextType::class, [
+            'label' => 'Action',
+        ])
+        ->add('text', TextType::class, [
+            'required' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

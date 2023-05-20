@@ -25,6 +25,7 @@ class Room
 
     public function getId(): ?int
     {
+        error_log("get id: ". $this->id,0);
         return $this->id;
     }
 
@@ -36,30 +37,6 @@ class Room
     public function setBackground(string $background): self
     {
         $this->background = $background;
-
-        return $this;
-    }
-
-    public function getGameObjects(): array
-    {
-        return $this->gameObjects;
-    }
-
-    public function setGameObjects(?array $gameObjects): self
-    {
-        $this->gameObjects = $gameObjects;
-
-        return $this;
-    }
-
-    public function getDoors(): array
-    {
-        return $this->doors;
-    }
-
-    public function setDoors(array $doors): self
-    {
-        $this->doors = $doors;
 
         return $this;
     }

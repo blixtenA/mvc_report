@@ -66,12 +66,12 @@ class EventByObject
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): ?int
     {
         return $this->location;
     }
 
-    public function setLocation(string $location): self
+    public function setLocation(int $location): self
     {
         $this->location = $location;
 

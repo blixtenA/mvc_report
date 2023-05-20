@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ObjectByRoomType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('room_id', IntegerType::class)
@@ -18,10 +18,12 @@ class ObjectByRoomType extends AbstractType
             ->add('sequence', IntegerType::class)
             ->add('position_x', IntegerType::class)
             ->add('position_y', IntegerType::class)
-            ->add('position_z', IntegerType::class);
+            ->add('position_z', IntegerType::class)
+            ->add('width', IntegerType::class)
+            ->add('height', IntegerType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ObjectByRoom::class,

@@ -7,14 +7,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class Action
 {
-    private $game;
-    private $event;
-    private $object;
-    private $entityManager;
-    private $messages;
-    private $room;
+    private Game $game;
+    private Event $event;
+    private ?GameObject $object;
+    private EntityManagerInterface $entityManager;
+        /**
+     * @var array<string>
+     */
+    private array $messages = [];
+    private Room $room;
+    private array $eventActions = [];
 
-    public function __construct($game, $event, $object, EntityManagerInterface $entityManager)
+    public function __construct(Game $game, Event $event, ?GameObject $object, EntityManagerInterface $entityManager)
     {
         $this->game = $game;
         $this->event = $event;
@@ -24,32 +28,35 @@ class Action
         $this->room = $this->game->getCurrentRoom();
     }
 
-    public function perform()
+    /**
+     * Perform the operation.
+     *
+     * @return string[]|null Array of strings or null.
+     */
+    public function perform(): ?array
     {
-        error_log("perform", 0);
-        $eventActions = $this->event->getActions();
-        error_log("Number of event actions: " . count($eventActions), 0);
-    
-        foreach ($eventActions as $actionId) {
-            if ($this->game->getGameState() === 'gameover') {
-                return false;
+        $this->eventActions = $this->event->getActions();
+
+        foreach ($this->eventActions as $actionId) {
+            if ($this->game->getGameState() === 'Game Over') {
+                $this->addFinalComments();
+                return $this->messages;
             }
     
             if ($actionId !== null) {
-    
             $action = $this->fetchAction($actionId);
 
                 $eventAction = $action->getEventAction();
     
-                error_log("eventAction: " . $eventAction, 0);
-    
                 $this->executeAction($eventAction);
+                $this->messages [] = $action->getText();
+
             }
         }
         return $this->messages;
     }
     
-    private function executeAction($eventAction)
+    private function executeAction(string $eventAction): void
     {
         if ($eventAction === 'removeFromRoom') {
             $this->removeFromRoom();
@@ -57,15 +64,28 @@ class Action
             $this->addToInventory();
         } elseif ($eventAction === 'deathBySharpObject') {
             $this->deathEvent();
+        } elseif ($eventAction === 'deathByHeavyObject') {
+            $this->deathEvent();
+        } elseif ($eventAction === 'unlockTry') {
+            $this->unlockTry();
+        } elseif ($eventAction === 'unlockYes') {
+            $this->unlockYes();
+        } elseif ($eventAction === 'unlockNo') {
+            $this->unlockNo();                        
         } elseif (strpos($eventAction, 'walk') === 0) {
-            $direction = substr($eventAction, 4); // Extract the direction from the event action
+            $direction = substr($eventAction, 4);
             $this->walk($direction);
         }        
     }
     
-    private function fetchAction($actionId)
+    /**
+     * Fetches an Action entity by its ID.
+     *
+     * @param int $actionId The ID of the action.
+     * @return \App\Entity\Action|null The fetched Action entity, or null if not found.
+     */
+    private function fetchAction(int $actionId): ?\App\Entity\Action
     {
-        error_log("Enter fetchAction", 0);
         $entityActionRepository = $this->entityManager->getRepository(\App\Entity\Action::class);
         $entityAction = $entityActionRepository->find($actionId);
     
@@ -78,24 +98,60 @@ class Action
         return $entityAction;
     }
 
-    public function getMessages()
+    /**
+     * @return array<string>
+     */
+    public function getMessages(): array 
     {
         return $this->messages;
     }
 
-    function getGame() 
+    function getGame(): Game
     {
         return $this->game;
     }
 
+    function unlockTry(): void 
+    {
+        $checkInventory = $this->game->getPlayer()->getInventory();
+        $unlock = false;
+
+        foreach ($checkInventory as $item) {
+            if ($item instanceof GameObject && $item->getName() === "key") {
+                $unlock = true;
+                break;
+            }
+        }
+    
+        if ($unlock) {
+            $this->eventActions[] = 16;
+        }
+        else {
+            $this->eventActions[] = 17;
+        }
+
+    }
+
+    function unlockYes(): void 
+    {
+        $this->messages [] = $this->event->getText(); /* wrong text */
+        removeFromRoom();
+        $this->room->sequenceAdvance();
+    }
+
+    function unlockNo(): void 
+    {
+        $this->messages [] = $this->event->getText(); /* no */
+    }
+
     /* Remove the object from the current room */
-    function removeFromRoom() 
+    function removeFromRoom(): void
     {            
         $this->room->removeGameObject($this->object);
     }
 
     /* Action: move an object from the current room to the player's inventory */
-    function addToInventory() 
+    function addToInventory() : void
     {
 
         /* Get the player from the game */
@@ -105,15 +161,13 @@ class Action
         $newObject = new GameObject(
             $this->object->getObjId(),
             $this->object->getImage(),
+            $this->object->getName(),
             $this->object->getPositionX(),
             $this->object->getPositionY(),
             $this->object->getPositionZ(),
-            $this->object->getName(),
             true,
-            [
-                "Throw" => 3,
-                "Eat" => 4
-            ]
+            NULL,
+            $this->object->getEffect(),
         );
 
         /* Add the object to the player's inventory */
@@ -121,29 +175,32 @@ class Action
         $this->messages [] = $this->event->getText();
     }
 
-    private function deathEvent()
+    private function deathEvent(): void
     {    
         $this->room->removeAllGameObjects();
         $this->room->setBackground('img/proj/backgrounds/deathScreen.png');
 
-        $this->game->setGameState = 'Game Over';
+        $this->game->setGameState('Game Over');
         $this->messages [] = $this->event->getText();
+    }
+
+    private function addFinalComments(): void 
+    {
+        error_log("in",0);
         $this->messages [] = 
             "Player was killed by ".
             $this->object->getName() . " in " .
             $this->room->getName();
     }
 
-    private function walk($direction)
+    private function walk(string $direction): void
     {
-        error_log("walk ". $direction,0);
+
         /* Check if the current room has a neighbor in the specified direction */
         if (isset($this->room->getNeighbors()[$direction])) {
-            error_log("isset",0);
+
             /* Retrieve the neighboring room */
             $neighborRoom = $this->room->getNeighbors()[$direction];
-            error_log("neighbor: ". $neighborRoom->getId(),0);
-            error_log("neighbor: ". $neighborRoom->getName(),0);
     
             /* Set the neighboring room as the current room */
             $this->game->setCurrentRoom($neighborRoom);

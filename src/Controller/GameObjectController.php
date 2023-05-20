@@ -26,6 +26,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class GameObjectController extends AbstractController
 {
@@ -37,39 +39,16 @@ class GameObjectController extends AbstractController
         ]);
     }
 
-    #[Route('/proj/game/createObject', name: 'game_object_create')]
-    public function createGameObject(Request $request, ManagerRegistry $doctrine): Response
-    {
-        $entityManager = $doctrine->getManager();
-        
-        $gameobject = new GameObject();
-
-        /* broken */
-
-    }
-
-    #[Route('/proj/game/createRoom', name: 'game_room_create')]
-    public function createGameRoom(Request $request, ManagerRegistry $doctrine): Response
-    {
-        $entityManager = $doctrine->getManager();
-        
-        $gameroom = new Room();
-
-        /* broken */
-
-    }
-
     #[Route('/proj/game/showobjects', name: 'game_object_show_all')]
     public function showAllObjects(ManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
     {
         $entityManager = $doctrine->getManager();
         $gameObjects = $entityManager->getRepository(GameObject::class)->findAll();
-        $serializedData = $serializer->normalize($gameObjects, null, [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
-        $jsonContent = json_encode($serializedData, JSON_PRETTY_PRINT);
-    
-        return new JsonResponse($jsonContent, 200, [], true);
+        $serializedData = $serializer->serialize($gameObjects, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
+        
+        return new JsonResponse($serializedData, 200, [], true);
     }
-
+    
     #[Route('/proj/game/showactions', name: 'game_action_show_all')]
     public function showAllActions(ManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
     {
@@ -364,7 +343,7 @@ class GameObjectController extends AbstractController
     }
     
     #[Route('/game/object/delete/{id}', name: 'game_object_delete')]
-    public function deleteObject($id, ManagerRegistry $doctrine): Response
+    public function deleteObject(int $id, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         $gameObject = $entityManager->getRepository(GameObject::class)->find($id);
@@ -406,7 +385,7 @@ class GameObjectController extends AbstractController
     }
 
     #[Route('/game/room/delete/{id}', name: 'game_room_delete')]
-    public function deleteRoom($id, ManagerRegistry $doctrine): Response
+    public function deleteRoom(int $id, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         $room = $entityManager->getRepository(Room::class)->find($id);
@@ -448,7 +427,7 @@ class GameObjectController extends AbstractController
     }
 
     #[Route('/game/room/object/delete/{id}', name: 'delete_object_by_room')]
-    public function deleteObjectByRoom($id, ManagerRegistry $doctrine): Response
+    public function deleteObjectByRoom(int $id, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         $objectByRoom = $entityManager->getRepository(ObjectByRoom::class)->find($id);
@@ -490,7 +469,7 @@ class GameObjectController extends AbstractController
     }
 
     #[Route('/game/action/delete/{id}', name: 'action_delete')]
-    public function deleteAction($id, ManagerRegistry $doctrine): Response
+    public function deleteAction(int $id, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         $action = $entityManager->getRepository(Action::class)->find($id);
@@ -532,7 +511,7 @@ class GameObjectController extends AbstractController
     }
     
     #[Route('/game/event/delete/{id}', name: 'event_delete')]
-    public function deleteEvent($id, ManagerRegistry $doctrine): Response
+    public function deleteEvent(int $id, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         $event = $entityManager->getRepository(Event::class)->find($id);
@@ -574,7 +553,7 @@ class GameObjectController extends AbstractController
     }
 
     #[Route('/game/event/object/delete/{id}', name: 'event_by_object_delete')]
-    public function deleteEventByObject($id, ManagerRegistry $doctrine): Response
+    public function deleteEventByObject(int $id, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         $eventByObject = $entityManager->getRepository(EventByObject::class)->find($id);

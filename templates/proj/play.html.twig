@@ -6,43 +6,6 @@
     <h1>Would you like to play a game?</h1>
 
     <div class="gameContainer">
-        <div class="gameCanvas">
-
-            <div class="roomBackground" style="background-image: url('{{ asset(game.getCurrentRoom().getBackground()) }}');">
-                {% for gameObject in game.getCurrentRoom().getGameObjects() %}
-                  <div class="gameObjectContainer" style="left: {{ gameObject.getPositionX() }}px; top: {{ gameObject.getPositionY() }}px;">
-                    <div id="gameObject-{{ loop.index }}" class="gameObject {{ gameObject.getEffect() ? gameObject.getEffect() : '' }}" data-game-object-id="{{ gameObject.getObjId() }}">                          
-                        <div class="gameObjectImage" style="background-image: url('{{ asset(gameObject.getImage()) }}');"></div>
-                      <div class="optionsContainer">
-                        <div class="gameObjectName">{{ gameObject.getName() }}</div>
-                        <div class="options">
-                            {% for option in gameObject.onClick() %}
-                            <button class="optionButton" data-option="{{ option.eventId }}">{{ option.eventName }}</button>
-                          {% endfor %}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-              
-
-            <div class="playerInfo">
-                <img src="{{ asset(game.getPlayer().getAvatar()) }}" alt="Player Avatar" class="playerAvatar">
-                <div class="playerName">{{ game.getPlayer().getName() }}</div>
-            </div>
-        </div>
-
-        <div class="gameInfo">
-            <div class="roomDescription">{{ game.getCurrentRoom().getDescription() }}</div>
-            <div class="messages">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-            <div class="staticText">För att överleva spelet - pilla inte på vassa föremål, bubblande syra eller kaninen. Plocka upp nyckeln och handgranaten. Kasta handgranaten i rummet med kaninen. Använd nyckeln i rummet med låset.</div>
-        </div>  
-
         <div class="inventoryRow">
             {% for i in 1..6 %}
                 <div class="inventorySlot">
@@ -63,6 +26,44 @@
             {% endfor %}
             <div class="inventorySpace"></div>
         </div>
+        <div class="gameCanvas">
+            
+
+            <div class="playerInfo">
+                <img src="{{ asset(game.getPlayer().getAvatar()) }}" alt="Player Avatar" class="playerAvatar">
+                <div class="playerName">{{ game.getPlayer().getName() }}</div>
+            </div>
+            <div class="roomBackground" style="background-image: url('{{ asset(game.getCurrentRoom().getBackground()) }}');">
+                {% for gameObject in game.getCurrentRoom().getGameObjects() %}
+                <div class="gameObjectContainer" style="left: {{ gameObject.getPositionX() }}px; top: {{ gameObject.getPositionY() }}px; width: {{ gameObject.getWidth()|default(100) }}px; height: {{ gameObject.getHeight()|default(100) }}px; z-index: {{ gameObject.getZIndex()|default(999) }}; position: absolute;">
+                    <div id="gameObject-{{ loop.index }}" class="gameObject {{ gameObject.getEffect() ? gameObject.getEffect() : '' }}" data-game-object-id="{{ gameObject.getObjId() }}">                          
+                        <div class="gameObjectImage" style="background-image: url('{{ asset(gameObject.getImage()) }}');"></div>
+                        <div class="optionsContainer">
+                            <div class="gameObjectName">{{ gameObject.getName() }}</div>
+                            {% set onClickOptions = gameObject.onClick()|default([]) %}
+                            {% if onClickOptions is iterable %}
+                                <div class="options">
+                                    {% for option in onClickOptions %}
+                                        <button class="optionButton" data-option="{{ option.eventId }}">{{ option.eventName }}</button>
+                                    {% endfor %}
+                                </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+        </div>
+
+        <div class="gameInfo">
+            <div class="roomDescription">{{ game.getCurrentRoom().getDescription() }}</div>
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            <div class="staticText">För att överleva spelet - pilla inte på vassa föremål, bubblande syra eller kaninen. Plocka upp den vänstra tavlan i galleriet och nyckeln som gömmer sig bakom den. Plocka upp handgranaten i rummet till höger i fyrvägskorningen. Kasta handgranaten i rummet med kaninen. Använd nyckeln i rummet med låset.</div>
+        </div>  
  
         <script>
             document.addEventListener('DOMContentLoaded', function() {
