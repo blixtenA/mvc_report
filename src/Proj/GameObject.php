@@ -225,8 +225,10 @@ class GameObject
      * Initialize and populate the GameObject from a room.
      *
      */
-    public function initFromRoom($objectByRoom, $gameObject)
+    public function initFromRoom($objectByRoom, $gameObject, $doctrine, $roomID)
     {
+        $entityManager = $doctrine->getManager();
+
         $positionX = $objectByRoom->getPositionX();
         $positionY = $objectByRoom->getPositionY();
         $positionZ = $objectByRoom->getPositionZ();
@@ -244,6 +246,28 @@ class GameObject
         $this->effect = $gameObject->getEffect();
         $this->width = $width;
         $this->height = $height;
+
+        /* Fetch the event IDs associated with the current GameObject */
+        $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
+        /** @phpstan-ignore-next-line */
+        $eventIDs = $eventByObjectRepository->findEventIDsByObjectIDAndLocation($gameObject->getId(), $roomID);
+
+        /* Retrieve the corresponding events based on the fetched event IDs */
+        $eventRepository = $entityManager->getRepository(\App\Entity\Event::class);
+        $events = $eventRepository->findBy(['id' => $eventIDs]);
+
+        /* Create an array of event_id/name pairs for the current GameObject */
+        $eventOptions = [];
+        foreach ($events as $event) {
+            $eventOptions[$event->getId()] = $event->getName();
+        }
+
+        /* Set the event options for the current GameObject */
+        foreach ($eventOptions as $eventID => $eventName) {
+            $this->addOption($eventID, $eventName);
+        }
     }
+
+    
 
 }

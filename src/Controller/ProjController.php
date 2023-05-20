@@ -40,7 +40,6 @@ class ProjController extends AbstractController
     ): Response
     {
         $entityManager = $doctrine->getManager();
-        error_log("test",0);
 
         $game = new Game();
 
@@ -95,25 +94,17 @@ class ProjController extends AbstractController
             $roomPositionX = $roomPositions[$roomEntity->getId()]['pos_x'];
             $roomPositionY = $roomPositions[$roomEntity->getId()]['pos_y'];
 
-            error_log('Processing Room ID: ' . $roomEntity->getId() . ', X: ' . $roomPositionX . ', Y: ' . $roomPositionY, 0);
-
             foreach ($rooms as $neighborEntity) {
                 $neighborPositionX = $roomPositions[$neighborEntity->getId()]['pos_x'];
                 $neighborPositionY = $roomPositions[$neighborEntity->getId()]['pos_y'];
 
-                error_log('Processing Neighbor ID: ' . $neighborEntity->getId() . ', X: ' . $neighborPositionX . ', Y: ' . $neighborPositionY, 0);
-
                 if ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY - 1) {
-                    error_log('Adding South neighbor: ' . $roomEntity->getId() . ' => ' . $neighborEntity->getId(), 0);
                     $roomObjects[$roomEntity->getId()]->addNeighbor('South', $roomObjects[$neighborEntity->getId()]);
                 } elseif ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY + 1) {
-                    error_log('Adding North neighbor: ' . $roomEntity->getId() . ' => ' . $neighborEntity->getId(), 0);
                     $roomObjects[$roomEntity->getId()]->addNeighbor('North', $roomObjects[$neighborEntity->getId()]);
                 } elseif ($neighborPositionX === $roomPositionX - 1 && $neighborPositionY === $roomPositionY) {
-                    error_log('Adding West neighbor: ' . $roomEntity->getId() . ' => ' . $neighborEntity->getId(), 0);
                     $roomObjects[$roomEntity->getId()]->addNeighbor('West', $roomObjects[$neighborEntity->getId()]);
                 } elseif ($neighborPositionX === $roomPositionX + 1 && $neighborPositionY === $roomPositionY) {
-                    error_log('Adding East neighbor: ' . $roomEntity->getId() . ' => ' . $neighborEntity->getId(), 0);
                     $roomObjects[$roomEntity->getId()]->addNeighbor('East', $roomObjects[$neighborEntity->getId()]);
                 }
             }
@@ -121,64 +112,8 @@ class ProjController extends AbstractController
             $game->addRoom($roomObjects[$roomEntity->getId()]);
         }
 
-        /* Load Objects into each Room */
-        $objectByRoomRepository = $entityManager->getRepository(\App\Entity\ObjectByRoom::class);
-        $gameObjectsRepository = $entityManager->getRepository(\App\Entity\GameObject::class);
-
-
-/*        foreach ($game->getRooms() as $room) {
-            $gameObject = new GameObject();
-        
-            $gameObject->initializeFromRoom($room);
-        
-        } */
-
         foreach ($game->getRooms() as $room) {
-            $roomID = $room->getId();
-            $objectByRooms = $objectByRoomRepository->findBy(['room_id' => $roomID]);
-            $objectIDs = [];
-
-            foreach ($objectByRooms as $objectByRoom) {
-                if ($objectByRoom->getSequence() === 1) {
-                    $objectIDs[] = $objectByRoom->getObjectId();
-                }
-            }
-
-            $gameObjects = $gameObjectsRepository->findBy(['id' => $objectIDs]);
-
-            foreach ($gameObjects as $gameObject) {
-                /* Find the object_by_room entry for the current GameObject */
-                $objectByRoom = $objectByRoomRepository->findOneBy([
-                    'room_id' => $roomID,
-                    'object_id' => $gameObject->getId(),
-                    'sequence' => 1,
-                ]);
-
-                /* Retrieve the position values from object_by_room */
-                $newGameObject = new GameObject();
-                $newGameObject->initFromRoom($objectByRoom, $gameObject);
-
-                /* Fetch the event IDs associated with the current GameObject */
-                $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
-                /** @phpstan-ignore-next-line */
-                $eventIDs = $eventByObjectRepository->findEventIDsByObjectIDAndLocation($gameObject->getId(), $roomID);
-                /* Retrieve the corresponding events based on the fetched event IDs */
-                $eventRepository = $entityManager->getRepository(\App\Entity\Event::class);
-                $events = $eventRepository->findBy(['id' => $eventIDs]);
-
-                /* Create an array of event_id/name pairs for the current GameObject */
-                $eventOptions = [];
-                foreach ($events as $event) {
-                    $eventOptions[$event->getId()] = $event->getName();
-                }
-
-                /* Set the event options for the current GameObject */
-                foreach ($eventOptions as $eventID => $eventName) {
-                    $newGameObject->addOption($eventID, $eventName);
-                }
-
-                $room->addGameObject($newGameObject);
-            }
+            $room->loadObjects(1, $doctrine);
         }
 
         /* to do: custom player */

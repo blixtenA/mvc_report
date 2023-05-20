@@ -225,4 +225,39 @@ class Room
     {
         error_log("advance",0);
     }
+
+    public function loadObjects(int $sequence, $doctrine): void
+    {
+        $entityManager = $doctrine->getManager();
+        $roomID = $this->getId();
+
+        /* Load Objects into each Room */
+        $objectByRoomRepository = $entityManager->getRepository(\App\Entity\ObjectByRoom::class);
+        $gameObjectsRepository = $entityManager->getRepository(\App\Entity\GameObject::class);
+        
+        $objectByRooms = $objectByRoomRepository->findBy(['room_id' => $roomID]);
+        $objectIDs = [];
+
+        foreach ($objectByRooms as $objectByRoom) {
+            if ($objectByRoom->getSequence() === 1) {
+                $objectIDs[] = $objectByRoom->getObjectId();
+            }
+        }
+
+        $gameObjects = $gameObjectsRepository->findBy(['id' => $objectIDs]);
+
+        foreach ($gameObjects as $gameObject) {
+            /* Find the object_by_room entry for the current GameObject */
+            $objectByRoom = $objectByRoomRepository->findOneBy([
+                'room_id' => $roomID,
+                'object_id' => $gameObject->getId(),
+                'sequence' => $sequence,
+            ]);
+
+            /* Retrieve the position values from object_by_room */
+            $newGameObject = new GameObject();
+            $newGameObject->initFromRoom($objectByRoom, $gameObject, $doctrine, $roomID);
+            $this->addGameObject($newGameObject);
+        }
+    }
 }
