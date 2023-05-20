@@ -41,80 +41,10 @@ class ProjController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
 
-        $game = new Game();
-
         /* Load Game */
         $gameID = 1;
-
-        $gameRepository = $entityManager->getRepository(\App\Entity\Game::class);
-        $map = $gameRepository->findBy(['game_id' => $gameID]); 
-
-        /* Extract room IDs and positions from the retrieved game entity */
-        $roomIDs = [];
-        $roomPositions = [];
-        foreach ($map as $gameEntity) {
-            $roomIDs[] = $gameEntity->getRoomId();
-            $roomPositions[$gameEntity->getRoomId()] = [
-                'pos_x' => $gameEntity->getPosX(),
-                'pos_y' => $gameEntity->getPosY(),
-            ];
-        }
-
-        /* Fetch the rooms from the Room entity using the extracted room IDs */
-        $roomRepository = $entityManager->getRepository(\App\Entity\Room::class);
-        $rooms = $roomRepository->findBy(['id' => $roomIDs]);
-
-        /* Prepare Rooms and load them into the game */
-        $roomObjects = [];
-        foreach ($rooms as $roomEntity) {
-            $roomID = $roomEntity->getId();
-            $start = null;
-        
-            foreach ($map as $gameEntity) {
-                if ($gameEntity->getRoomId() === $roomID) {
-                    $start = $gameEntity->isStart();
-                    break;
-                }
-            }
-
-            $room = new Room(
-                $roomEntity->getId(),
-                $roomEntity->getName(),
-                $roomEntity->getBackground(),
-                $roomEntity->getDescription(),
-                null,
-                $start
-            );
-
-            $roomObjects[$roomEntity->getId()] = $room;        
-        }
-        
-        /* Find neighboring rooms based on coordinates */
-        foreach ($rooms as $roomEntity) {
-            $roomPositionX = $roomPositions[$roomEntity->getId()]['pos_x'];
-            $roomPositionY = $roomPositions[$roomEntity->getId()]['pos_y'];
-
-            foreach ($rooms as $neighborEntity) {
-                $neighborPositionX = $roomPositions[$neighborEntity->getId()]['pos_x'];
-                $neighborPositionY = $roomPositions[$neighborEntity->getId()]['pos_y'];
-
-                if ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY - 1) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('South', $roomObjects[$neighborEntity->getId()]);
-                } elseif ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY + 1) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('North', $roomObjects[$neighborEntity->getId()]);
-                } elseif ($neighborPositionX === $roomPositionX - 1 && $neighborPositionY === $roomPositionY) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('West', $roomObjects[$neighborEntity->getId()]);
-                } elseif ($neighborPositionX === $roomPositionX + 1 && $neighborPositionY === $roomPositionY) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('East', $roomObjects[$neighborEntity->getId()]);
-                }
-            }
-
-            $game->addRoom($roomObjects[$roomEntity->getId()]);
-        }
-
-        foreach ($game->getRooms() as $room) {
-            $room->loadObjects(1, $doctrine);
-        }
+        $game = new Game($gameID);
+        $game->initGame($doctrine);
 
         /* to do: custom player */
         $player = new Player(
@@ -122,18 +52,6 @@ class ProjController extends AbstractController
             "img/proj/characters/character1.png"
         );
         $game->setPlayer($player);
-
-        /* Set the starting room and let the mayhem begin. */
-        $startingRoom = null;
-        foreach ($game->getRooms() as $room) {
-            if ($room->isStart()) {
-                $startingRoom = $room;
-                break;
-            }
-        }
-        $game->setCurrentRoom($startingRoom);
-
-        error_log($game->getCurrentRoom()->getName(),0);
 
         /* Save to session */
         $session->set("game", $game);
