@@ -26,7 +26,7 @@ class GameTest extends TestCase
         $background = 'room1_background.jpg';
         $description = 'This is Room 1.';
         $neighbors = [];
-        $start = 1;
+        $start = true;
 
         $room = new Room($sequence, $roomId, $name, $background, $description, $neighbors, $start);
         $this->assertInstanceOf(Room::class, $room);

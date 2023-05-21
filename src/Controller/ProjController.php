@@ -82,21 +82,27 @@ class ProjController extends AbstractController
         /* Get the game from the session */
         $game = $session->get("game");
     
-        $gameObjectId = $request->query->get('gameObjectId');
-        $eventId = $request->query->get('eventId');
+        $gameObjectId = (int) $request->query->get('gameObjectId');
+        $eventId = (int) $request->query->get('eventId');
 
-        $event = new Event();
-        $event->initEvent($game, $gameObjectId, $eventId, $doctrine);
-    
         /* Retrieve the current game object from the room or player's inventory */
         $gameObject = $game->getCurrentRoom()->getGameObjectById($gameObjectId);
         if (!$gameObject) {
             $gameObject = $game->getPlayer()->getInventoryById($gameObjectId);
+            error_log("found in inventory",0);
+        }
+        else {
+            error_log("foudn in room",0);
         }
     
         if (!$gameObject) {
             error_log("Object not found in controller", 0);
         }
+
+        $event = new Event();
+        $event->initEvent($game, $gameObjectId, $eventId, $doctrine);
+    
+
     
         /* Do action */
         /** @phpstan-ignore-next-line */

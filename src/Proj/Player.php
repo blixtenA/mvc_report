@@ -79,10 +79,12 @@ class Player
         $inventoryString = '';
         foreach ($this->inventory as $gameObject) {
             $inventoryString .= 'GameObject: ID=' . $gameObject->getObjId() . ', Name=' . $gameObject->getName() . '; ';
-//            error_log("options: ". $gameObject->getOptions(),0);
+    
+            // Log the options for the current object
+//            error_log('Options for ' . $gameObject->getName() . ': ' . var_export($gameObject->getOptions(), true), 0);
         }
         error_log('Inventory: ' . $inventoryString);
-
+    
         return $this->inventory;
     }
     

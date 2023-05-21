@@ -161,7 +161,7 @@ class Event
         }
     
         if (!$gameObject) {
-            error_log("Object not found in controller", 0);
+            error_log("Object not found in initEvent", 0);
         }
     
         /* Retrieve the event from the database */
@@ -176,8 +176,6 @@ class Event
 
         if ($eventByObject) {
             $location = $eventByObject->getLocation();
-            error_log("location ". $location,0);
-            error_log("ebo id ". $eventByObject->getId(),0);
             $actions = [
                 $eventByObject->getAction1(),
                 $eventByObject->getAction2(),
@@ -194,7 +192,8 @@ class Event
                 $text = $event->getText();
                 $name = $event->getName();
 
-            /* Create a new Event object with the data */
+            /* Create a new Event object with the data */    
+            // @phpstan-ignore-next-line
             $this->eventId = $eventId;
             $this->name = $name;
             $this->text = $text;

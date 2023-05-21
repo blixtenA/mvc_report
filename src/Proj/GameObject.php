@@ -12,18 +12,14 @@ use App\Entity\ObjectByRoom;
 use App\Entity\EventByObject;
 use App\Entity\GameObject as AppGameObject;
 
-class GameObject
+class GameObject 
 {
     private string $image;
     private int $positionX;
     private int $positionY;
-    // @phpstan-ignore-next-line
     private ?int $positionZ = 0;
     private bool $clickable;
     private string $name;
-    /**
-     * @var array<string, mixed>
-     */
     private ?array $options = null;
     private int $objId;
     private ?string $effect;
@@ -192,8 +188,6 @@ class GameObject
      */
     public function hasClickOptions(): bool
     {
-//        error_log("this object name: ". $this->name,0);
-//        error_log("empty? .." . empty($this->options),0);
         return !empty($this->options);
     }
 
@@ -211,8 +205,8 @@ class GameObject
                 'eventName' => $eventName,
             ];
 
-//            error_log("eventid: ". $eventId,0);
-//            error_log("eventName: ". $eventName,0);
+            error_log("eventid: ". $eventId,0);
+            error_log("eventName: ". $eventName,0);
         }
 
         return $result;
@@ -223,10 +217,13 @@ class GameObject
      */
     public function getOptions(): array
     {
+        error_log('1 getOptions: ' . var_export($this->options, true),0);
+
         $options = [];
         foreach ($this->options as $optionKey => $eventId) {
             $options[$optionKey] = $eventId;
         }
+        error_log('2 getOptions: ' . var_export($options, true),0);
         return $options;
     }
     
@@ -237,11 +234,11 @@ class GameObject
     
     public function addOption(int|string $key, mixed $value): void
     {
-//        error_log("Before adding option: Options = " . print_r($this->options, true), 0);
+        error_log("Before adding option: Options = " . print_r($this->options, true), 0);
         /** @phpstan-ignore-next-line */
         $this->options[$key] = $value;
-//        error_log("After adding option: Options = " . print_r($this->options, true), 0);
-//        error_log("Added option: key = $key, value = $value", 0);
+        error_log("After adding option: Options = " . print_r($this->options, true), 0);
+        error_log("Added option: key = $key, value = $value", 0);
     }
     
     

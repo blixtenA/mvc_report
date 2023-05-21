@@ -17,9 +17,12 @@ class Action
      */
     private array $messages = [];
     private Room $room;
+    /**
+ * @var array<int>
+ */
     private array $eventActions = [];
-    private $reloadRoom = false;
-    private $currentAction = null;
+    private bool $reloadRoom = false;
+    private ?\App\Entity\Action $currentAction = null;
 
     public function __construct(Game $game, Event $event, ?GameObject $object, EntityManagerInterface $entityManager)
     {
@@ -182,8 +185,22 @@ class Action
      */
     function addRead(): void 
     {
-        error_log("add read",0);
-        $this->object->addOption(21, "Read");
+        $player = $this->game->getPlayer();
+
+        $matchingObject = null;
+        foreach ($player->getInventory() as $gameObject) {
+            if ($gameObject->getObjId() === $this->object->getObjId()) {
+                $matchingObject = $gameObject;
+                break;
+            }
+        }
+        if ($matchingObject !== null) {    
+            $matchingObject->addOption(11, "Read");
+    
+            error_log("in add read, After adding option: Options = " . print_r($matchingObject->getOptions(), true), 0);
+        } else {
+            error_log("Matching object not found in player's inventory for objId: " . $this->object->getObjId(), 0);
+        }
     }
 
     /**
@@ -239,15 +256,19 @@ class Action
     /* Remove the object from the current room */
     function removeFromRoom(): void
     {            
+        error_log("remove from room");
+
         $this->room->removeGameObject($this->object);
     }
 
     /* Action: move an object from the current room to the player's inventory */
     function addToInventory() : void
     {
+        error_log("add to inventory",0);
 
         /* Get the player from the game */
         $player = $this->game->getPlayer();
+        
     
         /* Create the new object for the player's inventory */
         $newObject = new GameObject(

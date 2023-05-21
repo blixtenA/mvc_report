@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2023-05-15 00:16:07        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2023-05-21 20:57:59        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -93,7 +93,7 @@
                             <path d="M0 0h24v24H0z" fill="none">
                             <path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z">
                         </svg>
-                        Violations (5)
+                        Violations (15)
                     </a>
                 </li>
                                     <li>
@@ -330,6 +330,62 @@
         "relations": []
     },
     {
+        "name": "\\App\\Controller\\ProjController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "\\Symfony\\Component\\HttpFoundation\\Response",
+            "\\Symfony\\Component\\HttpFoundation\\Request",
+            "\\Symfony\\Component\\HttpFoundation\\Session\\SessionInterface",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Proj\\Game",
+            "\\App\\Proj\\Player",
+            "\\Symfony\\Component\\Routing\\RouterInterface",
+            "\\App\\Proj\\Event",
+            "\\App\\Proj\\Action"
+        ]
+    },
+    {
+        "name": "\\Doctrine\\Persistence\\ManagerRegistry",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Proj\\Game",
+        "size": 3000,
+        "relations": [
+            "\\App\\Proj\\Room",
+            "\\App\\Proj\\Player"
+        ]
+    },
+    {
+        "name": "\\App\\Proj\\Player",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Routing\\RouterInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Proj\\Event",
+        "size": 3000,
+        "relations": [
+            "\\App\\Proj\\Game"
+        ]
+    },
+    {
+        "name": "\\App\\Proj\\Action",
+        "size": 3000,
+        "relations": [
+            "\\App\\Proj\\Game",
+            "\\App\\Proj\\Event",
+            "\\Doctrine\\ORM\\EntityManagerInterface",
+            "\\App\\Proj\\GameObject"
+        ]
+    },
+    {
         "name": "\\App\\Controller\\LibraryController",
         "size": 3000,
         "relations": [
@@ -342,11 +398,6 @@
         ]
     },
     {
-        "name": "\\Doctrine\\Persistence\\ManagerRegistry",
-        "size": 3000,
-        "relations": []
-    },
-    {
         "name": "\\App\\Entity\\Book",
         "size": 3000,
         "relations": []
@@ -357,11 +408,40 @@
         "relations": []
     },
     {
+        "name": "\\App\\Controller\\RoomController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "\\Symfony\\Component\\HttpFoundation\\Response"
+        ]
+    },
+    {
         "name": "\\App\\Controller\\BookController",
         "size": 3000,
         "relations": [
             "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
             "\\Symfony\\Component\\HttpFoundation\\Response"
+        ]
+    },
+    {
+        "name": "\\App\\Controller\\GameObjectController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "\\Symfony\\Component\\HttpFoundation\\Response",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\Symfony\\Component\\HttpFoundation\\Request",
+            "\\Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
+            "\\App\\Repository\\GameRepository"
+        ]
+    },
+    {
+        "name": "\\App\\Repository\\GameRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Game"
         ]
     },
     {
@@ -401,6 +481,44 @@
         ]
     },
     {
+        "name": "\\App\\Controller\\EventController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "\\Symfony\\Component\\HttpFoundation\\Response"
+        ]
+    },
+    {
+        "name": "\\App\\Controller\\ProjJSONController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "\\Symfony\\Component\\HttpFoundation\\JsonResponse",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface",
+            "\\Symfony\\Component\\HttpFoundation\\Request",
+            "\\Symfony\\Component\\Serializer\\SerializerInterface",
+            "\\App\\Entity\\GameObject",
+            "\\Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
+            "\\Symfony\\Component\\HttpFoundation\\Response"
+        ]
+    },
+    {
+        "name": "\\Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Serializer\\SerializerInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Entity\\GameObject",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\App\\Controller\\ProductController",
         "size": 3000,
         "relations": [
@@ -434,7 +552,27 @@
         ]
     },
     {
-        "name": "\\App\\Form\\BookType",
+        "name": "\\Doctrine\\ORM\\EntityManagerInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Proj\\GameObject",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Proj\\Room",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Entity\\ObjectByRoom",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Form\\ActionType",
         "size": 3000,
         "relations": [
             "\\Symfony\\Component\\Form\\AbstractType",
@@ -458,6 +596,155 @@
         "relations": []
     },
     {
+        "name": "\\App\\Form\\GameObjectType",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Form\\AbstractType",
+            "\\Symfony\\Component\\Form\\DataTransformerInterface",
+            "\\Symfony\\Component\\Form\\FormBuilderInterface",
+            "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "\\Symfony\\Component\\Form\\DataTransformerInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Form\\GameType",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Form\\AbstractType",
+            "\\Symfony\\Component\\Form\\FormBuilderInterface",
+            "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "\\App\\Form\\EventByObjectType",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Form\\AbstractType",
+            "\\Symfony\\Component\\Form\\FormBuilderInterface",
+            "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "\\App\\Form\\EventType",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Form\\AbstractType",
+            "\\Symfony\\Component\\Form\\FormBuilderInterface",
+            "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "\\App\\Form\\BookType",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Form\\AbstractType",
+            "\\Symfony\\Component\\Form\\FormBuilderInterface",
+            "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "\\App\\Form\\RoomType",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Form\\AbstractType",
+            "\\Symfony\\Component\\Form\\FormBuilderInterface",
+            "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "\\App\\Form\\ObjectByRoomType",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Form\\AbstractType",
+            "\\Symfony\\Component\\Form\\FormBuilderInterface",
+            "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
+        ]
+    },
+    {
+        "name": "\\App\\Repository\\RoomRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Room"
+        ]
+    },
+    {
+        "name": "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Entity\\Room",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\EventRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Event"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Event",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Entity\\Game",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\StartRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Start"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Start",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\ActionRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\Action"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\Action",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\GameMapRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\GameMap"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\GameMap",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\App\\Repository\\BookRepository",
         "size": 3000,
         "relations": [
@@ -467,7 +754,48 @@
         ]
     },
     {
-        "name": "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+        "name": "\\App\\Repository\\GameObjectRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\GameObject"
+        ]
+    },
+    {
+        "name": "\\App\\Repository\\ObjectByRoomRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\ObjectByRoom"
+        ]
+    },
+    {
+        "name": "\\App\\Repository\\EventByObjectRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\EventByObject"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\EventByObject",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Repository\\TextByObjectEventRepository",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
+            "\\App\\Entity\\TextByObjectEvent"
+        ]
+    },
+    {
+        "name": "\\App\\Entity\\TextByObjectEvent",
         "size": 3000,
         "relations": []
     },

@@ -8,7 +8,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class GameObjectTypeTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'id' => 1,
@@ -35,14 +35,14 @@ class GameObjectTypeTest extends TypeTestCase
         }
     }
 
-    public function testReverseTransform()
+    public function testReverseTransform(): void
     {
         $gameObjectType = new GameObjectType();
         $result = $gameObjectType->reverseTransform('value');
         $this->assertNull($result);
     }
 
-    public function testTransform()
+    public function testTransform(): void
     {
         $gameObjectType = new GameObjectType();
         $result = $gameObjectType->transform('value');

@@ -50,7 +50,7 @@ class GameObjectController extends AbstractController
         $rooms = $roomRepository->findAll();
     
         $gameRepository = $doctrine->getRepository(Game::class);
-        $gameIds = $gameRepository->findUniqueGameIds();
+        $gameIds = $gameRepository->findUniqueGameIds(); // @phpstan-ignore-line
     
         $objectByRoomRepository = $doctrine->getRepository(ObjectByRoom::class);
         $objectByRooms = $objectByRoomRepository->findAll();
