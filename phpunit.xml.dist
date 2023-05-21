@@ -17,21 +17,21 @@
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
     </php>
 
-    <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>
         </include>
         <report>
-            <clover outputFile="./docs/coverage.clover"/>
-            <html outputDirectory="./docs/coverage/coverage" lowUpperBound="35" highLowerBound="70"/>
+            <clover outputFile="docs/coverage.clover"/>
+            <html outputDirectory="docs/coverage" lowUpperBound="35" highLowerBound="70"/>
         </report>
     </coverage>
+
+    <testsuites>
+        <testsuite name="all">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />

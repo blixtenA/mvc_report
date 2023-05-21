@@ -40,28 +40,6 @@ class GameObjectController extends AbstractController
         ]);
     }
 
-    #[Route('/proj/game/showobjects', name: 'game_object_show_all')]
-    public function showAllObjects(ManagerRegistry $doctrine, NormalizerInterface $normalizer): JsonResponse
-    {
-        $entityManager = $doctrine->getManager();
-        $gameObjects = $entityManager->getRepository(GameObject::class)->findAll();
-        $normalizedData = $normalizer->normalize($gameObjects, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
-        $jsonContent = json_encode($normalizedData, JSON_PRETTY_PRINT);
-
-        return new JsonResponse($jsonContent, 200, [], true);
-    }
-    
-    #[Route('/proj/game/showactions', name: 'game_action_show_all')]
-    public function showAllActions(ManagerRegistry $doctrine, NormalizerInterface $normalizer): JsonResponse
-    {
-        $entityManager = $doctrine->getManager();
-        $gameActions = $entityManager->getRepository(Action::class)->findAll();
-        $normalizedData = $normalizer->normalize($gameActions, null, [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
-        $jsonContent = json_encode($normalizedData, JSON_PRETTY_PRINT);
-    
-        return new JsonResponse($jsonContent, 200, [], true);
-    }
-
     #[Route('/game/viewall', name: 'game_view_all')]
     public function readMany(ManagerRegistry $doctrine): Response
     {

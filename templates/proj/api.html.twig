@@ -5,10 +5,21 @@
 {% block body %}
     <h1>Available JSON Routes</h1>
     <ul>
-        <li><a href="{{ path('game_object_show_all') }}">proj/game/showobjects</a> - visa alla spelobjekt</li>
-        <li><a href="{{ path('game_action_show_all') }}">proj/game/showactions</a> - visa alla handlingar</li>
-        <li><a href="{{ path('game_view_all') }}">proj/game/viewall</a> - visa allt i spelobjektet</li>
-
+        <li><a href="{{ path('game_object_show_all') }}">proj/api/showobjects</a> - visa alla spelobjekt</li>
+        <li><a href="{{ path('game_action_show_all') }}">proj/api/showactions</a> - visa alla handlingar</li>
+        <li><a href="{{ path('game_view_all_JSON') }}">proj/api/viewall</a> - visa allt i spelet</li>
+        <form action="{{ path('game_object_create_JSON') }}" method="post">
+            <button type="submit">Create GameObject</button>
+          </form>
+          <form action="{{ path('game_object_delete_JSON', {'id': '__id__'}) }}" method="post">
+            <input type="number" name="id" placeholder="Enter object ID" required>
+            <button type="submit">Delete</button>
+        </form>
+        
+        
+        
+        
+                 
     </ul>
 
 {% endblock %}

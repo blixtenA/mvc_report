@@ -99,7 +99,7 @@
             "@phpstan"
         ],
         "phpdoc": "tools/phpdoc/phpdoc",
-        "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit",
+        "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html docs/ --coverage-clover docs/coverage.clover",
         "phpmetrics": "tools/phpmetrics/vendor/bin/phpmetrics --config=phpmetrics.json"
     },    
     "conflict": {
