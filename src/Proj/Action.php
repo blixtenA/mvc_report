@@ -38,23 +38,35 @@ class Action
         $this->eventActions = $this->event->getActions();
         $key = 0;
         $totalActions = count($this->eventActions);
-
-        foreach ($this->eventActions as $actionId) {
+    
+        while ($key < $totalActions) {
+            $actionId = $this->eventActions[$key];
+    
             if ($this->game->getGameState() === 'Game Over') {
                 $this->addFinalComments();
                 return $this->messages;
             }
     
             if ($actionId !== null) {
-            $action = $this->fetchAction($actionId);
-
+                $action = $this->fetchAction($actionId);
                 $eventAction = $action->getEventAction();
     
                 $this->executeAction($eventAction);
-                $this->messages [] = $action->getText();
-
-            }
+                $this->messages[] = $action->getText();
+    
+                /* Determine if $this->eventActions has been updated */
+                $updatedEventActions = $this->event->getActions();
+    
+                if (count($updatedEventActions) > $totalActions) {
+                    /* Additional actions have been added, adjust the loop */
+                    $this->eventActions = $updatedEventActions;
+                    $totalActions = count($this->eventActions);
+                    $key++;
+                }
+            }    
+            $key++;
         }
+    
         return $this->messages;
     }
     
@@ -125,14 +137,22 @@ class Action
                 break;
             }
         }
-    
+        $emptyIndex = array_search('', $this->eventActions);
         if ($unlock) {
             error_log("adding 16",0);
-            $this->eventActions[] = 16;
+            if ($emptyIndex !== false) {
+                $this->eventActions[$emptyIndex] = 16;
+            } else {
+                $this->eventActions[] = 16;
+            }
         }
         else {
-            error_log("adding 19",0);
-            $this->eventActions[] = 17;
+            error_log("adding 17",0);
+            if ($emptyIndex !== false) {
+                $this->eventActions[$emptyIndex] = 17;
+            } else {
+                $this->eventActions[] = 17;
+            }
         }
 
     }
@@ -141,7 +161,7 @@ class Action
     {
         error_log("unnlock yes",0);
         $this->messages [] = $this->event->getText(); /* wrong text */
-        removeFromRoom();
+        $this->removeFromRoom();
         $this->room->sequenceAdvance();
     }
 
