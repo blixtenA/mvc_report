@@ -230,7 +230,7 @@ class Room
     }
 
     /**
-     * Load objects into the road.
+     * Load objects into the room.
      */
     public function loadObjects(int $sequence, mixed $doctrine): void
     {

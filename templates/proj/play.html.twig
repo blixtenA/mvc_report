@@ -3,7 +3,7 @@
 {% block title %}Game{% endblock %}
 
 {% block body %}
-    <h1>Would you like to play a game?</h1>
+    <h1>Cube - BTH edition</h1>
 
     <div class="gameContainer">
 
@@ -16,18 +16,19 @@
                         <div class="optionsContainer inventoryOptions">
                             <div class="gameObjectName">{{ gameObject.getName() }}</div>
                             {% if gameObject.hasClickOptions() %}
-                            {% set onClickOptions = gameObject.onClick() %}
-                            <div class="options">
-                                {% for option in onClickOptions %}
-                                    <button class="optionButton" data-option="{{ option.eventId }}">{{ option.eventName }}</button>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                                {% set onClickOptions = gameObject.onClick() %}
+                                <div class="options">
+                                    {% for option in onClickOptions %}
+                                        <button class="optionButton" data-option="{{ option.eventId }}">{{ option.eventName }}</button>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endif %}                
                 </div>
             {% endfor %}
+            
             <div class="inventorySpace"></div>
         </div>
 

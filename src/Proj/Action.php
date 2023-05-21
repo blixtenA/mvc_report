@@ -44,6 +44,7 @@ class Action
     
         while ($key < $totalActions) {
             $actionId = $this->eventActions[$key];
+            error_log("action id: ".$actionId,0);
     
             if ($this->game->getGameState() === 'Game Over') {
                 $this->addFinalComments();
@@ -99,7 +100,11 @@ class Action
         } elseif ($eventAction === 'unlockNo') {
             $this->failMessage();          
         } elseif ($eventAction === 'deathByBunny') {
-            $this->deathByBunny();                     
+            $this->deathByBunny();
+        } elseif ($eventAction === 'addRead') {
+            $this->addRead();
+        } elseif ($eventAction === 'addThrow') {
+            $this->addThrow();                     
         } elseif (strpos($eventAction, 'walk') === 0) {
             $direction = substr($eventAction, 4);
             $this->walk($direction);
@@ -168,6 +173,17 @@ class Action
     function addThrow(): void 
     {
         $this->object->addOption(20, "Throw");
+    }
+
+        /**
+     * Add the "Read" option to the object.
+     *
+     * @return void
+     */
+    function addRead(): void 
+    {
+        error_log("add read",0);
+        $this->object->addOption(21, "Read");
     }
 
     /**

@@ -146,7 +146,7 @@ class GameObject
 
     public function getPositionZ(): int
     {
-        return $this->positionY;
+        return $this->positionZ;
     }
 
     public function setPositionZ(int $position): void
@@ -192,6 +192,8 @@ class GameObject
      */
     public function hasClickOptions(): bool
     {
+//        error_log("this object name: ". $this->name,0);
+//        error_log("empty? .." . empty($this->options),0);
         return !empty($this->options);
     }
 
@@ -200,14 +202,20 @@ class GameObject
      */
     public function onClick(): array
     {
-        $options = [];
-        foreach ($this->options as $eventId => $eventName) {
-            $options[] = [
+        $options = $this->options ?? [];
+        $result = [];
+
+        foreach ($options as $eventId => $eventName) {
+            $result[] = [
                 'eventId' => $eventId,
                 'eventName' => $eventName,
             ];
+
+//            error_log("eventid: ". $eventId,0);
+//            error_log("eventName: ". $eventName,0);
         }
-        return $options;
+
+        return $result;
     }
     
     /**
@@ -229,10 +237,13 @@ class GameObject
     
     public function addOption(int|string $key, mixed $value): void
     {
+//        error_log("Before adding option: Options = " . print_r($this->options, true), 0);
         /** @phpstan-ignore-next-line */
         $this->options[$key] = $value;
-        error_log("Added option: key = $key, value = $value", 0);
+//        error_log("After adding option: Options = " . print_r($this->options, true), 0);
+//        error_log("Added option: key = $key, value = $value", 0);
     }
+    
     
     /**
      * Initialize and populate the GameObject from a room.

@@ -63,10 +63,9 @@ class Player
      */
     public function removeFromInventory(GameObject $item): void
     {
-        $key = array_search($item, $this->inventory);
-        if ($key !== false) {
-            unset($this->inventory[$key]);
-        }
+        $this->inventory = array_values(array_filter($this->inventory, function ($inventoryItem) use ($item) {
+            return $inventoryItem !== $item;
+        }));
     }
 
     /**
@@ -77,8 +76,16 @@ class Player
      */
     public function getInventory(): array
     {
+        $inventoryString = '';
+        foreach ($this->inventory as $gameObject) {
+            $inventoryString .= 'GameObject: ID=' . $gameObject->getObjId() . ', Name=' . $gameObject->getName() . '; ';
+//            error_log("options: ". $gameObject->getOptions(),0);
+        }
+        error_log('Inventory: ' . $inventoryString);
+
         return $this->inventory;
     }
+    
 
     /**
      * Retrieves an array of inventory item names.

@@ -1,0 +1,28 @@
+{% extends "proj/base.html.twig" %}
+
+{% block title %}About{% endblock %}
+
+{% block body %}
+    <h1>Om projektet</h1>
+    <div class="columns">
+        <div class="column">
+            <h2>Om databasen</h2>
+            <p>Bygge med ORM/Doctrine / SQLite</p>
+            <ul>
+                <li>Game - en klass som i sin databasform innehåller kartan för spelet och kopplingarna som behövs för att rummen ska kunna hitta varandra.</li>
+                <li>Room - en klass som fokuserar på själva rummen i spelet. Rummen kan innehålla objekt, och objekten i sin tur håller ordning på sina respektive positioner i rummet. Varje rum laddas med en sekvens som kan förnyas. De startar på sekvens 1. När ett rum går från sekvens 1 till 2 laddas det om med nya objekt - detta använder jag t.ex. när spelaren öppnar ett lås. Då laddas rummet om, tar bort det gamla låset, och lägger istället till en ny utgång.</li>
+                <li>GameObject - klassen för "prylarna" i spelet, vilket kan vara allt från nycklar till utgångar. Helt enkelt allt som ska läggas in i rummen. Objekten kan ha egenskaper som t.ex. att de roterar eller droppar och detat sätts automatiskt i templaten om uppsättningarna för det finns i css. Varje objekt kan också ha optioner som tillåter spelaren att interagera med objektet på olika sätt (events)</li>
+                <li>Event - klassen för spelar-händelser, som till exempel att gå norrut eller plocka upp något.</li>
+                <li>Action - klassen för allting som händer... man kan tänka på det som konsekvenser av spelarens handlingar. Om spelaren försöker plocka upp det snurrande sågbladet kommer spelaren att dö - så actions är de handlingar som utförs av spelet.</li>
+                <li>Diverse kopplingstabeller för uppsättningar, såsom objekt per rum, event per objekt osv. ObjectByRoom har som uppgift att koppla ett object till ett rum, medan EventByObject kopplar händelser till ett object (även detta per rum)</li>
+            </ul>
+            <p>Om jag ska vara självkritisk, så är jag inte 100% nöjd med tabellerna - men de funkar. Med mer tid hade jag velat reda ut de sista många-till-många förhållandena och semantiskt skapa en tydligare skillnad mellan action och event, samt förtydliga och lägga till fler möjligheter att forma det som sker. Jag ser detta som en vettig grund och jag tycker det fungerar och laddar bra till spelobjekten.</p>
+            <p>De flesta av tabellerna har relationer kopplade till ID. Relationen mellan event och action ligger dock i 5 st actionfält - action1, action2 osv. Detta var ett snabbt sätt att få igång en functionalitet med en ordningshantering och hålla det relativt enkelt att interagera med det via mitt CRUD-interface.</p>
+            <img src="{{ asset('img/proj/ProjER.jpg') }}">
+
+            
+            </div>
+        <div class="column">
+    </div>
+</div>    
+{% endblock %}
