@@ -46,6 +46,8 @@ class Room
         $this->start = $start;
     }
 
+
+
     /**
      * Retrieves the name of the room.
      *
@@ -224,12 +226,31 @@ class Room
     public function sequenceAdvance(): void 
     {
         error_log("advance",0);
+        $this->loadObjects(2);
     }
 
-    public function loadObjects(int $sequence, $doctrine): void
+    public static function setDoctrine($doctrine)
     {
+        self::$doctrine = $doctrine;
+    }
+
+    private static function getDoctrine()
+    {
+        return self::$doctrine;
+    }
+
+    public function loadObjects(int $sequence): void
+    {
+        $doctrine = $GLOBALS['room_doctrine'];
+
+        if (!$doctrine) {
+            throw new \RuntimeException('Doctrine has not been set in Room.');
+        }
         $entityManager = $doctrine->getManager();
         $roomID = $this->getId();
+
+//        $entityManager = $doctrine->getManager();
+//        $roomID = $this->getId();
 
         /* Load Objects into each Room */
         $objectByRoomRepository = $entityManager->getRepository(\App\Entity\ObjectByRoom::class);
@@ -239,7 +260,7 @@ class Room
         $objectIDs = [];
 
         foreach ($objectByRooms as $objectByRoom) {
-            if ($objectByRoom->getSequence() === 1) {
+            if ($objectByRoom->getSequence() === $sequence) {
                 $objectIDs[] = $objectByRoom->getObjectId();
             }
         }

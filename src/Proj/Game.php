@@ -116,7 +116,7 @@ class Game
                     break;
                 }
             }
-
+            $GLOBALS['room_doctrine'] = $doctrine;
             $room = new Room(
                 $roomEntity->getId(),
                 $roomEntity->getName(),
@@ -125,7 +125,7 @@ class Game
                 null,
                 $start
             );
-            $room->loadObjects(1, $doctrine);
+            $room->loadObjects(1);
 
             $roomObjects[$roomEntity->getId()] = $room;      
         }

@@ -36,6 +36,8 @@ class Action
     public function perform(): ?array
     {
         $this->eventActions = $this->event->getActions();
+        $key = 0;
+        $totalActions = count($this->eventActions);
 
         foreach ($this->eventActions as $actionId) {
             if ($this->game->getGameState() === 'Game Over') {
@@ -113,6 +115,7 @@ class Action
 
     function unlockTry(): void 
     {
+        error_log("unnlock try",0);
         $checkInventory = $this->game->getPlayer()->getInventory();
         $unlock = false;
 
@@ -124,9 +127,11 @@ class Action
         }
     
         if ($unlock) {
+            error_log("adding 16",0);
             $this->eventActions[] = 16;
         }
         else {
+            error_log("adding 19",0);
             $this->eventActions[] = 17;
         }
 
@@ -134,6 +139,7 @@ class Action
 
     function unlockYes(): void 
     {
+        error_log("unnlock yes",0);
         $this->messages [] = $this->event->getText(); /* wrong text */
         removeFromRoom();
         $this->room->sequenceAdvance();
@@ -141,6 +147,7 @@ class Action
 
     function unlockNo(): void 
     {
+        error_log("unnlock no",0);
         $this->messages [] = $this->event->getText(); /* no */
     }
 
