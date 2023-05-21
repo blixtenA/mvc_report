@@ -73,13 +73,12 @@ class ProjController extends AbstractController
 
         /* Get the game from the session */
         $game = $session->get("game");
-        $roomID = $game->getCurrentRoom()->getId();
     
         $gameObjectId = $request->query->get('gameObjectId');
         $eventId = $request->query->get('eventId');
 
-        error_log("eventId: ". $eventId,0);
-        error_log("gameObjectId: ". $gameObjectId,0);
+        $event = new Event();
+        $event->initEvent($game, $gameObjectId, $eventId, $doctrine);
     
         /* Retrieve the current game object from the room or player's inventory */
         $gameObject = $game->getCurrentRoom()->getGameObjectById($gameObjectId);
@@ -91,44 +90,7 @@ class ProjController extends AbstractController
             error_log("Object not found in controller", 0);
         }
     
-        /* Retrieve the event from the database */
-        $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
-        $eventByObject = $eventByObjectRepository->findOneBy([
-            'event_id' => $eventId,
-            'object_id' => $gameObjectId,
-            'location' => $roomID
-        ]);
-        $eventRepository = $entityManager->getRepository(\App\Entity\Event::class);
-        $event = null;
-
-        if ($eventByObject) {
-            $location = $eventByObject->getLocation();
-            error_log("location ". $location,0);
-            error_log("ebo id ". $eventByObject->getId(),0);
-            $actions = [
-                $eventByObject->getAction1(),
-                $eventByObject->getAction2(),
-                $eventByObject->getAction3(),
-                $eventByObject->getAction4(),
-                $eventByObject->getAction5(),
-            ];
-
-            /* Find the corresponding event record based on eventId */
-            $event = $eventRepository->findOneBy(['id' => $eventByObject->getEventId()]);
-
-            if ($event) {
-                $eventId = $event->getId();
-                $text = $event->getText();
-                $name = $event->getName();
-
-            /* Create a new Event object with the data */
-            $event = new Event($eventId, $name, $text, $location, $actions);
-        } else {
-            error_log("event not found!",0);
-        }
-    }
-    
-    /* Do action */
+        /* Do action */
         /** @phpstan-ignore-next-line */
         $action = new Action($game, $event, $gameObject, $entityManager);
         $action->perform();

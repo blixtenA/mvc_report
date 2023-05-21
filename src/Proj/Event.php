@@ -7,16 +7,15 @@ class Event
     private int $event_id;
     private string $text;
     private string $name;
-        /**
+    /**
      * @var array<int>
      */
     private array $actions;
     private int $location;
 
-       // @phpstan-ignore-next-line
     public function __construct(
-        int $event_id,
-        string $name,
+        int $event_id = 0,
+        string $name = '',
         string $text = "something happened",
         int $location = 0,
         array $actions = []
@@ -92,6 +91,69 @@ class Event
     public function setLocation(int $location): void
     {
         $this->location = $location;
+    }
+
+    public function initEvent(Game $game, int $gameObjectId, int $eventId, $doctrine): void 
+    {
+        $entityManager = $doctrine->getManager();
+        $roomID = $game->getCurrentRoom()->getId();
+        
+//        error_log("eventId: ". $eventId,0);
+//        error_log("gameObjectId: ". $gameObjectId,0);
+    
+        /* Retrieve the current game object from the room or player's inventory */
+        $gameObject = $game->getCurrentRoom()->getGameObjectById($gameObjectId);
+        if (!$gameObject) {
+            $gameObject = $game->getPlayer()->getInventoryById($gameObjectId);
+        }
+    
+        if (!$gameObject) {
+            error_log("Object not found in controller", 0);
+        }
+    
+        /* Retrieve the event from the database */
+        $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
+        $eventByObject = $eventByObjectRepository->findOneBy([
+            'event_id' => $eventId,
+            'object_id' => $gameObjectId,
+            'location' => $roomID
+        ]);
+        $eventRepository = $entityManager->getRepository(\App\Entity\Event::class);
+        $event = null;
+
+        if ($eventByObject) {
+            $location = $eventByObject->getLocation();
+            error_log("location ". $location,0);
+            error_log("ebo id ". $eventByObject->getId(),0);
+            $actions = [
+                $eventByObject->getAction1(),
+                $eventByObject->getAction2(),
+                $eventByObject->getAction3(),
+                $eventByObject->getAction4(),
+                $eventByObject->getAction5(),
+            ];
+
+            /* Find the corresponding event record based on eventId */
+            $event = $eventRepository->findOneBy(['id' => $eventByObject->getEventId()]);
+
+            if ($event) {
+                $eventId = $event->getId();
+                $text = $event->getText();
+                $name = $event->getName();
+
+            /* Create a new Event object with the data */
+//            $event = new Event($eventId, $name, $text, $location, $actions);
+
+            $this->eventId = $eventId;
+            $this->name = $name;
+            $this->text = $text;
+            $this->location = $location;
+            $this->actions = $actions;
+        } else {
+            error_log("event not found!",0);
+        }
+    }
+
     }
 }
 
