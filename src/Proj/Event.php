@@ -13,6 +13,9 @@ class Event
     private array $actions;
     private int $location;
 
+    /**
+     * @phpstan-ignore-next-line
+     */
     public function __construct(
         int $event_id = 0,
         string $name = '',
@@ -27,47 +30,80 @@ class Event
         $this->actions = $actions;
     }
 
+    /**
+     * Get the text of the event.
+     *
+     * @return string The event text.
+     */
     public function getText(): string
     {
         return $this->text;
     }
 
+    /**
+     * Set the text of the event.
+     *
+     * @param string $text The event text.
+     * @return void
+     */
     public function setText(string $text): void
     {
         $this->text = $text;
     }
 
+    /**
+     * Get the name of the event.
+     *
+     * @return string The event name.
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * Set the name of the event.
+     *
+     * @param string $name The event name.
+     * @return void
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
+    /**
+     * Get the ID of the event.
+     *
+     * @return int The event ID.
+     */
     public function getEventId(): int
     {
         return $this->event_id;
     }
 
+    /**
+     * Set the ID of the event.
+     *
+     * @param int $event_id The event ID.
+     * @return void
+     */
     public function setEventId(int $event_id): void
     {
         $this->event_id = $event_id;
     }
 
     /**
- * @return array<int>
- */
+     * @return array<int>
+    */
     public function getActions(): array
     {
         return $this->actions;
     }
 
     /**
- * @param array<int> $actions
- */
+     * @param array<int> $actions
+    */
     public function setActions(array  $actions): void
     {
         $this->actions = $actions;
@@ -83,16 +119,36 @@ class Event
         $this->actions[] = $action;
     }
 
+    /**
+     * Get the location of the event.
+     *
+     * @return int The event location.
+     */
     public function getLocation(): int
     {
         return $this->location;
     }
 
+    /**
+     * Set the location of the event.
+     *
+     * @param int $location The event location.
+     * @return void
+     */
     public function setLocation(int $location): void
     {
         $this->location = $location;
     }
 
+    /**
+     * Initialize the event.
+     *
+     * @param Game              $game          The game instance.
+     * @param int               $gameObjectId  The ID of the game object.
+     * @param int               $eventId       The ID of the event.
+     * @param mixed             $doctrine      The Doctrine entity manager.
+     * @return void
+     */
     public function initEvent(Game $game, int $gameObjectId, int $eventId, $doctrine): void 
     {
         $entityManager = $doctrine->getManager();
@@ -139,8 +195,6 @@ class Event
                 $name = $event->getName();
 
             /* Create a new Event object with the data */
-//            $event = new Event($eventId, $name, $text, $location, $actions);
-
             $this->eventId = $eventId;
             $this->name = $name;
             $this->text = $text;

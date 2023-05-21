@@ -32,7 +32,7 @@ class Action
     }
 
     /**
-     * Perform the operation.
+     * Perform the event.
      *
      * @return bool flag to say if the room needs a reload.
      */
@@ -73,6 +73,12 @@ class Action
         return $this->reloadRoom;
     }
     
+    /**
+     * Execute the given event action.
+     *
+     * @param string $eventAction The event action to execute.
+     * @return void
+     */
     private function executeAction(string $eventAction): void
     {
         error_log("Action: ". $eventAction,0);
@@ -83,6 +89,8 @@ class Action
         } elseif ($eventAction === 'deathBySharpObject') {
             $this->deathEvent();
         } elseif ($eventAction === 'deathByHeavyObject') {
+            $this->deathEvent();
+        } elseif ($eventAction === 'deathByAcid') {
             $this->deathEvent();
         } elseif ($eventAction === 'unlockTry') {
             $this->actionWithOptionsAndObject();
@@ -127,11 +135,21 @@ class Action
         return $this->messages;
     }
 
+    /**
+     * Get the game instance.
+     *
+     * @return Game The game instance.
+     */
     function getGame(): Game
     {
         return $this->game;
     }
 
+    /**
+     * Handle the death by bunny event.
+     *
+     * @return void
+     */
     function deathByBunny(): void 
     {
         $this->room->removeAllGameObjects();
@@ -142,6 +160,11 @@ class Action
         $this->messages [] = $this->event->getText();
     }
 
+    /**
+     * Add the "Throw" option to the object.
+     *
+     * @return void
+     */
     function addThrow(): void 
     {
         $this->object->addOption(20, "Throw");

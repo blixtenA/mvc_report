@@ -24,6 +24,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -40,22 +41,23 @@ class GameObjectController extends AbstractController
     }
 
     #[Route('/proj/game/showobjects', name: 'game_object_show_all')]
-    public function showAllObjects(ManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
+    public function showAllObjects(ManagerRegistry $doctrine, NormalizerInterface $normalizer): JsonResponse
     {
         $entityManager = $doctrine->getManager();
         $gameObjects = $entityManager->getRepository(GameObject::class)->findAll();
-        $serializedData = $serializer->serialize($gameObjects, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
-        
-        return new JsonResponse($serializedData, 200, [], true);
+        $normalizedData = $normalizer->normalize($gameObjects, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
+        $jsonContent = json_encode($normalizedData, JSON_PRETTY_PRINT);
+
+        return new JsonResponse($jsonContent, 200, [], true);
     }
     
     #[Route('/proj/game/showactions', name: 'game_action_show_all')]
-    public function showAllActions(ManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
+    public function showAllActions(ManagerRegistry $doctrine, NormalizerInterface $normalizer): JsonResponse
     {
         $entityManager = $doctrine->getManager();
         $gameActions = $entityManager->getRepository(Action::class)->findAll();
-        $serializedData = $serializer->normalize($gameActions, null, [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
-        $jsonContent = json_encode($serializedData, JSON_PRETTY_PRINT);
+        $normalizedData = $normalizer->normalize($gameActions, null, [AbstractNormalizer::IGNORED_ATTRIBUTES => ['events']]);
+        $jsonContent = json_encode($normalizedData, JSON_PRETTY_PRINT);
     
         return new JsonResponse($jsonContent, 200, [], true);
     }

@@ -6,6 +6,19 @@
     <h1>Om projektet</h1>
     <div class="columns">
         <div class="column">
+            <h2>Om projektet</h2>
+            <p>Jag skrev som mitt projekt ett äventyrsspel, inspirerat av spel av den gamla skolan. Min första dator var en Commodore 64 och jag spelade mycket textbaserade äventyrsspel på den tiden. När grafiken kom var det ett roligt hopp framåt, även om varje sida tog lång tid att rita upp. Sedan fortsatte såklart intresset när det kom 386or och grafiskt fulländade spel såsom Leisure Suit Larry.</p>
+            <p>Som spelidé inspirerades jag av Cube-filmerna och jag bad grafik-AIn Craion att producera några pixelerade bakgrunder i C64-stil och några spelobjekt. Idén var sedan att populera rummen i kuben med den ena dödliga faran efter den andra, och få vägen visa upp olika objektbeteenden.</p>
+            <p>Jag använder några olika komponenter med stöd från en databas. Objekten i databasen skiljer sig från objekten i projektet eftersom databasobjekten håller information på olika nivåer - ibland egenskaper hos ett objekt (detta kan då lagras i databasen för objektet - gemensamt för alla sådana objekt), medan andra egenskaper ligger i kopplingstabeller, som till exempel objektets position i rummet.</p>
+            <ul>
+                <li>Game - en klass som i sin databasform innehåller kartan för spelet och kopplingarna som behövs för att rummen ska kunna hitta varandra.</li>
+                <li>Room - en klass som fokuserar på själva rummen i spelet. Rummen kan innehålla objekt, och objekten i sin tur håller ordning på sina respektive positioner i rummet. Varje rum laddas med en sekvens som kan förnyas. De startar på sekvens 1. När ett rum går från sekvens 1 till 2 laddas det om med nya objekt - detta använder jag t.ex. när spelaren öppnar ett lås. Då laddas rummet om, tar bort det gamla låset, och lägger istället till en ny utgång.</li>
+                <li>GameObject - klassen för "prylarna" i spelet, vilket kan vara allt från nycklar till utgångar. Helt enkelt allt som ska läggas in i rummen. Objekten kan ha egenskaper som t.ex. att de roterar eller droppar och detat sätts automatiskt i templaten om uppsättningarna för det finns i css. Varje objekt kan också ha optioner som tillåter spelaren att interagera med objektet på olika sätt (events)</li>
+                <li>Event - klassen för spelar-händelser, som till exempel att gå norrut eller plocka upp något.</li>
+                <li>Action - klassen för allting som händer... man kan tänka på det som konsekvenser av spelarens handlingar. Om spelaren försöker plocka upp det snurrande sågbladet kommer spelaren att dö - så actions är de handlingar som utförs av spelet.</li>
+                <li>Diverse kopplingstabeller för uppsättningar, såsom objekt per rum, event per objekt osv.</li>
+            </ul>
+            </p>
             </div>
         <div class="column">
     </div>
