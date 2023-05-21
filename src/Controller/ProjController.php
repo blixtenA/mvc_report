@@ -41,7 +41,7 @@ class ProjController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
 
-        /* Load Game */
+        /* Load new Game */
         $gameID = 1;
         $game = new Game($gameID);
         $game->initGame($doctrine);
@@ -93,8 +93,13 @@ class ProjController extends AbstractController
         /* Do action */
         /** @phpstan-ignore-next-line */
         $action = new Action($game, $event, $gameObject, $entityManager);
-        $action->perform();
+        $reloadRoom = $action->perform();
         $messages = $action->getMessages();
+
+        if ($reloadRoom) {
+            error_log("reload",0);
+            $game->getCurrentRoom()->loadObjects(2, $doctrine);
+        }
     
         /* Save the updated game to the session */
         $session->set("game", $game);

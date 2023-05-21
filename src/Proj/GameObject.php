@@ -29,8 +29,10 @@ class GameObject
     private ?string $effect;
     private ?int $width = null;
     private ?int $height = null;
-    private ?ManagerRegistry $doctrine;
-    
+    /**
+     * @phpstan-ignore-next-line
+     */
+    private ?string $image2;    
 
     // @phpstan-ignore-next-line
     public function __construct(
@@ -45,7 +47,7 @@ class GameObject
         ?string $effect = null,
         ?int $width = null,
         ?int $height = null,
-        ?ManagerRegistry $doctrine = null
+        ?string $image2 = null
     ) {
         $this->objId = $objId;
         $this->image = $image;
@@ -58,7 +60,7 @@ class GameObject
         $this->effect = $effect;
         $this->width = $width;
         $this->height = $height;
-        $this->doctrine = $doctrine;
+        $this->image2 = $image2;
     }
 
     /**
@@ -86,7 +88,7 @@ class GameObject
         return $this->effect;
     }
 
-    public function setEffect($effect): void
+    public function setEffect(string $effect): void
     {
         $this->effect = $effect;
     }
@@ -96,17 +98,28 @@ class GameObject
         return $this->image;
     }
 
-    public function setImage($image): void
+    public function setImage(string $image): void
     {
         $this->image = $image;
     }
+
+    public function getImage2(): string
+    {
+        return $this->image;
+    }
+
+    public function setImage2(string $image): void
+    {
+        $this->image = $image;
+    }
+
 
     public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -225,7 +238,7 @@ class GameObject
      * Initialize and populate the GameObject from a room.
      *
      */
-    public function initFromRoom($objectByRoom, $gameObject, $doctrine, $roomID)
+    public function initFromRoom(ObjectByRoom $objectByRoom, AppGameObject $gameObject, mixed $doctrine, int $roomID): void
     {
         $entityManager = $doctrine->getManager();
 
@@ -246,10 +259,10 @@ class GameObject
         $this->effect = $gameObject->getEffect();
         $this->width = $width;
         $this->height = $height;
+        $this->image2 = $gameObject->getImage2();
 
         /* Fetch the event IDs associated with the current GameObject */
         $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
-        /** @phpstan-ignore-next-line */
         $eventIDs = $eventByObjectRepository->findEventIDsByObjectIDAndLocation($gameObject->getId(), $roomID);
 
         /* Retrieve the corresponding events based on the fetched event IDs */

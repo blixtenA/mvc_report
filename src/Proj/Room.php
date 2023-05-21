@@ -17,6 +17,7 @@ class Room
     private string $description;
     private int $roomId;
     private ?bool $start;
+    private int $sequence;
 
     /**
      * Room constructor.
@@ -30,6 +31,7 @@ class Room
      */
     // @phpstan-ignore-next-line
     public function __construct(
+        int $sequence,
         int $roomId,
         string $name,
         string $background,
@@ -37,6 +39,7 @@ class Room
         ?array $neighbors = null,
         ?bool $start = null
     ) {
+        $this->sequence = $sequence;
         $this->roomId = $roomId;
         $this->name = $name;
         $this->background = $background;
@@ -46,8 +49,6 @@ class Room
         $this->start = $start;
     }
 
-
-
     /**
      * Retrieves the name of the room.
      *
@@ -56,6 +57,16 @@ class Room
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * Retrieves the sequence of the room.
+     *
+     * @return int The sequence of the room.
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
     }
     
     /**
@@ -219,38 +230,12 @@ class Room
     }
 
     /**
-     * Advance the sequence of the room.
-     *
-     * @return bool True if the room is a starting room, false otherwise.
+     * Load objects into the road.
      */
-    public function sequenceAdvance(): void 
+    public function loadObjects(int $sequence, mixed $doctrine): void
     {
-        error_log("advance",0);
-        $this->loadObjects(2);
-    }
-
-    public static function setDoctrine($doctrine)
-    {
-        self::$doctrine = $doctrine;
-    }
-
-    private static function getDoctrine()
-    {
-        return self::$doctrine;
-    }
-
-    public function loadObjects(int $sequence): void
-    {
-        $doctrine = $GLOBALS['room_doctrine'];
-
-        if (!$doctrine) {
-            throw new \RuntimeException('Doctrine has not been set in Room.');
-        }
         $entityManager = $doctrine->getManager();
         $roomID = $this->getId();
-
-//        $entityManager = $doctrine->getManager();
-//        $roomID = $this->getId();
 
         /* Load Objects into each Room */
         $objectByRoomRepository = $entityManager->getRepository(\App\Entity\ObjectByRoom::class);

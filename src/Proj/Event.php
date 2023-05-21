@@ -97,10 +97,7 @@ class Event
     {
         $entityManager = $doctrine->getManager();
         $roomID = $game->getCurrentRoom()->getId();
-        
-//        error_log("eventId: ". $eventId,0);
-//        error_log("gameObjectId: ". $gameObjectId,0);
-    
+            
         /* Retrieve the current game object from the room or player's inventory */
         $gameObject = $game->getCurrentRoom()->getGameObjectById($gameObjectId);
         if (!$gameObject) {

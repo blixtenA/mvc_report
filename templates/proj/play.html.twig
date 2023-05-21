@@ -44,6 +44,7 @@
                         <div class="gameObjectImage" style="background-image: url('{{ asset(gameObject.getImage()) }}');"></div>
                         <div class="optionsContainer">
                             <div class="gameObjectName">{{ gameObject.getName() }}</div>
+                            {% if gameObject.hasClickOptions() %}
                             {% set onClickOptions = gameObject.onClick()|default([]) %}
                             {% if onClickOptions is iterable %}
                                 <div class="options">
@@ -51,6 +52,7 @@
                                         <button class="optionButton" data-option="{{ option.eventId }}">{{ option.eventName }}</button>
                                     {% endfor %}
                                 </div>
+                        {% endif %}
                         {% endif %}
                       </div>
                     </div>

@@ -98,10 +98,6 @@ nav ul {
   z-index: 9999;
 }
 
-.gameObject.rotate .gameObjectImage {
-  animation: rotate 2s linear infinite;
-}
-
 .inventoryOptions .options {
   display: flex;
   flex-direction: row;
@@ -261,6 +257,9 @@ nav ul {
 }
 
 /* object effects */
+.gameObject.rotate .gameObjectImage {
+  animation: rotate 2s linear infinite;
+}
 
 @keyframes rotate {
   0% {
@@ -268,6 +267,31 @@ nav ul {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.gameObject.drip {
+  position: relative;
+  overflow: hidden;
+}
+
+.gameObject.drip .gameObjectImage {
+  position: relative;
+  animation: dripAnimation 2s linear infinite;
+}
+
+@keyframes dripAnimation {
+  0% {
+    top: -50px; /* Initial position */
+    opacity: 0; /* Initial transparency */
+  }
+  50% {
+    top: 50%; /* Middle position */
+    opacity: 1; /* Full visibility */
+  }
+  100% {
+    top: 100%; /* Final position */
+    opacity: 0; /* Full transparency */
   }
 }
 

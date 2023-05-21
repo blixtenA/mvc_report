@@ -132,6 +132,9 @@
             <th>ID</th>
             <th>Action</th>
             <th>Text</th>
+            <th>Option Yes</th>
+            <th>Option No</th>
+            <th>Option Object</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -141,6 +144,9 @@
                 <td>{{ action.id }}</td>
                 <td>{{ action.getEventAction() }}</td>
                 <td>{{ action.getText() }}</td>
+                <td>{{ action.getOptionYes() }}</td>
+                <td>{{ action.getOptionNo() }}</td>
+                <td>{{ action.getOptionObject() }}</td>
                 <td>
                     <a href="{{ path('game_action_edit', { 'id': action.id }) }}">Edit</a>
                 </td>

@@ -82,7 +82,7 @@ class Game
         $this->setCurrentRoom($startingRoom);
     }
 
-    public function initGame($doctrine): void 
+    public function initGame(mixed $doctrine): void 
     {
         $entityManager = $doctrine->getManager();
 
@@ -116,8 +116,9 @@ class Game
                     break;
                 }
             }
-            $GLOBALS['room_doctrine'] = $doctrine;
+
             $room = new Room(
+                1, /* initial sequence */
                 $roomEntity->getId(),
                 $roomEntity->getName(),
                 $roomEntity->getBackground(),
@@ -125,7 +126,7 @@ class Game
                 null,
                 $start
             );
-            $room->loadObjects(1);
+            $room->loadObjects(1, $doctrine);
 
             $roomObjects[$roomEntity->getId()] = $room;      
         }

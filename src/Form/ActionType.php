@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class ActionType extends AbstractType
 {
@@ -17,6 +18,15 @@ class ActionType extends AbstractType
             'label' => 'Action',
         ])
         ->add('text', TextType::class, [
+            'required' => false,
+        ])
+        ->add('option_yes', IntegerType::class, [
+            'required' => false,
+        ])
+        ->add('option_no', IntegerType::class, [
+            'required' => false,
+        ])
+        ->add('option_object', IntegerType::class, [
             'required' => false,
         ]);
     }

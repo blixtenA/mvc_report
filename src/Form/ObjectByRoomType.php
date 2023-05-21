@@ -19,8 +19,12 @@ class ObjectByRoomType extends AbstractType
             ->add('position_x', IntegerType::class)
             ->add('position_y', IntegerType::class)
             ->add('position_z', IntegerType::class)
-            ->add('width', IntegerType::class)
-            ->add('height', IntegerType::class);
+            ->add('width', IntegerType::class, [
+                'required' => false,
+            ])
+            ->add('height', IntegerType::class, [
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

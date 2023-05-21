@@ -2,6 +2,7 @@
 
 namespace App\Proj;
 
+use App\Entity\EventByObject;
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -17,6 +18,8 @@ class Action
     private array $messages = [];
     private Room $room;
     private array $eventActions = [];
+    private $reloadRoom = false;
+    private $currentAction = null;
 
     public function __construct(Game $game, Event $event, ?GameObject $object, EntityManagerInterface $entityManager)
     {
@@ -31,9 +34,9 @@ class Action
     /**
      * Perform the operation.
      *
-     * @return string[]|null Array of strings or null.
+     * @return bool flag to say if the room needs a reload.
      */
-    public function perform(): ?array
+    public function perform(): bool
     {
         $this->eventActions = $this->event->getActions();
         $key = 0;
@@ -44,7 +47,7 @@ class Action
     
             if ($this->game->getGameState() === 'Game Over') {
                 $this->addFinalComments();
-                return $this->messages;
+                return $this->reloadRoom;
             }
     
             if ($actionId !== null) {
@@ -67,11 +70,12 @@ class Action
             $key++;
         }
     
-        return $this->messages;
+        return $this->reloadRoom;
     }
     
     private function executeAction(string $eventAction): void
     {
+        error_log("Action: ". $eventAction,0);
         if ($eventAction === 'removeFromRoom') {
             $this->removeFromRoom();
         } elseif ($eventAction === 'addToInventory') {
@@ -81,11 +85,13 @@ class Action
         } elseif ($eventAction === 'deathByHeavyObject') {
             $this->deathEvent();
         } elseif ($eventAction === 'unlockTry') {
-            $this->unlockTry();
+            $this->actionWithOptionsAndObject();
         } elseif ($eventAction === 'unlockYes') {
             $this->unlockYes();
         } elseif ($eventAction === 'unlockNo') {
-            $this->unlockNo();                        
+            $this->failMessage();          
+        } elseif ($eventAction === 'deathByBunny') {
+            $this->deathByBunny();                     
         } elseif (strpos($eventAction, 'walk') === 0) {
             $direction = substr($eventAction, 4);
             $this->walk($direction);
@@ -102,6 +108,7 @@ class Action
     {
         $entityActionRepository = $this->entityManager->getRepository(\App\Entity\Action::class);
         $entityAction = $entityActionRepository->find($actionId);
+        $this->currentAction = $entityAction;
     
         if ($entityAction) {
             error_log("Object found", 0);
@@ -125,50 +132,69 @@ class Action
         return $this->game;
     }
 
-    function unlockTry(): void 
+    function deathByBunny(): void 
     {
-        error_log("unnlock try",0);
+        $this->room->removeAllGameObjects();
+//        $this->object->setImage($this->object->getImage2());
+        $this->room->setBackground('img/proj/backgrounds/deathScreen.png');
+
+        $this->game->setGameState('Game Over');
+        $this->messages [] = $this->event->getText();
+    }
+
+    function addThrow(): void 
+    {
+        $this->object->addOption(20, "Throw");
+    }
+
+    /**
+     * Attempt to unlock, or other options/object action. 
+     * Check if the player has the key
+     */
+    function actionWithOptionsAndObject(): void 
+    {
+        $optionObject = $this->currentAction->getOptionObject();
         $checkInventory = $this->game->getPlayer()->getInventory();
         $unlock = false;
 
         foreach ($checkInventory as $item) {
-            if ($item instanceof GameObject && $item->getName() === "key") {
+            if ($item instanceof GameObject && $item->getObjId() === $optionObject) {
                 $unlock = true;
                 break;
             }
         }
         $emptyIndex = array_search('', $this->eventActions);
         if ($unlock) {
-            error_log("adding 16",0);
-            if ($emptyIndex !== false) {
-                $this->eventActions[$emptyIndex] = 16;
-            } else {
-                $this->eventActions[] = 16;
-            }
+            $newAction = $this->currentAction->getOptionYes();
+            $this->reloadRoom = true;
         }
         else {
-            error_log("adding 17",0);
-            if ($emptyIndex !== false) {
-                $this->eventActions[$emptyIndex] = 17;
-            } else {
-                $this->eventActions[] = 17;
-            }
+            $newAction = $this->currentAction->getOptionNo();
+        }
+
+        if ($emptyIndex !== false) {
+            $this->eventActions[$emptyIndex] = $newAction;
+        } else {
+            $this->eventActions[] = $newAction;
         }
 
     }
 
+    /**
+     * Unlock an object and update the room
+     */
     function unlockYes(): void 
     {
-        error_log("unnlock yes",0);
-        $this->messages [] = $this->event->getText(); /* wrong text */
+        $this->messages [] = $this->event->getText();
         $this->removeFromRoom();
-        $this->room->sequenceAdvance();
     }
 
-    function unlockNo(): void 
+    /**
+     * A simple fail message
+     */
+    function failMessage(): void 
     {
-        error_log("unnlock no",0);
-        $this->messages [] = $this->event->getText(); /* no */
+        $this->messages [] = $this->event->getText(); 
     }
 
     /* Remove the object from the current room */
@@ -202,6 +228,9 @@ class Action
         $this->messages [] = $this->event->getText();
     }
 
+    /**
+     * A general death event
+     */
     private function deathEvent(): void
     {    
         $this->room->removeAllGameObjects();
@@ -211,18 +240,22 @@ class Action
         $this->messages [] = $this->event->getText();
     }
 
+    /**
+     * Add final comments
+     */
     private function addFinalComments(): void 
     {
-        error_log("in",0);
         $this->messages [] = 
             "Player was killed by ".
             $this->object->getName() . " in " .
             $this->room->getName();
     }
 
+    /**
+     * Walk from one room to another
+     */
     private function walk(string $direction): void
     {
-
         /* Check if the current room has a neighbor in the specified direction */
         if (isset($this->room->getNeighbors()[$direction])) {
 
