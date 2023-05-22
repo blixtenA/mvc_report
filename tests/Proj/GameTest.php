@@ -95,4 +95,7 @@ class GameTest extends TestCase
         $this->assertInstanceOf(Room::class, $currentRoom);
         $this->assertTrue($currentRoom->isStart());
     }
+
+    
 }
+

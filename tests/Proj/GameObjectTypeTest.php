@@ -14,7 +14,6 @@ class GameObjectTypeTest extends TypeTestCase
             'id' => 1,
             'image' => 'image.png',
             'name' => 'Object',
-            'clickable' => true,
             'image2' => 'image2.png',
             'effect' => 'Effect',
         ];

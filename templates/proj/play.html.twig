@@ -74,6 +74,8 @@
         </div>  
  
         <script>
+            var appUrl = "{{ app.request.schemeAndHttpHost ~ app.request.basePath }}";
+
             document.addEventListener('DOMContentLoaded', function() {
                 var gameObjects = document.querySelectorAll('.gameObject');
                 var inventoryItems = document.querySelectorAll('.inventoryItem');
@@ -90,13 +92,8 @@
                         button.addEventListener('click', function(event) {
                             event.stopPropagation();
                             var eventId = button.dataset.option;
-                            console.log('Player chose:', eventId);
-            
-                            var gameObjectId = gameObject.dataset.gameObjectId;
-                            console.log('Object Id:', gameObjectId);
-                                                  
-                            var hrefValue = '/proj/handle-event?gameObjectId=' + gameObjectId + '&eventId=' + eventId;
-                        
+                            var gameObjectId = gameObject.dataset.gameObjectId;                                                  
+                            var hrefValue = appUrl + '/proj/handle-event?gameObjectId=' + gameObjectId + '&eventId=' + eventId;
                             var anchor = document.createElement('a');
                             anchor.href = hrefValue;
                             anchor.click();
@@ -115,14 +112,9 @@
                     optionButtons.forEach(function(button) {
                       button.addEventListener('click', function(event) {
                         event.stopPropagation();
-                        var eventId = button.dataset.option;
-                        console.log('Player chose:', eventId);
-                  
+                        var eventId = button.dataset.option;                  
                         var gameObjectId = inventoryItem.dataset.gameObjectId;
-                        console.log('Object Id:', gameObjectId);
-                  
-                        var hrefValue = '/proj/handle-event?gameObjectId=' + gameObjectId + '&eventId=' + eventId;
-                  
+                        var hrefValue = appUrl + '/proj/handle-event?gameObjectId=' + gameObjectId + '&eventId=' + eventId;                  
                         var anchor = document.createElement('a');
                         anchor.href = hrefValue;
                         anchor.click();
@@ -139,10 +131,7 @@
             });
         
           </script>
-          
-          
-          
-      
+
 </div>
 
 {% endblock %}

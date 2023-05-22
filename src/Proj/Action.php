@@ -190,7 +190,6 @@ class Action
     function deathByBunny(): void 
     {
         $this->room->removeAllGameObjects();
-//        $this->object->setImage($this->object->getImage2());
         $this->room->setBackground('img/proj/backgrounds/deathScreen.png');
         $this->game->setGameState('Game Over');
         $this->messages [] = $this->event->getText();

@@ -293,10 +293,10 @@ class Game
     private function getNeighborPositions(int $roomPositionX, int $roomPositionY): array
     {
         $neighborPositions = [
-            [$roomPositionX, $roomPositionY - 1], // South
-            [$roomPositionX, $roomPositionY + 1], // North
-            [$roomPositionX - 1, $roomPositionY], // West
-            [$roomPositionX + 1, $roomPositionY], // East
+            [$roomPositionX, $roomPositionY - 1], // S
+            [$roomPositionX, $roomPositionY + 1], // N
+            [$roomPositionX - 1, $roomPositionY], // W
+            [$roomPositionX + 1, $roomPositionY], // E
         ];
 
         return $neighborPositions;
