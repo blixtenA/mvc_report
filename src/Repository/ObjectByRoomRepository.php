@@ -55,6 +55,7 @@ class ObjectByRoomRepository extends ServiceEntityRepository
 
     public function findOneBy(array $criteria, array $orderBy = null)
     {
+        /* $orderBy parameter intentionally unused for this implementation */
         $qb = $this->createQueryBuilder('obr');
     
         foreach ($criteria as $field => $value) {

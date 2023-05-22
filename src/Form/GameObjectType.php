@@ -28,9 +28,6 @@ class GameObjectType extends AbstractType implements DataTransformerInterface
             ])
             ->add('image', TextType::class)
             ->add('name', TextType::class)
-            ->add('clickable', CheckboxType::class, [
-                'required' => false,
-            ])
             ->add('image2', TextType::class, [
                 'required' => false,
             ])

@@ -20,9 +20,6 @@ class GameObject
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?bool $clickable = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image2 = null;
 
@@ -54,18 +51,6 @@ class GameObject
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function isClickable(): ?bool
-    {
-        return $this->clickable;
-    }
-
-    public function setClickable(bool $clickable): self
-    {
-        $this->clickable = $clickable;
 
         return $this;
     }

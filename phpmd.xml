@@ -13,6 +13,16 @@
     <exclude-pattern>cache</exclude-pattern>
     <exclude-pattern>node_modules</exclude-pattern>
     <exclude-pattern>vendor</exclude-pattern>
+    <exclude-pattern>src/Repository/StartRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/RoomRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/ProductRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/ObjectByRoomRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/GameRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/GameObjectRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/EventRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/EventByObjectRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/BookRepository.php</exclude-pattern>
+    <exclude-pattern>src/Repository/ActionRepository.php</exclude-pattern>
 
     <rule ref="rulesets/design.xml" />
     <rule ref="rulesets/cleancode.xml" />

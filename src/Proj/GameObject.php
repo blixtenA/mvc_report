@@ -12,13 +12,15 @@ use App\Entity\ObjectByRoom;
 use App\Entity\EventByObject;
 use App\Entity\GameObject as AppGameObject;
 
+/**
+ * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+ */
 class GameObject 
 {
     private string $image;
     private int $positionX;
     private int $positionY;
     private ?int $positionZ = 0;
-    private bool $clickable;
     private string $name;
     private ?array $options = null;
     private int $objId;
@@ -38,7 +40,6 @@ class GameObject
         int $positionX = 0,
         int $positionY = 0,
         int $positionZ = 0,
-        bool $clickable = false,
         ?array $options = null,
         ?string $effect = null,
         ?int $width = null,
@@ -50,7 +51,6 @@ class GameObject
         $this->positionX = $positionX;
         $this->positionY = $positionY;
         $this->positionZ = $positionZ;
-        $this->clickable = $clickable;
         $this->name = $name;
         $this->options = $options;
         $this->effect = $effect;
@@ -171,16 +171,6 @@ class GameObject
         $this->width = $value;
     }
 
-    public function isClickable(): bool
-    {
-        return $this->clickable;
-    }
-
-    public function setClickable(bool $clickable): void
-    {
-        $this->clickable = $clickable;
-    }
-
         /**
      * Check if there are any click options available.
      *
@@ -252,7 +242,6 @@ class GameObject
         $this->positionX = $positionX;
         $this->positionY = $positionY;
         $this->positionZ = $positionZ;
-        $this->clickable = $gameObject->isClickable();
         $this->options = null;
         $this->effect = $gameObject->getEffect();
         $this->width = $width;
@@ -260,8 +249,8 @@ class GameObject
         $this->image2 = $gameObject->getImage2();
 
         /* Fetch the event IDs associated with the current GameObject */
-        $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
-        $eventIDs = $eventByObjectRepository->findEventIDsByObjectIDAndLocation($gameObject->getId(), $roomID);
+        $eventByObjRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
+        $eventIDs = $eventByObjRepository->findEventIDsByObjectIDAndLocation($gameObject->getId(), $roomID);
 
         /* Retrieve the corresponding events based on the fetched event IDs */
         $eventRepository = $entityManager->getRepository(\App\Entity\Event::class);

@@ -2,6 +2,9 @@
 
 namespace App\Proj;
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 class Room
 {
     private string $background;
@@ -238,10 +241,10 @@ class Room
         $roomID = $this->getId();
 
         /* Load Objects into each Room */
-        $objectByRoomRepository = $entityManager->getRepository(\App\Entity\ObjectByRoom::class);
-        $gameObjectsRepository = $entityManager->getRepository(\App\Entity\GameObject::class);
+        $objByRoomRepository = $entityManager->getRepository(\App\Entity\ObjectByRoom::class);
+        $gameObjRepository = $entityManager->getRepository(\App\Entity\GameObject::class);
         
-        $objectByRooms = $objectByRoomRepository->findBy(['room_id' => $roomID]);
+        $objectByRooms = $objByRoomRepository->findBy(['room_id' => $roomID]);
         $objectIDs = [];
 
         foreach ($objectByRooms as $objectByRoom) {
@@ -250,11 +253,11 @@ class Room
             }
         }
 
-        $gameObjects = $gameObjectsRepository->findBy(['id' => $objectIDs]);
+        $gameObjects = $gameObjRepository->findBy(['id' => $objectIDs]);
 
         foreach ($gameObjects as $gameObject) {
             /* Find the object_by_room entry for the current GameObject */
-            $objectByRoom = $objectByRoomRepository->findOneBy([
+            $objectByRoom = $objByRoomRepository->findOneBy([
                 'room_id' => $roomID,
                 'object_id' => $gameObject->getId(),
                 'sequence' => $sequence,

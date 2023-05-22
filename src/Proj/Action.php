@@ -321,7 +321,6 @@ class Action
             $this->object->getPositionX(),
             $this->object->getPositionY(),
             $this->object->getPositionZ(),
-            true,
             NULL,
             $this->object->getEffect(),
         );
