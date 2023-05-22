@@ -1,0 +1,30 @@
+{% extends "proj/base.html.twig" %}
+
+{% block title %}Game{% endblock %}
+
+{% block body %}
+    <h1>Cube - BTH edition</h1>
+
+    <form method="POST" action="{{ path('proj_game_player') }}">
+        <label for="playerName">Player Name</label>
+        <input type="text" id="playerName" name="playerName" placeholder="Enter your name" required>
+
+        <div class="avatar-row">
+            <div class="avatar-option">
+                <label for="avatar1">
+                    <img src="{{ asset('img/proj/characters/character1.png') }}" alt="Avatar 1" width="100" height="100">
+                    <input type="radio" id="avatar1" name="avatar" value="avatar1">
+                </label>
+            </div>
+
+            <div class="avatar-option">
+                <label for="avatar2">
+                    <img src="{{ asset('img/proj/characters/character2.png') }}" alt="Avatar 2" width="100" height="100">
+                    <input type="radio" id="avatar2" name="avatar" value="avatar2">
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="horror-button">Start</button>
+    </form>
+{% endblock %}

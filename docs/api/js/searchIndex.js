@@ -1411,16 +1411,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Entity-GameObject.html#method_setName"
         },                {
-            "fqsen": "\\App\\Entity\\GameObject\u003A\u003AisClickable\u0028\u0029",
-            "name": "isClickable",
-            "summary": "",
-            "url": "classes/App-Entity-GameObject.html#method_isClickable"
-        },                {
-            "fqsen": "\\App\\Entity\\GameObject\u003A\u003AsetClickable\u0028\u0029",
-            "name": "setClickable",
-            "summary": "",
-            "url": "classes/App-Entity-GameObject.html#method_setClickable"
-        },                {
             "fqsen": "\\App\\Entity\\GameObject\u003A\u003AgetImage2\u0028\u0029",
             "name": "getImage2",
             "summary": "",
@@ -1455,11 +1445,6 @@ Search.appendIndex(
             "name": "name",
             "summary": "",
             "url": "classes/App-Entity-GameObject.html#property_name"
-        },                {
-            "fqsen": "\\App\\Entity\\GameObject\u003A\u003A\u0024clickable",
-            "name": "clickable",
-            "summary": "",
-            "url": "classes/App-Entity-GameObject.html#property_clickable"
         },                {
             "fqsen": "\\App\\Entity\\GameObject\u003A\u003A\u0024image2",
             "name": "image2",
@@ -1811,6 +1796,16 @@ Search.appendIndex(
             "summary": "Perform\u0020the\u0020event.",
             "url": "classes/App-Proj-Action.html#method_perform"
         },                {
+            "fqsen": "\\App\\Proj\\Action\u003A\u003AaddCommentAndHandleState\u0028\u0029",
+            "name": "addCommentAndHandleState",
+            "summary": "Add\u0020a\u0020comment\u0020and\u0020handle\u0020the\u0020game\u0020state\u0020accordingly.",
+            "url": "classes/App-Proj-Action.html#method_addCommentAndHandleState"
+        },                {
+            "fqsen": "\\App\\Proj\\Action\u003A\u003AaddComment\u0028\u0029",
+            "name": "addComment",
+            "summary": "Add\u0020a\u0020comment\u0020to\u0020the\u0020messages\u0020array.",
+            "url": "classes/App-Proj-Action.html#method_addComment"
+        },                {
             "fqsen": "\\App\\Proj\\Action\u003A\u003AexecuteAction\u0028\u0029",
             "name": "executeAction",
             "summary": "Execute\u0020the\u0020given\u0020event\u0020action.",
@@ -1836,15 +1831,20 @@ Search.appendIndex(
             "summary": "Handle\u0020the\u0020death\u0020by\u0020bunny\u0020event.",
             "url": "classes/App-Proj-Action.html#method_deathByBunny"
         },                {
-            "fqsen": "\\App\\Proj\\Action\u003A\u003AaddThrow\u0028\u0029",
-            "name": "addThrow",
-            "summary": "Add\u0020the\u0020\u0022Throw\u0022\u0020option\u0020to\u0020the\u0020object.",
-            "url": "classes/App-Proj-Action.html#method_addThrow"
+            "fqsen": "\\App\\Proj\\Action\u003A\u003AplayerWins\u0028\u0029",
+            "name": "playerWins",
+            "summary": "Handle\u0020the\u0020player\u0020wins\u0020event",
+            "url": "classes/App-Proj-Action.html#method_playerWins"
         },                {
-            "fqsen": "\\App\\Proj\\Action\u003A\u003AaddRead\u0028\u0029",
-            "name": "addRead",
-            "summary": "Add\u0020the\u0020\u0022Read\u0022\u0020option\u0020to\u0020the\u0020object.",
-            "url": "classes/App-Proj-Action.html#method_addRead"
+            "fqsen": "\\App\\Proj\\Action\u003A\u003AkillBunny\u0028\u0029",
+            "name": "killBunny",
+            "summary": "Handle\u0020the\u0020dead\u0020bunny\u0020event.",
+            "url": "classes/App-Proj-Action.html#method_killBunny"
+        },                {
+            "fqsen": "\\App\\Proj\\Action\u003A\u003AaddEvent\u0028\u0029",
+            "name": "addEvent",
+            "summary": "Add\u0020the\u0020specified\u0020event\u0020option\u0020to\u0020the\u0020object.",
+            "url": "classes/App-Proj-Action.html#method_addEvent"
         },                {
             "fqsen": "\\App\\Proj\\Action\u003A\u003AactionWithOptionsAndObject\u0028\u0029",
             "name": "actionWithOptionsAndObject",
@@ -1866,6 +1866,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Proj-Action.html#method_removeFromRoom"
         },                {
+            "fqsen": "\\App\\Proj\\Action\u003A\u003AremoveFromInventory\u0028\u0029",
+            "name": "removeFromInventory",
+            "summary": "",
+            "url": "classes/App-Proj-Action.html#method_removeFromInventory"
+        },                {
             "fqsen": "\\App\\Proj\\Action\u003A\u003AaddToInventory\u0028\u0029",
             "name": "addToInventory",
             "summary": "",
@@ -1875,11 +1880,6 @@ Search.appendIndex(
             "name": "deathEvent",
             "summary": "A\u0020general\u0020death\u0020event",
             "url": "classes/App-Proj-Action.html#method_deathEvent"
-        },                {
-            "fqsen": "\\App\\Proj\\Action\u003A\u003AaddFinalComments\u0028\u0029",
-            "name": "addFinalComments",
-            "summary": "Add\u0020final\u0020comments",
-            "url": "classes/App-Proj-Action.html#method_addFinalComments"
         },                {
             "fqsen": "\\App\\Proj\\Action\u003A\u003Awalk\u0028\u0029",
             "name": "walk",
@@ -2001,10 +2001,10 @@ Search.appendIndex(
             "summary": "Initialize\u0020the\u0020event.",
             "url": "classes/App-Proj-Event.html#method_initEvent"
         },                {
-            "fqsen": "\\App\\Proj\\Event\u003A\u003A\u0024event_id",
-            "name": "event_id",
+            "fqsen": "\\App\\Proj\\Event\u003A\u003A\u0024eventId",
+            "name": "eventId",
             "summary": "",
-            "url": "classes/App-Proj-Event.html#property_event_id"
+            "url": "classes/App-Proj-Event.html#property_eventId"
         },                {
             "fqsen": "\\App\\Proj\\Event\u003A\u003A\u0024text",
             "name": "text",
@@ -2038,58 +2038,103 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AsetCurrentRoom\u0028\u0029",
             "name": "setCurrentRoom",
-            "summary": "",
+            "summary": "Set\u0020the\u0020current\u0020room\u0020in\u0020the\u0020game.",
             "url": "classes/App-Proj-Game.html#method_setCurrentRoom"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AgetCurrentRoom\u0028\u0029",
             "name": "getCurrentRoom",
-            "summary": "",
+            "summary": "Get\u0020the\u0020current\u0020room\u0020in\u0020the\u0020game.",
             "url": "classes/App-Proj-Game.html#method_getCurrentRoom"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AsetGameState\u0028\u0029",
             "name": "setGameState",
-            "summary": "",
+            "summary": "Set\u0020the\u0020game\u0020state.",
             "url": "classes/App-Proj-Game.html#method_setGameState"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AgetGameState\u0028\u0029",
             "name": "getGameState",
-            "summary": "",
+            "summary": "Get\u0020the\u0020game\u0020state.",
             "url": "classes/App-Proj-Game.html#method_getGameState"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AgetGameId\u0028\u0029",
             "name": "getGameId",
-            "summary": "",
+            "summary": "Get\u0020the\u0020game\u0020ID.",
             "url": "classes/App-Proj-Game.html#method_getGameId"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AaddRoom\u0028\u0029",
             "name": "addRoom",
-            "summary": "",
+            "summary": "Add\u0020a\u0020room\u0020to\u0020the\u0020game.",
             "url": "classes/App-Proj-Game.html#method_addRoom"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AgetRooms\u0028\u0029",
             "name": "getRooms",
-            "summary": "",
+            "summary": "Get\u0020the\u0020rooms\u0020in\u0020the\u0020game.",
             "url": "classes/App-Proj-Game.html#method_getRooms"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AsetPlayer\u0028\u0029",
             "name": "setPlayer",
-            "summary": "",
+            "summary": "Set\u0020the\u0020player\u0020in\u0020the\u0020game.",
             "url": "classes/App-Proj-Game.html#method_setPlayer"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AgetPlayer\u0028\u0029",
             "name": "getPlayer",
-            "summary": "",
+            "summary": "Get\u0020the\u0020player\u0020in\u0020the\u0020game.",
             "url": "classes/App-Proj-Game.html#method_getPlayer"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AmapStartingRoom\u0028\u0029",
             "name": "mapStartingRoom",
-            "summary": "",
+            "summary": "Map\u0020the\u0020starting\u0020room\u0020as\u0020the\u0020current\u0020room.",
             "url": "classes/App-Proj-Game.html#method_mapStartingRoom"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AextractRoomData\u0028\u0029",
+            "name": "extractRoomData",
+            "summary": "Get\u0020the\u0020room\u0020data\u0020for\u0020positioning\u0020etc",
+            "url": "classes/App-Proj-Game.html#method_extractRoomData"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AcreateRoom\u0028\u0029",
+            "name": "createRoom",
+            "summary": "Create\u0020a\u0020Room\u0020object\u0020based\u0020on\u0020the\u0020given\u0020Room\u0020entity\u0020and\u0020start\u0020flag.",
+            "url": "classes/App-Proj-Game.html#method_createRoom"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AfetchGameMap\u0028\u0029",
+            "name": "fetchGameMap",
+            "summary": "Fetch\u0020the\u0020game\u0020map\u0020from\u0020the\u0020database\u0020using\u0020the\u0020EntityManager.",
+            "url": "classes/App-Proj-Game.html#method_fetchGameMap"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AfetchRooms\u0028\u0029",
+            "name": "fetchRooms",
+            "summary": "Fetch\u0020the\u0020rooms\u0020from\u0020the\u0020database\u0020based\u0020on\u0020the\u0020given\u0020room\u0020IDs.",
+            "url": "classes/App-Proj-Game.html#method_fetchRooms"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003AinitGame\u0028\u0029",
             "name": "initGame",
-            "summary": "",
+            "summary": "Game\u0020init",
             "url": "classes/App-Proj-Game.html#method_initGame"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AfindAndSetNeighbors\u0028\u0029",
+            "name": "findAndSetNeighbors",
+            "summary": "Find\u0020and\u0020set\u0020the\u0020neighbors\u0020of\u0020the\u0020rooms",
+            "url": "classes/App-Proj-Game.html#method_findAndSetNeighbors"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AfindAndAddNeighbors\u0028\u0029",
+            "name": "findAndAddNeighbors",
+            "summary": "Find\u0020and\u0020add\u0020neighbors\u0020to\u0020a\u0020room\u0020based\u0020on\u0020coordinates",
+            "url": "classes/App-Proj-Game.html#method_findAndAddNeighbors"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AgetNeighborPositions\u0028\u0029",
+            "name": "getNeighborPositions",
+            "summary": "Get\u0020neighbor\u0020positions\u0020based\u0020on\u0020room\u0020coordinates",
+            "url": "classes/App-Proj-Game.html#method_getNeighborPositions"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AgetNeighborDirection\u0028\u0029",
+            "name": "getNeighborDirection",
+            "summary": "Get\u0020neighbor\u0020direction\u0020based\u0020on\u0020room\u0020and\u0020neighbor\u0020coordinates",
+            "url": "classes/App-Proj-Game.html#method_getNeighborDirection"
+        },                {
+            "fqsen": "\\App\\Proj\\Game\u003A\u003AaddRoomsToGame\u0028\u0029",
+            "name": "addRoomsToGame",
+            "summary": "Add\u0020rooms\u0020to\u0020the\u0020game",
+            "url": "classes/App-Proj-Game.html#method_addRoomsToGame"
         },                {
             "fqsen": "\\App\\Proj\\Game\u003A\u003A\u0024currentRoom",
             "name": "currentRoom",
@@ -2381,26 +2426,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Repository-EventRepository.html#method_remove"
         },                {
-            "fqsen": "\\App\\Repository\\GameMapRepository",
-            "name": "GameMapRepository",
-            "summary": "",
-            "url": "classes/App-Repository-GameMapRepository.html"
-        },                {
-            "fqsen": "\\App\\Repository\\GameMapRepository\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-Repository-GameMapRepository.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Repository\\GameMapRepository\u003A\u003Asave\u0028\u0029",
-            "name": "save",
-            "summary": "",
-            "url": "classes/App-Repository-GameMapRepository.html#method_save"
-        },                {
-            "fqsen": "\\App\\Repository\\GameMapRepository\u003A\u003Aremove\u0028\u0029",
-            "name": "remove",
-            "summary": "",
-            "url": "classes/App-Repository-GameMapRepository.html#method_remove"
-        },                {
             "fqsen": "\\App\\Repository\\GameObjectRepository",
             "name": "GameObjectRepository",
             "summary": "",
@@ -2520,26 +2545,6 @@ Search.appendIndex(
             "name": "remove",
             "summary": "",
             "url": "classes/App-Repository-StartRepository.html#method_remove"
-        },                {
-            "fqsen": "\\App\\Repository\\TextByObjectEventRepository",
-            "name": "TextByObjectEventRepository",
-            "summary": "",
-            "url": "classes/App-Repository-TextByObjectEventRepository.html"
-        },                {
-            "fqsen": "\\App\\Repository\\TextByObjectEventRepository\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-Repository-TextByObjectEventRepository.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Repository\\TextByObjectEventRepository\u003A\u003Asave\u0028\u0029",
-            "name": "save",
-            "summary": "",
-            "url": "classes/App-Repository-TextByObjectEventRepository.html#method_save"
-        },                {
-            "fqsen": "\\App\\Repository\\TextByObjectEventRepository\u003A\u003Aremove\u0028\u0029",
-            "name": "remove",
-            "summary": "",
-            "url": "classes/App-Repository-TextByObjectEventRepository.html#method_remove"
         },                {
             "fqsen": "\\",
             "name": "\\",

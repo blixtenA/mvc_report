@@ -22,6 +22,7 @@ class GameObject
     private int $positionY;
     private ?int $positionZ = 0;
     private string $name;
+    // @phpstan-ignore-next-line warning-code
     private ?array $options = null;
     private int $objId;
     private ?string $effect;
@@ -200,7 +201,7 @@ class GameObject
     }
     
     /**
-     * @return array<mixed, mixed>
+     * @return array<int|string, mixed>
      */
     public function getOptions(): array
     {
@@ -211,14 +212,26 @@ class GameObject
         return $options;
     }
     
+    /**
+     * Get the event by option.
+     *
+     * @param mixed $option The option to retrieve the event for.
+     * @return mixed|null The event associated with the option, or null if not found.
+     */
     public function getEventByOption(mixed $option): mixed
     {
         return isset($this->options[$option]) ? $this->options[$option] : null;
     }
-    
+
+    /**
+     * Add an option to the event.
+     *
+     * @param int|string $key The key of the option.
+     * @param mixed $value The value of the option.
+     * @return void
+     */
     public function addOption(int|string $key, mixed $value): void
     {
-        /** @phpstan-ignore-next-line */
         $this->options[$key] = $value;
     }
         

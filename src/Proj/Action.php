@@ -273,7 +273,8 @@ class Action
 
         if ($emptyIndex !== false) {
             $this->eventActions[$emptyIndex] = $newAction;
-        } else {
+        } 
+        else {
             $this->eventActions[] = $newAction;
         }
     }

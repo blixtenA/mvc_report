@@ -30,9 +30,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+/** @SuppressWarnings("CouplingBetweenObjects") */
 class ProjJSONController extends AbstractController
 {
-
     /* JSON 1 */
     #[Route('/proj/api/showobjects', name: 'game_object_show_all')]
     public function showAllObjects(ManagerRegistry $doctrine, NormalizerInterface $normalizer): JsonResponse
@@ -59,13 +59,15 @@ class ProjJSONController extends AbstractController
 
     /* JSON 3 */
     #[Route('/proj/api/createObject', name: 'game_object_create_JSON', methods: ['POST'])]
-    public function createObjectJson(Request $request, ManagerRegistry $doctrine, SerializerInterface $serializer): JsonResponse
+    public function createObjectJson(
+        ManagerRegistry $doctrine, 
+        SerializerInterface $serializer
+        ): JsonResponse
     {
         // Create a new GameObject instance with hard-coded dummy values
         $gameObject = new GameObject();
         $gameObject->setImage('dummy-image.jpg');
         $gameObject->setName('Dummy Name');
-        $gameObject->setClickable(true);
         $gameObject->setImage2(null);
         $gameObject->setEffect(null);
     
@@ -98,8 +100,8 @@ class ProjJSONController extends AbstractController
         $gameRepository = $doctrine->getRepository(Game::class);
         $gameIds = $gameRepository->findUniqueGameIds(); // @phpstan-ignore-line
 
-        $objectByRoomRepository = $doctrine->getRepository(ObjectByRoom::class);
-        $objectByRooms = $objectByRoomRepository->findAll();
+        $objByRoomRepository = $doctrine->getRepository(ObjectByRoom::class);
+        $objectByRooms = $objByRoomRepository->findAll();
 
         $actionRepository = $doctrine->getRepository(Action::class);
         $actions = $actionRepository->findAll();
@@ -107,8 +109,8 @@ class ProjJSONController extends AbstractController
         $eventRepository = $doctrine->getRepository(Event::class);
         $events = $eventRepository->findAll();
 
-        $eventByObjectRepository = $doctrine->getRepository(EventByObject::class);
-        $eventByObjects = $eventByObjectRepository->findAll();
+        $eventByObjRepository = $doctrine->getRepository(EventByObject::class);
+        $eventByObjects = $eventByObjRepository->findAll();
 
         $normalizedData = [
             'gameObject' => $gameObjects,

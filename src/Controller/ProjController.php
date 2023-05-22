@@ -20,7 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class ProjController extends AbstractController
 {
     #[Route('/proj', name: 'app_project')]
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return $this->render('proj/index.html.twig', [
             'controller_name' => 'ProjController',
@@ -39,6 +39,29 @@ class ProjController extends AbstractController
         return $this->render('proj/about_database.html.twig');
     }
 
+    #[Route("/proj/player", name: "proj_game_player", methods: ['GET', 'POST'])]
+    public function newPlayer(
+        Request $request,
+        SessionInterface $session,
+        ManagerRegistry $doctrine
+    ): Response {
+        if ($request->isMethod('POST')) {
+            $playerName = $request->request->get('playerName');
+            $avatar = $request->request->get('avatar');
+    
+            $avatarImagePath = match ($avatar) {
+                'avatar1' => 'img/proj/characters/character1.png',
+                'avatar2' => 'img/proj/characters/character2.png',
+                default => 'img/proj/characters/default.png',
+            };
+    
+            $player = new Player($playerName, $avatarImagePath);
+            $session->set("player", $player);
+            return $this->redirectToRoute('proj_game_start');
+        }
+    
+        return $this->render('proj/new_player.html.twig');
+    }
 
     #[Route("/proj/game", name: "proj_game_start", methods: ['GET'])]
     public function gamestart(
@@ -46,18 +69,11 @@ class ProjController extends AbstractController
         ManagerRegistry $doctrine
     ): Response
     {
-        $entityManager = $doctrine->getManager();
-
-        /* Load new Game */
+        /* Load new Game and set the player */
         $gameID = 1;
         $game = new Game($gameID);
         $game->initGame($doctrine);
-
-        /* to do: custom player */
-        $player = new Player(
-            "Anna",
-            "img/proj/characters/character1.png"
-        );
+        $player = $session->get("player");
         $game->setPlayer($player);
 
         /* Save to session */
@@ -71,11 +87,9 @@ class ProjController extends AbstractController
     public function handleEvent(
         Request $request, 
         SessionInterface $session, 
-        RouterInterface $router,
         ManagerRegistry $doctrine
         ): Response
     {
-        error_log("entering handle event",0);
         $entityManager = $doctrine->getManager();
 
         /* Get the game from the session and other IDs */
@@ -89,11 +103,7 @@ class ProjController extends AbstractController
         $gameObject = $game->getCurrentRoom()->getGameObjectById($gameObjectId);
         if (!$gameObject) {
             $gameObject = $game->getPlayer()->getInventoryById($gameObjectId);
-            error_log("found in inventory",0);
             $location = 0;
-        }
-        else {
-            error_log("found in room",0);
         }
     
         if (!$gameObject) {
@@ -101,7 +111,7 @@ class ProjController extends AbstractController
         }
 
         $event = new Event();
-        $event->initEvent($game, $gameObject, $eventId, $location, $doctrine);
+        $event->initEvent($gameObject, $eventId, $location, $doctrine);
     
         /* Do action */
         /** @phpstan-ignore-next-line */
@@ -110,7 +120,6 @@ class ProjController extends AbstractController
         $messages = $action->getMessages();
 
         if ($reloadRoom) {
-            error_log("reload",0);
             $game->getCurrentRoom()->loadObjects(2, $doctrine);
         }
     

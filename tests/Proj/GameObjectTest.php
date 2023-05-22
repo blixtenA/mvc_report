@@ -17,7 +17,6 @@ class GameObjectTest extends TestCase
         $positionX = 10;
         $positionY = 20;
         $positionZ = 0;
-        $clickable = true;
         $options = ['option1', 'option2'];
         $effect = 'example effect';
         $width = 100;
@@ -31,7 +30,6 @@ class GameObjectTest extends TestCase
             $positionX,
             $positionY,
             $positionZ,
-            $clickable,
             $options,
             $effect,
             $width,
@@ -188,22 +186,6 @@ class GameObjectTest extends TestCase
         $gameObject = new GameObject();
         $gameObject->setWidth($width);
         $this->assertSame($width, $gameObject->getWidth());
-    }
-
-    public function testIsClickable(): void
-    {
-        $clickable = true;
-        $gameObject = new GameObject();
-        $gameObject->setClickable($clickable);
-        $this->assertSame($clickable, $gameObject->isClickable());
-    }
-
-    public function testSetClickable(): void
-    {
-        $clickable = true;
-        $gameObject = new GameObject();
-        $gameObject->setClickable($clickable);
-        $this->assertSame($clickable, $gameObject->isClickable());
     }
 
     public function testHasClickOptions(): void

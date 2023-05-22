@@ -52,8 +52,8 @@ class GameObjectController extends AbstractController
         $gameRepository = $doctrine->getRepository(Game::class);
         $gameIds = $gameRepository->findUniqueGameIds(); // @phpstan-ignore-line
     
-        $objectByRoomRepository = $doctrine->getRepository(ObjectByRoom::class);
-        $objectByRooms = $objectByRoomRepository->findAll();
+        $objByRoomRepository = $doctrine->getRepository(ObjectByRoom::class);
+        $objectByRooms = $objByRoomRepository->findAll();
     
         $actionRepository = $doctrine->getRepository(Action::class);
         $actions = $actionRepository->findAll();
@@ -61,8 +61,8 @@ class GameObjectController extends AbstractController
         $eventRepository = $doctrine->getRepository(Event::class);
         $events = $eventRepository->findAll();
     
-        $eventByObjectRepository = $doctrine->getRepository(EventByObject::class);
-        $eventByObjects = $eventByObjectRepository->findAll();
+        $eventByObjRepository = $doctrine->getRepository(EventByObject::class);
+        $eventByObjects = $eventByObjRepository->findAll();
     
         return $this->render('proj/view_all.html.twig', [
             'gameObject' => $gameObject,
@@ -166,8 +166,8 @@ class GameObjectController extends AbstractController
     #[Route('/game/object_by_room/{id}/edit', name: 'game_object_by_room_edit', requirements: ['id' => '\d+'])]
     public function editObjectByRoom(Request $request, int $id, ManagerRegistry $doctrine): Response
     {
-        $objectByRoomRepository = $doctrine->getRepository(ObjectByRoom::class);
-        $objectByRoom = $objectByRoomRepository->find($id);
+        $objByRoomRepository = $doctrine->getRepository(ObjectByRoom::class);
+        $objectByRoom = $objByRoomRepository->find($id);
 
         $roomRepository = $doctrine->getRepository(Room::class);
         $room = $roomRepository->find($objectByRoom->getRoomId());
@@ -254,8 +254,8 @@ class GameObjectController extends AbstractController
     #[Route('/game/event_by_object/{id}/edit', name: 'game_event_by_object_edit', requirements: ['id' => '\d+'])]
     public function editEventByObject(Request $request, int $id, ManagerRegistry $doctrine): Response
     {
-        $eventByObjectRepository = $doctrine->getRepository(EventByObject::class);
-        $eventByObject = $eventByObjectRepository->find($id);
+        $eventByObjRepository = $doctrine->getRepository(EventByObject::class);
+        $eventByObject = $eventByObjRepository->find($id);
     
         $actionRepository = $doctrine->getRepository(Action::class);
         $actions = $actionRepository->findAll();
@@ -310,11 +310,7 @@ class GameObjectController extends AbstractController
                 $entityManager->flush();
     
                 return $this->redirectToRoute('game_view_all');
-            } else {
-                error_log("Form is not valid", 0);
             }
-        } else {
-            error_log("Form is not submitted", 0);
         }
     
         return $this->render('proj/create_object.html.twig', [
@@ -352,11 +348,7 @@ class GameObjectController extends AbstractController
                 $entityManager->flush();
 
                 return $this->redirectToRoute('game_view_all');
-            } else {
-                error_log("Form is not valid", 0);
             }
-        } else {
-            error_log("Form is not submitted", 0);
         }
 
         return $this->render('proj/create_room.html.twig', [
@@ -394,11 +386,7 @@ class GameObjectController extends AbstractController
                 $entityManager->flush();
     
                 return $this->redirectToRoute('game_view_all');
-            } else {
-                error_log("Form is not valid", 0);
             }
-        } else {
-            error_log("Form is not submitted", 0);
         }
     
         return $this->render('proj/create_object_by_room.html.twig', [
@@ -436,11 +424,7 @@ class GameObjectController extends AbstractController
                 $entityManager->flush();
 
                 return $this->redirectToRoute('game_view_all');
-            } else {
-                error_log("Form is not valid", 0);
             }
-        } else {
-            error_log("Form is not submitted", 0);
         }
 
         return $this->render('proj/create_action.html.twig', [
@@ -478,11 +462,7 @@ class GameObjectController extends AbstractController
                 $entityManager->flush();
     
                 return $this->redirectToRoute('game_view_all');
-            } else {
-                error_log("Form is not valid", 0);
             }
-        } else {
-            error_log("Form is not submitted", 0);
         }
     
         return $this->render('proj/create_event.html.twig', [
@@ -520,11 +500,7 @@ class GameObjectController extends AbstractController
                 $entityManager->flush();
 
                 return $this->redirectToRoute('game_view_all');
-            } else {
-                error_log("Form is not valid", 0);
             }
-        } else {
-            error_log("Form is not submitted", 0);
         }
 
         return $this->render('proj/create_event_by_object.html.twig', [

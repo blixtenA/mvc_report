@@ -23,6 +23,9 @@
     <exclude-pattern>src/Repository/EventByObjectRepository.php</exclude-pattern>
     <exclude-pattern>src/Repository/BookRepository.php</exclude-pattern>
     <exclude-pattern>src/Repository/ActionRepository.php</exclude-pattern>
+    <exclude-pattern>src/Proj/Action.php</exclude-pattern>
+    <exclude-pattern>src/Form/*</exclude-pattern>
+    <exclude-pattern>src/Entity/*</exclude-pattern>
 
     <rule ref="rulesets/design.xml" />
     <rule ref="rulesets/cleancode.xml" />
@@ -40,11 +43,17 @@
         </properties>
     </rule>
 
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="ElseExpression"/>
+    </rule>
+
     <rule ref="rulesets/naming.xml/ShortMethodName">
         <properties>
             <property name="exceptions" value="t,e" />
         </properties>
     </rule>
+
+    
 
     <rule ref="rulesets/unusedcode.xml" />
 

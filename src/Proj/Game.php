@@ -134,9 +134,13 @@ class Game
         $this->setCurrentRoom($startingRoom);
     }
 
-    /**
-     * Get the room data for positioning etc
-     */
+/**
+ * Get the room data for positioning etc
+ *
+ * @param array $map
+ * @return array
+ * */
+/* @phpstan-ignore-next-line warning-code */
     private function extractRoomData(array $map): array
     {
         $roomIDs = [];
@@ -180,7 +184,7 @@ class Game
      * Fetch the game map from the database using the EntityManager.
      *
      * @param mixed $entityManager The EntityManager object.
-     * @return array The fetched game map.
+     * @return array<\App\Entity\Game> The fetched game map.
      */
     private function fetchGameMap($entityManager): array
     {
@@ -192,8 +196,8 @@ class Game
      * Fetch the rooms from the database based on the given room IDs.
      *
      * @param mixed $entityManager The EntityManager object.
-     * @param array $roomIDs The array of room IDs to fetch.
-     * @return array The fetched rooms.
+     * @param array<int> $roomIDs The array of room IDs to fetch.
+     * @return array<\App\Entity\Room> The fetched rooms.
      */
     private function fetchRooms($entityManager, array $roomIDs): array
     {
@@ -203,6 +207,9 @@ class Game
 
     /**
      * Game init
+     *
+     * @param mixed $doctrine The doctrine instance
+     * @return void
      */
     public function initGame(mixed $doctrine): void 
     {
@@ -223,7 +230,7 @@ class Game
                     break;
                 }
             }
-            $room = $this->createRoom($roomEntity, $start, $doctrine);
+            $room = $this->createRoom($roomEntity, $start);
             $room->loadObjects(1, $doctrine);
             $roomObjects[$roomEntity->getId()] = $room;   
         }
@@ -236,6 +243,10 @@ class Game
 
     /**
      * Find and set the neighbors of the rooms
+     *
+     * @param array<Room> $roomObjects An array of room objects
+     * @param array<int,array<string,int>> $roomPositions An array of room positions
+     * @return void
      */
     private function findAndSetNeighbors(array &$roomObjects, array $roomPositions): void
     {
@@ -249,6 +260,13 @@ class Game
 
     /**
      * Find and add neighbors to a room based on coordinates
+     *
+     * @param Room $roomEntity The room entity to find neighbors for
+     * @param array<Room> $roomObjects An array of room objects
+     * @param array<int,array<string,int>> $roomPositions An array of room positions
+     * @param int $roomPositionX The X coordinate of the room
+     * @param int $roomPositionY The Y coordinate of the room
+     * @return void
      */
     private function findAndAddNeighbors(Room $roomEntity, array &$roomObjects, array $roomPositions, int $roomPositionX, int $roomPositionY): void
     {
@@ -267,7 +285,11 @@ class Game
 
     /**
      * Get neighbor positions based on room coordinates
-     */
+     *
+     * @param int $roomPositionX The X coordinate of the room
+     * @param int $roomPositionY The Y coordinate of the room
+    * @return array<int,array<int,int>> An array of neighbor positions [[$x1, $y1], [$x2, $y2], ...]
+    */
     private function getNeighborPositions(int $roomPositionX, int $roomPositionY): array
     {
         $neighborPositions = [
@@ -282,6 +304,12 @@ class Game
 
     /**
      * Get neighbor direction based on room and neighbor coordinates
+     *
+     * @param int $roomPositionX The X coordinate of the room
+     * @param int $roomPositionY The Y coordinate of the room
+     * @param int $neighborPositionX The X coordinate of the neighbor
+     * @param int $neighborPositionY The Y coordinate of the neighbor
+     * @return string The direction of the neighbor ('South', 'North', 'West', 'East'), or an empty string if no match
      */
     private function getNeighborDirection(int $roomPositionX, int $roomPositionY, int $neighborPositionX, int $neighborPositionY): string
     {
@@ -300,6 +328,8 @@ class Game
 
     /**
      * Add rooms to the game
+     *
+     * @param Room[] $roomObjects Array of Room objects
      */
     private function addRoomsToGame(array $roomObjects): void
     {

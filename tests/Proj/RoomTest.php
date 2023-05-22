@@ -45,7 +45,6 @@ class RoomTest extends TestCase
         $positionX = 10;
         $positionY = 20;
         $positionZ = 0;
-        $clickable = true;
         $options = ['option1', 'option2'];
         $effect = 'example effect';
         $width = 100;
@@ -59,7 +58,6 @@ class RoomTest extends TestCase
             $positionX,
             $positionY,
             $positionZ,
-            $clickable,
             $options,
             $effect,
             $width,

@@ -4,7 +4,7 @@ namespace App\Proj;
 
 class Event
 {
-    private int $event_id;
+    private int $eventId;
     private string $text;
     private string $name;
     /**
@@ -17,13 +17,13 @@ class Event
      * @phpstan-ignore-next-line
      */
     public function __construct(
-        int $event_id = 0,
+        int $eventId = 0,
         string $name = '',
         string $text = "something happened",
         int $location = 0,
         array $actions = []
     ) {
-        $this->event_id = $event_id;
+        $this->eventId = $eventId;
         $this->text = $text;
         $this->name = $name;
         $this->location = $location;
@@ -79,18 +79,18 @@ class Event
      */
     public function getEventId(): int
     {
-        return $this->event_id;
+        return $this->eventId;
     }
 
     /**
      * Set the ID of the event.
      *
-     * @param int $event_id The event ID.
+     * @param int $eventId The event ID.
      * @return void
      */
-    public function setEventId(int $event_id): void
+    public function setEventId(int $eventId): void
     {
-        $this->event_id = $event_id;
+        $this->eventId = $eventId;
     }
 
     /**
@@ -143,21 +143,20 @@ class Event
     /**
      * Initialize the event.
      *
-     * @param Game              $game          The game instance.
      * @param GameObject        $gameObject    The game object.
      * @param int               $eventId       The ID of the event.
      * @param mixed             $doctrine      The Doctrine entity manager.
      * @param int               $location      The room id (or inventory = 0)
      * @return void
      */
-    public function initEvent(Game $game, GameObject $gameObject, int $eventId, int $location, $doctrine): void 
+    public function initEvent(GameObject $gameObject, int $eventId, int $location, $doctrine): void 
     {
         $entityManager = $doctrine->getManager();
         $gameObjectId = $gameObject->getObjId();
                 
         /* Retrieve the event from the database */
-        $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
-        $eventByObject = $eventByObjectRepository->findOneBy([
+        $eventByObjRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
+        $eventByObject = $eventByObjRepository->findOneBy([
             'event_id' => $eventId,
             'object_id' => $gameObjectId,
             'location' => $location
@@ -184,7 +183,6 @@ class Event
                 $name = $event->getName();
 
             /* Create a new Event object with the data */    
-            // @phpstan-ignore-next-line
             $this->eventId = $eventId;
             $this->name = $name;
             $this->text = $text;
