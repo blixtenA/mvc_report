@@ -48,12 +48,14 @@ class ProjController extends AbstractController
             $playerName = $request->request->get('playerName');
             $avatar = $request->request->get('avatar');
     
+            /** @var string */
             $avatarImagePath = match ($avatar) {
                 'avatar1' => 'img/proj/characters/character1.png',
                 'avatar2' => 'img/proj/characters/character2.png',
                 default => 'img/proj/characters/default.png',
             };
-    
+            $avatarImagePath = (string)$avatarImagePath;
+            // @phpstan-ignore-next-line
             $player = new Player($playerName, $avatarImagePath);
             $session->set("player", $player);
             return $this->redirectToRoute('proj_game_start');

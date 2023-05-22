@@ -32,7 +32,7 @@ class LibraryControllerTest extends TestCase
             ->method('render')
             ->willReturn($response);
 
-        $actualResponse = $controller->index($request);
+        $actualResponse = $controller->index();
 
         $this->assertSame($response, $actualResponse);
     }

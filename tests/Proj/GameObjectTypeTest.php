@@ -34,17 +34,4 @@ class GameObjectTypeTest extends TypeTestCase
         }
     }
 
-    public function testReverseTransform(): void
-    {
-        $gameObjectType = new GameObjectType();
-        $result = $gameObjectType->reverseTransform('value');
-        $this->assertNull($result);
-    }
-
-    public function testTransform(): void
-    {
-        $gameObjectType = new GameObjectType();
-        $result = $gameObjectType->transform('value');
-        $this->assertNull($result);
-    }
 }

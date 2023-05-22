@@ -45,15 +45,17 @@ class ObjectByRoomRepository extends ServiceEntityRepository
      */
     public function findSequenceByObjectID(int $objectID): array
     {
-        return $this->createQueryBuilder('obr')
+        $result = $this->createQueryBuilder('obr')
             ->select('obr.sequence')
             ->where('obr.object_id = :objectID')
             ->setParameter('objectID', $objectID)
             ->getQuery()
             ->getResult();
+
+        return is_array($result) ? $result : [];
     }
 
-    public function findOneBy(array $criteria, array $orderBy = null)
+    public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
         /* $orderBy parameter intentionally unused for this implementation */
         $qb = $this->createQueryBuilder('obr');

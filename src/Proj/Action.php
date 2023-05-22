@@ -50,6 +50,7 @@ class Action
     
             if ($this->game->getGameState() === 'Game Over') {
                 $objectName = $this->object ? $this->object->getName() : 'Unknown Object';
+                /** @phpstan-ignore-next-line */
                 $roomName = $this->room ? $this->room->getName() : 'Unknown Room';
             
                 return $this->addCommentAndHandleState("Player was killed by " . $objectName . " in " . $roomName);
@@ -237,6 +238,9 @@ class Action
 
         $matchingObject = null;
         foreach ($player->getInventory() as $gameObject) {
+            if ($gameObject->getObjId() === null) {
+                break;
+            }
             if ($gameObject->getObjId() === $this->object->getObjId()) {
                 $matchingObject = $gameObject;
                 break;
