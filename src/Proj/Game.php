@@ -22,54 +22,106 @@ class Game
         $this->player = null;
     }
 
+    /**
+     * Set the current room in the game.
+     *
+     * @param Room $room The room object.
+     * @return void
+     */
     public function setCurrentRoom(Room $room): void
     {
         $this->currentRoom = $room;
     }
 
+    /**
+     * Get the current room in the game.
+     *
+     * @return Room|null The current room object, or null if not set.
+     */
     public function getCurrentRoom(): ?Room
     {
         return $this->currentRoom;
     }
 
+    /**
+     * Set the game state.
+     *
+     * @param string $state The game state.
+     * @return void
+     */
     public function setGameState(string $state): void
     {
         $this->gameState = $state;
     }
 
+    /**
+     * Get the game state.
+     *
+     * @return string The game state.
+     */
     public function getGameState(): string
     {
         return $this->gameState;
     }
 
+    /**
+     * Get the game ID.
+     *
+     * @return int The game ID.
+     */
     public function getGameId(): int
     {
         return $this->gameId;
     }
 
+    /**
+     * Add a room to the game.
+     *
+     * @param Room $room The room object to add.
+     * @return void
+     */
     public function addRoom(Room $room): void
     {
         $this->rooms[] = $room;
     }
 
+
     /**
-     * @return array<Room>
+     * Get the rooms in the game.
+     *
+     * @return array<Room> The array of rooms.
      */
     public function getRooms(): array
     {
         return $this->rooms;
     }
 
+    /**
+     * Set the player in the game.
+     *
+     * @param Player $player The player object.
+     * @return void
+     */
     public function setPlayer(Player $player): void
     {
         $this->player = $player;
     }
 
+    /**
+     * Get the player in the game.
+     *
+     * @return Player|null The player object, or null if not set.
+     */
     public function getPlayer(): ?Player
     {
         return $this->player;
     }
 
+    /**
+     * Map the starting room as the current room.
+     *
+     * @return void
+     */
     public function mapStartingRoom(): void
     {
         $startingRoom = null;
@@ -82,27 +134,82 @@ class Game
         $this->setCurrentRoom($startingRoom);
     }
 
-    public function initGame(mixed $doctrine): void 
+    /**
+     * Get the room data for positioning etc
+     */
+    private function extractRoomData(array $map): array
     {
-        $entityManager = $doctrine->getManager();
-
-        $gameRepository = $entityManager->getRepository(\App\Entity\Game::class);
-        $map = $gameRepository->findBy(['game_id' => $this->gameId]); 
-
-        /* Extract room IDs and positions from the retrieved game entity */
         $roomIDs = [];
         $roomPositions = [];
+        
         foreach ($map as $gameEntity) {
-            $roomIDs[] = $gameEntity->getRoomId();
-            $roomPositions[$gameEntity->getRoomId()] = [
+            $roomID = $gameEntity->getRoomId();
+            $roomIDs[] = $roomID;
+            $roomPositions[$roomID] = [
                 'pos_x' => $gameEntity->getPosX(),
                 'pos_y' => $gameEntity->getPosY(),
             ];
         }
 
-        /* Fetch the rooms from the Room entity using the extracted room IDs */
+        return [$roomIDs, $roomPositions];
+    }
+
+    /**
+     * Create a Room object based on the given Room entity and start flag.
+     *
+     * @param \App\Entity\Room $roomEntity The Room entity.
+     * @param bool|null $start The start flag indicating if the room is a starting room.
+     * @return \App\Proj\Room The created Room object.
+     */
+    private function createRoom(\App\Entity\Room $roomEntity, ?bool $start): \App\Proj\Room
+    {
+        $room = new Room(
+            1, /* initial sequence */
+            $roomEntity->getId(),
+            $roomEntity->getName(),
+            $roomEntity->getBackground(),
+            $roomEntity->getDescription(),
+            null,
+            $start
+        );
+
+        return $room;
+    }
+    
+    /**
+     * Fetch the game map from the database using the EntityManager.
+     *
+     * @param mixed $entityManager The EntityManager object.
+     * @return array The fetched game map.
+     */
+    private function fetchGameMap($entityManager): array
+    {
+        $gameRepository = $entityManager->getRepository(\App\Entity\Game::class);
+        return $gameRepository->findBy(['game_id' => $this->gameId]);
+    }
+
+    /**
+     * Fetch the rooms from the database based on the given room IDs.
+     *
+     * @param mixed $entityManager The EntityManager object.
+     * @param array $roomIDs The array of room IDs to fetch.
+     * @return array The fetched rooms.
+     */
+    private function fetchRooms($entityManager, array $roomIDs): array
+    {
         $roomRepository = $entityManager->getRepository(\App\Entity\Room::class);
-        $rooms = $roomRepository->findBy(['id' => $roomIDs]);
+        return $roomRepository->findBy(['id' => $roomIDs]);
+    }
+
+    /**
+     * Game init
+     */
+    public function initGame(mixed $doctrine): void 
+    {
+        $entityManager = $doctrine->getManager();
+        $map = $this->fetchGameMap($entityManager);
+        [$roomIDs, $roomPositions] = $this->extractRoomData($map);
+        $rooms = $this->fetchRooms($entityManager, $roomIDs);
 
         /* Prepare Rooms and load them into the game */
         $roomObjects = [];
@@ -116,47 +223,89 @@ class Game
                     break;
                 }
             }
-
-            $room = new Room(
-                1, /* initial sequence */
-                $roomEntity->getId(),
-                $roomEntity->getName(),
-                $roomEntity->getBackground(),
-                $roomEntity->getDescription(),
-                null,
-                $start
-            );
+            $room = $this->createRoom($roomEntity, $start, $doctrine);
             $room->loadObjects(1, $doctrine);
-
-            $roomObjects[$roomEntity->getId()] = $room;      
+            $roomObjects[$roomEntity->getId()] = $room;   
         }
         
-        /* Find neighboring rooms based on coordinates */
-        foreach ($rooms as $roomEntity) {
-        
+        /* Specialized functions for populating and placing the rooms */
+        $this->findAndSetNeighbors($roomObjects, $roomPositions);
+        $this->addRoomsToGame($roomObjects);
+        $this->mapStartingRoom();
+    }
+
+    /**
+     * Find and set the neighbors of the rooms
+     */
+    private function findAndSetNeighbors(array &$roomObjects, array $roomPositions): void
+    {
+        foreach ($roomObjects as $roomEntity) {
             $roomPositionX = $roomPositions[$roomEntity->getId()]['pos_x'];
             $roomPositionY = $roomPositions[$roomEntity->getId()]['pos_y'];
 
-            foreach ($rooms as $neighborEntity) {
-                $neighborPositionX = $roomPositions[$neighborEntity->getId()]['pos_x'];
-                $neighborPositionY = $roomPositions[$neighborEntity->getId()]['pos_y'];
+            $this->findAndAddNeighbors($roomEntity, $roomObjects, $roomPositions, $roomPositionX, $roomPositionY);
+        }
+    }
 
-                if ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY - 1) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('South', $roomObjects[$neighborEntity->getId()]);
-                } elseif ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY + 1) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('North', $roomObjects[$neighborEntity->getId()]);
-                } elseif ($neighborPositionX === $roomPositionX - 1 && $neighborPositionY === $roomPositionY) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('West', $roomObjects[$neighborEntity->getId()]);
-                } elseif ($neighborPositionX === $roomPositionX + 1 && $neighborPositionY === $roomPositionY) {
-                    $roomObjects[$roomEntity->getId()]->addNeighbor('East', $roomObjects[$neighborEntity->getId()]);
-                }
+    /**
+     * Find and add neighbors to a room based on coordinates
+     */
+    private function findAndAddNeighbors(Room $roomEntity, array &$roomObjects, array $roomPositions, int $roomPositionX, int $roomPositionY): void
+    {
+        $neighborPositions = $this->getNeighborPositions($roomPositionX, $roomPositionY);
+
+        foreach ($roomObjects as $neighborEntity) {
+            $neighborPositionX = $roomPositions[$neighborEntity->getId()]['pos_x'];
+            $neighborPositionY = $roomPositions[$neighborEntity->getId()]['pos_y'];
+
+            if (in_array([$neighborPositionX, $neighborPositionY], $neighborPositions)) {
+                $direction = $this->getNeighborDirection($roomPositionX, $roomPositionY, $neighborPositionX, $neighborPositionY);
+                $roomEntity->addNeighbor($direction, $roomObjects[$neighborEntity->getId()]);
             }
+        }
+    }
 
-            $this->addRoom($roomObjects[$roomEntity->getId()]);
+    /**
+     * Get neighbor positions based on room coordinates
+     */
+    private function getNeighborPositions(int $roomPositionX, int $roomPositionY): array
+    {
+        $neighborPositions = [
+            [$roomPositionX, $roomPositionY - 1], // South
+            [$roomPositionX, $roomPositionY + 1], // North
+            [$roomPositionX - 1, $roomPositionY], // West
+            [$roomPositionX + 1, $roomPositionY], // East
+        ];
+
+        return $neighborPositions;
+    }
+
+    /**
+     * Get neighbor direction based on room and neighbor coordinates
+     */
+    private function getNeighborDirection(int $roomPositionX, int $roomPositionY, int $neighborPositionX, int $neighborPositionY): string
+    {
+        if ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY - 1) {
+            return 'South';
+        } elseif ($neighborPositionX === $roomPositionX && $neighborPositionY === $roomPositionY + 1) {
+            return 'North';
+        } elseif ($neighborPositionX === $roomPositionX - 1 && $neighborPositionY === $roomPositionY) {
+            return 'West';
+        } elseif ($neighborPositionX === $roomPositionX + 1 && $neighborPositionY === $roomPositionY) {
+            return 'East';
         }
 
-        $this->mapStartingRoom();
+        return '';
+    }
 
+    /**
+     * Add rooms to the game
+     */
+    private function addRoomsToGame(array $roomObjects): void
+    {
+        foreach ($roomObjects as $roomEntity) {
+            $this->addRoom($roomEntity);
+        }
     }
 
 }
