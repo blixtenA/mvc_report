@@ -6,7 +6,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Proj\Game;
 use App\Proj\Room;
 use App\Proj\Player;
-use App\Entity\Event;
 use App\Proj\Action;
 use App\Entity\ObjectByRoom;
 use App\Entity\EventByObject;
@@ -143,14 +142,13 @@ class GameObject
 
     public function getPositionZ(): int
     {
-        return $this->positionZ;
+        return $this->positionZ ?? 0;
     }
 
     public function setPositionZ(int $position): void
     {
         $this->positionZ = $position;
     }
-
 
     public function getHeight(): ?int
     {

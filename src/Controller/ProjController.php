@@ -42,8 +42,7 @@ class ProjController extends AbstractController
     #[Route("/proj/player", name: "proj_game_player", methods: ['GET', 'POST'])]
     public function newPlayer(
         Request $request,
-        SessionInterface $session,
-        ManagerRegistry $doctrine
+        SessionInterface $session
     ): Response {
         if ($request->isMethod('POST')) {
             $playerName = $request->request->get('playerName');

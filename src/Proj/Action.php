@@ -49,7 +49,10 @@ class Action
             $actionId = $this->eventActions[$key];
     
             if ($this->game->getGameState() === 'Game Over') {
-                return $this->addCommentAndHandleState("Player was killed by " . $this->object->getName() . " in " . $this->room->getName());
+                $objectName = $this->object ? $this->object->getName() : 'Unknown Object';
+                $roomName = $this->room ? $this->room->getName() : 'Unknown Room';
+            
+                return $this->addCommentAndHandleState("Player was killed by " . $objectName . " in " . $roomName);
             }
     
             if ($this->game->getGameState() === 'Player Wins') {
@@ -249,6 +252,7 @@ class Action
      * Attempt to unlock, or other options/object action. 
      * Check if the player has the key
      */
+    /** @scrutinizer ignore-call */ 
     function actionWithOptionsAndObject(): void 
     {
         $optionObject = $this->currentAction->getOptionObject();

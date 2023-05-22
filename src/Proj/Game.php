@@ -170,9 +170,9 @@ class Game
         $room = new Room(
             1, /* initial sequence */
             $roomEntity->getId(),
-            $roomEntity->getName(),
-            $roomEntity->getBackground(),
-            $roomEntity->getDescription(),
+            $roomEntity->getName() ?? '',
+            $roomEntity->getBackground() ?? '',
+            $roomEntity->getDescription() ?? '',
             null,
             $start
         );

@@ -12,7 +12,7 @@ class Room
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 255)]
     private ?string $background = null;
@@ -23,9 +23,8 @@ class Room
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    public function getId(): ?int
+    public function getId(): int
     {
-        error_log("get id: ". $this->id,0);
         return $this->id;
     }
 
