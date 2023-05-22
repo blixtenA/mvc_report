@@ -204,9 +204,6 @@ class GameObject
                 'eventId' => $eventId,
                 'eventName' => $eventName,
             ];
-
-            error_log("eventid: ". $eventId,0);
-            error_log("eventName: ". $eventName,0);
         }
 
         return $result;
@@ -217,13 +214,10 @@ class GameObject
      */
     public function getOptions(): array
     {
-        error_log('1 getOptions: ' . var_export($this->options, true),0);
-
         $options = [];
         foreach ($this->options as $optionKey => $eventId) {
             $options[$optionKey] = $eventId;
         }
-        error_log('2 getOptions: ' . var_export($options, true),0);
         return $options;
     }
     
@@ -234,14 +228,10 @@ class GameObject
     
     public function addOption(int|string $key, mixed $value): void
     {
-        error_log("Before adding option: Options = " . print_r($this->options, true), 0);
         /** @phpstan-ignore-next-line */
         $this->options[$key] = $value;
-        error_log("After adding option: Options = " . print_r($this->options, true), 0);
-        error_log("Added option: key = $key, value = $value", 0);
     }
-    
-    
+        
     /**
      * Initialize and populate the GameObject from a room.
      *

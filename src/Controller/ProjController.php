@@ -39,7 +39,6 @@ class ProjController extends AbstractController
         return $this->render('proj/about_database.html.twig');
     }
 
-    
 
     #[Route("/proj/game", name: "proj_game_start", methods: ['GET'])]
     public function gamestart(

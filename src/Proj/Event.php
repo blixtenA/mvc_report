@@ -144,19 +144,16 @@ class Event
      * Initialize the event.
      *
      * @param Game              $game          The game instance.
-     * @param GameObject        $gameObjectId  The ID of the game object.
+     * @param GameObject        $gameObject    The game object.
      * @param int               $eventId       The ID of the event.
      * @param mixed             $doctrine      The Doctrine entity manager.
+     * @param int               $location      The room id (or inventory = 0)
      * @return void
      */
-    public function initEvent(Game $game, GameObject $gameObject, int $eventId, $location, $doctrine): void 
+    public function initEvent(Game $game, GameObject $gameObject, int $eventId, int $location, $doctrine): void 
     {
         $entityManager = $doctrine->getManager();
-
         $gameObjectId = $gameObject->getObjId();
-        error_log("gameObjectId ". $gameObjectId,0);
-        error_log("location ". $location,0);
-        error_log("eventId ". $eventId,0);
                 
         /* Retrieve the event from the database */
         $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
@@ -178,17 +175,12 @@ class Event
                 $eventByObject->getAction5(),
             ];
 
-            // Log the actions
-            error_log('Actions: ' . implode(', ', $actions), 0);
-
             /* Find the corresponding event record based on eventId */
             $event = $eventRepository->findOneBy(['id' => $eventByObject->getEventId()]);
 
             if ($event) {
-                error_log("event found");
                 $eventId = $event->getId();
                 $text = $event->getText();
-                error_log("text ". $text,0);
                 $name = $event->getName();
 
             /* Create a new Event object with the data */    
@@ -198,8 +190,6 @@ class Event
             $this->text = $text;
             $this->location = $location;
             $this->actions = $actions;
-        } else {
-            error_log("event not found!",0);
         }
     }
 

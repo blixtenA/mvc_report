@@ -12,14 +12,14 @@ class Action
     private Event $event;
     private ?GameObject $object;
     private EntityManagerInterface $entityManager;
-        /**
+    /**
      * @var array<string>
      */
     private array $messages = [];
     private Room $room;
     /**
- * @var array<int>
- */
+    * @var array<int>
+    */
     private array $eventActions = [];
     private bool $reloadRoom = false;
     private ?\App\Entity\Action $currentAction = null;
@@ -44,21 +44,17 @@ class Action
         $this->eventActions = $this->event->getActions();
         $key = 0;
         $totalActions = count($this->eventActions);
-        error_log("totalActions: ". $totalActions,0);
     
         while ($key < $totalActions) {
             $actionId = $this->eventActions[$key];
-            error_log("action id: ".$actionId,0);
     
             if ($this->game->getGameState() === 'Game Over') {
-                $this->addFinalComments();
-                return $this->reloadRoom;
+                return $this->addCommentAndHandleState("Player was killed by " . $this->object->getName() . " in " . $this->room->getName());
             }
+    
             if ($this->game->getGameState() === 'Player Wins') {
-                $this->addWinComments();
-                $this->game->setGameState('Game Over');
-                return $this->reloadRoom;
-            }       
+                return $this->addCommentAndHandleState("Congratulations, you beat the Cube BTH edition!");
+            }   
     
             if ($actionId !== null) {
                 $action = $this->fetchAction($actionId);
@@ -82,6 +78,34 @@ class Action
     
         return $this->reloadRoom;
     }
+
+    /**
+     * Add a comment and handle the game state accordingly.
+     *
+     * @param string $comment The comment to add.
+     * @return bool The value of $reloadRoom.
+     */
+    private function addCommentAndHandleState(string $comment): bool
+    {
+        $this->addComment($comment);
+
+        if ($this->game->getGameState() === 'Player Wins') {
+            $this->game->setGameState('Game Over');
+        }
+
+        return $this->reloadRoom;
+    }
+
+    /**
+     * Add a comment to the messages array.
+     *
+     * @param string $comment The comment to add.
+     * @return void
+     */
+    private function addComment(string $comment): void
+    {
+        $this->messages[] = $comment;
+    }
     
     /**
      * Execute the given event action.
@@ -91,11 +115,12 @@ class Action
      */
     private function executeAction(string $eventAction): void
     {
-        error_log("Action: ". $eventAction,0);
         if ($eventAction === 'removeFromRoom') {
             $this->removeFromRoom();
         } elseif ($eventAction === 'addToInventory') {
             $this->addToInventory();
+        } elseif ($eventAction === 'removeFromInventory') {
+            $this->removeFromInventory();
         } elseif ($eventAction === 'deathBySharpObject') {
             $this->deathEvent();
         } elseif ($eventAction === 'deathByHeavyObject') {
@@ -134,14 +159,8 @@ class Action
     {
         $entityActionRepository = $this->entityManager->getRepository(\App\Entity\Action::class);
         $entityAction = $entityActionRepository->find($actionId);
-        $this->currentAction = $entityAction;
-    
-        if ($entityAction) {
-            error_log("Object found", 0);
-        } else {
-            error_log("Object not found", 0);
-        }
-    
+        $this->currentAction = $entityAction;    
+
         return $entityAction;
     }
 
@@ -173,7 +192,6 @@ class Action
         $this->room->removeAllGameObjects();
 //        $this->object->setImage($this->object->getImage2());
         $this->room->setBackground('img/proj/backgrounds/deathScreen.png');
-
         $this->game->setGameState('Game Over');
         $this->messages [] = $this->event->getText();
     }
@@ -186,13 +204,11 @@ class Action
     function playerWins(): void 
     {
         $this->room->removeAllGameObjects();
-//        $this->object->setImage($this->object->getImage2());
         $this->room->setBackground('img/proj/backgrounds/playerWin.png');
-
+        $this->room->setDescription('');
         $this->game->setGameState('Player Wins');
         $this->messages [] = $this->event->getText();
     }
-
 
         /**
      * Handle the dead bunny event.
@@ -260,7 +276,6 @@ class Action
         } else {
             $this->eventActions[] = $newAction;
         }
-
     }
 
     /**
@@ -283,20 +298,21 @@ class Action
     /* Remove the object from the current room */
     function removeFromRoom(): void
     {            
-        error_log("remove from room");
-
         $this->room->removeGameObject($this->object);
+    }
+
+    /* Remove the object from the inventory */
+    function removeFromInventory(): void
+    {            
+        $this->game->getPlayer()->removeFromInventory($this->object);
     }
 
     /* Action: move an object from the current room to the player's inventory */
     function addToInventory() : void
     {
-        error_log("add to inventory",0);
-
         /* Get the player from the game */
         $player = $this->game->getPlayer();
         
-    
         /* Create the new object for the player's inventory */
         $newObject = new GameObject(
             $this->object->getObjId(),
@@ -325,23 +341,6 @@ class Action
 
         $this->game->setGameState('Game Over');
         $this->messages [] = $this->event->getText();
-    }
-
-    /**
-     * Add final comments
-     */
-    private function addFinalComments(): void 
-    {
-        $this->messages [] = 
-            "Player was killed by ".
-            $this->object->getName() . " in " .
-            $this->room->getName();
-    }
-
-    private function addWinComments(): void
-    {
-        $this->messages [] = 
-            "Congratulations, you beat the Cube BTH edition!";
     }
 
     /**
