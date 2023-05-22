@@ -44,6 +44,7 @@ class Action
         $this->eventActions = $this->event->getActions();
         $key = 0;
         $totalActions = count($this->eventActions);
+        error_log("totalActions: ". $totalActions,0);
     
         while ($key < $totalActions) {
             $actionId = $this->eventActions[$key];
@@ -53,6 +54,11 @@ class Action
                 $this->addFinalComments();
                 return $this->reloadRoom;
             }
+            if ($this->game->getGameState() === 'Player Wins') {
+                $this->addWinComments();
+                $this->game->setGameState('Game Over');
+                return $this->reloadRoom;
+            }       
     
             if ($actionId !== null) {
                 $action = $this->fetchAction($actionId);
@@ -105,9 +111,13 @@ class Action
         } elseif ($eventAction === 'deathByBunny') {
             $this->deathByBunny();
         } elseif ($eventAction === 'addRead') {
-            $this->addRead();
+            $this->addEvent(11, "Read");
         } elseif ($eventAction === 'addThrow') {
-            $this->addThrow();                     
+            $this->addEvent(5, "Throw");  
+        } elseif ($eventAction === 'killBunny') {
+            $this->killBunny();   
+        } elseif ($eventAction === 'playerWins') {
+            $this->playerWins();             
         } elseif (strpos($eventAction, 'walk') === 0) {
             $direction = substr($eventAction, 4);
             $this->walk($direction);
@@ -168,22 +178,42 @@ class Action
         $this->messages [] = $this->event->getText();
     }
 
-    /**
-     * Add the "Throw" option to the object.
+        /**
+     * Handle the player wins event
      *
      * @return void
      */
-    function addThrow(): void 
+    function playerWins(): void 
     {
-        $this->object->addOption(20, "Throw");
+        $this->room->removeAllGameObjects();
+//        $this->object->setImage($this->object->getImage2());
+        $this->room->setBackground('img/proj/backgrounds/playerWin.png');
+
+        $this->game->setGameState('Player Wins');
+        $this->messages [] = $this->event->getText();
     }
 
+
         /**
-     * Add the "Read" option to the object.
+     * Handle the dead bunny event.
      *
      * @return void
      */
-    function addRead(): void 
+    function killBunny(): void 
+    {
+        $this->room->removeAllGameObjects();
+        $this->reloadRoom = true;
+        $this->messages [] = $this->event->getText();
+    }
+
+    /**
+     * Add the specified event option to the object.
+     *
+     * @param int $eventId The event ID.
+     * @param string $eventName The event name.
+     * @return void
+     */
+    function addEvent(int $eventId, string $eventName): void
     {
         $player = $this->game->getPlayer();
 
@@ -194,12 +224,9 @@ class Action
                 break;
             }
         }
+        
         if ($matchingObject !== null) {    
-            $matchingObject->addOption(11, "Read");
-    
-            error_log("in add read, After adding option: Options = " . print_r($matchingObject->getOptions(), true), 0);
-        } else {
-            error_log("Matching object not found in player's inventory for objId: " . $this->object->getObjId(), 0);
+            $matchingObject->addOption($eventId, $eventName);
         }
     }
 
@@ -309,6 +336,12 @@ class Action
             "Player was killed by ".
             $this->object->getName() . " in " .
             $this->room->getName();
+    }
+
+    private function addWinComments(): void
+    {
+        $this->messages [] = 
+            "Congratulations, you beat the Cube BTH edition!";
     }
 
     /**

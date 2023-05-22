@@ -79,20 +79,22 @@ class ProjController extends AbstractController
         error_log("entering handle event",0);
         $entityManager = $doctrine->getManager();
 
-        /* Get the game from the session */
+        /* Get the game from the session and other IDs */
         $game = $session->get("game");
-    
+        $roomID = $game->getCurrentRoom()->getId();
         $gameObjectId = (int) $request->query->get('gameObjectId');
         $eventId = (int) $request->query->get('eventId');
+        $location = $roomID;
 
         /* Retrieve the current game object from the room or player's inventory */
         $gameObject = $game->getCurrentRoom()->getGameObjectById($gameObjectId);
         if (!$gameObject) {
             $gameObject = $game->getPlayer()->getInventoryById($gameObjectId);
             error_log("found in inventory",0);
+            $location = 0;
         }
         else {
-            error_log("foudn in room",0);
+            error_log("found in room",0);
         }
     
         if (!$gameObject) {
@@ -100,9 +102,7 @@ class ProjController extends AbstractController
         }
 
         $event = new Event();
-        $event->initEvent($game, $gameObjectId, $eventId, $doctrine);
-    
-
+        $event->initEvent($game, $gameObject, $eventId, $location, $doctrine);
     
         /* Do action */
         /** @phpstan-ignore-next-line */

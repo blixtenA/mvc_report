@@ -106,11 +106,29 @@
             
                 inventoryItems.forEach(function(inventoryItem) {
                     inventoryItem.addEventListener('click', function(event) {
-                        event.stopPropagation();
-                        var optionsContainer = inventoryItem.closest('.inventorySlot').querySelector('.optionsContainer');
-                        optionsContainer.classList.toggle('active');
+                      event.stopPropagation();
+                      var optionsContainer = inventoryItem.querySelector('.optionsContainer');
+                      optionsContainer.classList.toggle('active');
                     });
-                });
+                  
+                    var optionButtons = inventoryItem.querySelectorAll('.optionButton');
+                    optionButtons.forEach(function(button) {
+                      button.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        var eventId = button.dataset.option;
+                        console.log('Player chose:', eventId);
+                  
+                        var gameObjectId = inventoryItem.dataset.gameObjectId;
+                        console.log('Object Id:', gameObjectId);
+                  
+                        var hrefValue = '/proj/handle-event?gameObjectId=' + gameObjectId + '&eventId=' + eventId;
+                  
+                        var anchor = document.createElement('a');
+                        anchor.href = hrefValue;
+                        anchor.click();
+                      });
+                    });
+                  });
             
                 document.addEventListener('click', function() {
                     var optionsContainers = document.querySelectorAll('.optionsContainer');

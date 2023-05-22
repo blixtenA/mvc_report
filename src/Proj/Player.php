@@ -75,19 +75,9 @@ class Player
      * @phpstan-ignore-next-line Ignore PHPStan warning for mixed return type.
      */
     public function getInventory(): array
-    {
-        $inventoryString = '';
-        foreach ($this->inventory as $gameObject) {
-            $inventoryString .= 'GameObject: ID=' . $gameObject->getObjId() . ', Name=' . $gameObject->getName() . '; ';
-    
-            // Log the options for the current object
-//            error_log('Options for ' . $gameObject->getName() . ': ' . var_export($gameObject->getOptions(), true), 0);
-        }
-        error_log('Inventory: ' . $inventoryString);
-    
+    {    
         return $this->inventory;
     }
-    
 
     /**
      * Retrieves an array of inventory item names.

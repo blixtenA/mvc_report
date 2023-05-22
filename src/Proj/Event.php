@@ -144,32 +144,26 @@ class Event
      * Initialize the event.
      *
      * @param Game              $game          The game instance.
-     * @param int               $gameObjectId  The ID of the game object.
+     * @param GameObject        $gameObjectId  The ID of the game object.
      * @param int               $eventId       The ID of the event.
      * @param mixed             $doctrine      The Doctrine entity manager.
      * @return void
      */
-    public function initEvent(Game $game, int $gameObjectId, int $eventId, $doctrine): void 
+    public function initEvent(Game $game, GameObject $gameObject, int $eventId, $location, $doctrine): void 
     {
         $entityManager = $doctrine->getManager();
-        $roomID = $game->getCurrentRoom()->getId();
-            
-        /* Retrieve the current game object from the room or player's inventory */
-        $gameObject = $game->getCurrentRoom()->getGameObjectById($gameObjectId);
-        if (!$gameObject) {
-            $gameObject = $game->getPlayer()->getInventoryById($gameObjectId);
-        }
-    
-        if (!$gameObject) {
-            error_log("Object not found in initEvent", 0);
-        }
-    
+
+        $gameObjectId = $gameObject->getObjId();
+        error_log("gameObjectId ". $gameObjectId,0);
+        error_log("location ". $location,0);
+        error_log("eventId ". $eventId,0);
+                
         /* Retrieve the event from the database */
         $eventByObjectRepository = $entityManager->getRepository(\App\Entity\EventByObject::class);
         $eventByObject = $eventByObjectRepository->findOneBy([
             'event_id' => $eventId,
             'object_id' => $gameObjectId,
-            'location' => $roomID
+            'location' => $location
         ]);
         $eventRepository = $entityManager->getRepository(\App\Entity\Event::class);
         $event = null;
@@ -184,12 +178,17 @@ class Event
                 $eventByObject->getAction5(),
             ];
 
+            // Log the actions
+            error_log('Actions: ' . implode(', ', $actions), 0);
+
             /* Find the corresponding event record based on eventId */
             $event = $eventRepository->findOneBy(['id' => $eventByObject->getEventId()]);
 
             if ($event) {
+                error_log("event found");
                 $eventId = $event->getId();
                 $text = $event->getText();
+                error_log("text ". $text,0);
                 $name = $event->getName();
 
             /* Create a new Event object with the data */    
