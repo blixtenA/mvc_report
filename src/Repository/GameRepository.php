@@ -77,7 +77,6 @@ class GameRepository extends ServiceEntityRepository
         $query = $queryBuilder->getQuery();
     
         $result = $query->getResult();
-        dump($result); // Output the query result for debugging purposes
     
         return $result[0] ?? null;
     }

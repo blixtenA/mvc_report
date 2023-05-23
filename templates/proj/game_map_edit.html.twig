@@ -6,7 +6,6 @@
 
     <h1>Edit Game - ID: {{ id }}</h1>
 
-    <form method="POST">
         {{ form_start(form) }}
         <div id="games-collection">
             {{ form_errors(form) }}
@@ -26,7 +25,6 @@
         <div class="button-container">
             <a href="{{ path('game_view_all') }}" class="back-button">Back</a>
         </div>
-    </form>
     
     <table class="grid">
 
