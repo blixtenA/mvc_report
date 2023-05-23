@@ -238,6 +238,7 @@ class GameObjectController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $doctrine->getManager();
+             /** @scrutinizer ignore-call */
             $entityManager->persist($event);
             $entityManager->flush();
     

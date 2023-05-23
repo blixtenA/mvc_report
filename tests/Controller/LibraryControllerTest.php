@@ -21,7 +21,6 @@ class LibraryControllerTest extends TestCase
 {
     public function testIndex(): void
     {
-        $request = $this->createMock(Request::class);
         $response = $this->createMock(Response::class);
 
         $controller = $this->getMockBuilder(LibraryController::class)

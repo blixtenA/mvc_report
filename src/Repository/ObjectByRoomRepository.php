@@ -65,7 +65,13 @@ class ObjectByRoomRepository extends ServiceEntityRepository
                 ->setParameter($field, $value);
         }
     
-        return $qb->getQuery()->getOneOrNullResult();
+        $result = $qb->getQuery()->getOneOrNullResult();
+        
+        if (!is_null($result) && !is_object($result)) {
+            throw new \LogicException('Invalid result type returned.');
+        }
+    
+        return $result;
     }
 
 //    /**

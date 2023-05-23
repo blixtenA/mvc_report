@@ -235,20 +235,15 @@ class Action
     function addEvent(int $eventId, string $eventName): void
     {
         $player = $this->game->getPlayer();
-
-        $matchingObject = null;
+    
         foreach ($player->getInventory() as $gameObject) {
             if ($gameObject->getObjId() === null) {
                 break;
             }
             if ($gameObject->getObjId() === $this->object->getObjId()) {
-                $matchingObject = $gameObject;
+                $gameObject->addOption($eventId, $eventName);
                 break;
             }
-        }
-        
-        if ($matchingObject !== null) {    
-            $matchingObject->addOption($eventId, $eventName);
         }
     }
 
