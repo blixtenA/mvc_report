@@ -55,6 +55,9 @@ class ObjectByRoomRepository extends ServiceEntityRepository
         return is_array($result) ? $result : [];
     }
 
+    /**
+     * @return object|null
+     */
     public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
         /* $orderBy parameter intentionally unused for this implementation */
@@ -70,7 +73,7 @@ class ObjectByRoomRepository extends ServiceEntityRepository
         if (!is_null($result) && !is_object($result)) {
             throw new \LogicException('Invalid result type returned.');
         }
-    
+        // phpstan-ignore-next-line
         return $result;
     }
 
