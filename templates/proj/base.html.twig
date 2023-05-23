@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="{{ asset('img/proj/objects/bunny.png') }}">
+        <link rel="icon" href="{{ app.request.schemeAndHttpHost ~ asset('img/proj/objects/bunny.png') }}">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('game') }}
@@ -27,7 +27,7 @@
                 <li><a href="{{ path('game_api_land') }}">Game API</a></li>
                 <li><a href="{{ path('game_view_all') }}">View all game content</a></li>
             </ul>
-            <img src="{{ absolute_url('/img/proj/objects/bunnybloody.png') }}" alt="Bloody Bunny" class="nav-image">
+            <img src="https://www.student.bth.se/~anbx22/dbwebb-kurser/mvc/me/report/public/img/proj/objects/bunnybloody.png" alt="Bloody Bunny" class="nav-image">
         </nav>   
         {% block subheader %}{% endblock %}
 
