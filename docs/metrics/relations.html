@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2023-05-22 21:31:07        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2023-05-23 00:23:09        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -337,20 +337,20 @@
             "\\Symfony\\Component\\HttpFoundation\\Response",
             "\\Symfony\\Component\\HttpFoundation\\Request",
             "\\Symfony\\Component\\HttpFoundation\\Session\\SessionInterface",
-            "\\Doctrine\\Persistence\\ManagerRegistry",
             "\\App\\Proj\\Player",
+            "\\Doctrine\\Persistence\\ManagerRegistry",
             "\\App\\Proj\\Game",
             "\\App\\Proj\\Event",
             "\\App\\Proj\\Action"
         ]
     },
     {
-        "name": "\\Doctrine\\Persistence\\ManagerRegistry",
+        "name": "\\App\\Proj\\Player",
         "size": 3000,
         "relations": []
     },
     {
-        "name": "\\App\\Proj\\Player",
+        "name": "\\Doctrine\\Persistence\\ManagerRegistry",
         "size": 3000,
         "relations": []
     },
@@ -600,15 +600,9 @@
         "size": 3000,
         "relations": [
             "\\Symfony\\Component\\Form\\AbstractType",
-            "\\Symfony\\Component\\Form\\DataTransformerInterface",
             "\\Symfony\\Component\\Form\\FormBuilderInterface",
             "\\Symfony\\Component\\OptionsResolver\\OptionsResolver"
         ]
-    },
-    {
-        "name": "\\Symfony\\Component\\Form\\DataTransformerInterface",
-        "size": 3000,
-        "relations": []
     },
     {
         "name": "\\App\\Form\\GameType",
@@ -749,8 +743,14 @@
         "relations": [
             "\\Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository",
             "\\Doctrine\\Persistence\\ManagerRegistry",
-            "\\App\\Entity\\ObjectByRoom"
+            "\\App\\Entity\\ObjectByRoom",
+            "\\LogicException"
         ]
+    },
+    {
+        "name": "\\LogicException",
+        "size": 3000,
+        "relations": []
     },
     {
         "name": "\\App\\Repository\\EventByObjectRepository",

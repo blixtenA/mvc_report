@@ -1726,16 +1726,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Form-GameObjectType.html#method_buildForm"
         },                {
-            "fqsen": "\\App\\Form\\GameObjectType\u003A\u003AreverseTransform\u0028\u0029",
-            "name": "reverseTransform",
-            "summary": "",
-            "url": "classes/App-Form-GameObjectType.html#method_reverseTransform"
-        },                {
-            "fqsen": "\\App\\Form\\GameObjectType\u003A\u003Atransform\u0028\u0029",
-            "name": "transform",
-            "summary": "",
-            "url": "classes/App-Form-GameObjectType.html#method_transform"
-        },                {
             "fqsen": "\\App\\Form\\GameObjectType\u003A\u003AconfigureOptions\u0028\u0029",
             "name": "configureOptions",
             "summary": "",
@@ -1853,7 +1843,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Proj\\Action\u003A\u003AactionWithOptionsAndObject\u0028\u0029",
             "name": "actionWithOptionsAndObject",
-            "summary": "Attempt\u0020to\u0020unlock,\u0020or\u0020other\u0020options\/object\u0020action.",
+            "summary": "",
             "url": "classes/App-Proj-Action.html#method_actionWithOptionsAndObject"
         },                {
             "fqsen": "\\App\\Proj\\Action\u003A\u003AunlockYes\u0028\u0029",

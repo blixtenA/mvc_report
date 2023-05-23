@@ -40,11 +40,25 @@ footer.site-footer {
     position: relative;
     overflow: hidden;
     border-radius: 10%;
+    display: flex;
+    align-items: center;
+    padding-left: 20px; /* Adjust the value as needed */
 }
 
-nav ul {
-    column-count: 2; 
-    column-gap: 1em;
+ul {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 2; /* Add this property to display in two columns */
+    column-gap: 20px; /* Adjust the value as needed for gap between columns */
+}
+
+.nav-image {
+    height: 100%;
+    width: auto;
+    max-height: 100px; /* Adjust the value as needed */
+    margin-left: auto;
 }
 
 nav a {
